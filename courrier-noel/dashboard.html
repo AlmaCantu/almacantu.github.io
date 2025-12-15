@@ -199,9 +199,9 @@
   <div>
     <div class="brand">
       <button class="menu-btn" onclick="openMenu()">☰</button>
-      Dashboard
+      Lettre au Père Noël
     </div>
-    <div class="sub" id="subline"></div>
+    <!-- <div class="sub" id="subline"></div> -->
   </div>
   <button class="btn" onclick="logout()">Logout</button>
 </header>
@@ -209,7 +209,7 @@
 <div class="layout">
   <!-- Desktop sidebar -->
   <aside class="sidebar">
-    <div class="nav-title">Utilisateurs</div>
+    <!-- <div class="nav-title">Utilisateurs</div> -->
     <nav class="nav" id="desktopNav"></nav>
   </aside>
 
@@ -269,7 +269,7 @@
   const me = sessionStorage.getItem("username") || "User";
   let selectedUser = MENU.includes(me) ? me : MENU[0];
 
-  document.getElementById("subline").textContent = `Connecté : ${me}`;
+  // document.getElementById("subline").textContent = `Connecté : ${me}`;
 
   // Données
   let db = null;
