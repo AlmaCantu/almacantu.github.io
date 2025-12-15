@@ -163,16 +163,22 @@
     
     /* .stateBtn[disabled]{ opacity:.45; cursor:not-allowed; } */
 
-    .danger{
-      border: 1px solid #fecaca;
-      background: #fff;
-      padding: 6px 10px;
-      border-radius: 10px;
+    .delBtn{
+      font-size: 16px;
       cursor: pointer;
-      font-size: 13px;
-      color: #991b1b;
+      user-select: none;
+      color: #991b1b; /* or #333 if in white area */
+      opacity: .85;
     }
-    .danger[disabled]{ opacity:.45; cursor:not-allowed; }
+    
+    .delBtn:hover{
+      opacity: 1;
+    }
+    
+    .delBtn.disabled{
+      opacity: .4;
+      cursor: not-allowed;
+    }
 
     /* Add gift row */
     .addRow{
@@ -320,8 +326,8 @@
   }
 
   function stateIcon(etat){
-    if (etat === "selectionne") return "fa-regular fa-gift";
-    if (etat === "selectionne_par_plusieurs") return "fa-solid fa-gift";
+    if (etat === "selectionne") return "fa-solid fa-gift";
+    if (etat === "selectionne_par_plusieurs") return "fa-solid fa-grip-vertical";
     return "fa-regular fa-square";
   }
 
@@ -410,15 +416,7 @@
 
       // Bouton état uniquement pour les autres utilisateurs
       const stateBtn = document.createElement("i");
-      // stateBtn.className = "stateBtn";
-      // stateBtn.textContent = isMeMenu ? "fa-light fa-gift" : stateIcon(gift.etat);
-
-      // const icon = document.createElement("i");
       stateBtn.className = isMeMenu ? "stateBtn fa-solid fa-gift" : ("stateBtn " + stateIcon(gift.etat));
-
-      
-      // stateBtn.appendChild(icon);
-
 
       const who = gift.selectionne_par.length ? gift.selectionne_par.join(", ") : "Personne";
       stateBtn.title = `Sélectionné par : ${who}`;
@@ -453,9 +451,9 @@
 
       // Supprimer: seulement si je suis auteur + pas sélectionné
       const canDelete = (gift.auteur === me) && (gift.selectionne_par.length === 0);
-      const delBtn = document.createElement("button");
-      delBtn.className = "danger";
-      delBtn.textContent = "x";
+      const delBtn = document.createElement("i");
+      delBtn.className = "delBtn fa-solid fa-trash";
+      // delBtn.textContent = "x";
       delBtn.disabled = !canDelete;
       delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
 
