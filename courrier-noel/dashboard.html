@@ -205,8 +205,21 @@
   <!-- Main content -->
   <main>
     <section class="panel">
-      <h1 id="title"></h1>
-      <p class="hint" id="hint"></p>
+      <!-- <h1 id="title"></h1>
+      <p class="hint" id="hint"></p> -->
+
+      <p>
+        Cher Père Noël,
+      </p>
+    
+      <p>
+        J’espère que tu vas bien avec tous les cadeaux à préparer.
+        Cette année, j’ai essayé d’être sage et de faire de mon mieux.
+      </p>
+    
+      <p>
+        Pour Noël, j’aimerais beaucoup recevoir les quelques cadeaux suivants :
+      </p>
 
       <div class="list" id="giftList"></div>
 
@@ -214,6 +227,17 @@
         <button class="plusBtn" id="addBtn" title="Ajouter un cadeau">+</button>
         <input class="giftInput" id="giftInput" placeholder="Ajouter un cadeau..." />
       </div>
+
+      <p>
+        Merci pour tout le travail que tu fais chaque année.
+      </p>
+    
+      <p>
+        Mille bisous,
+      </p>
+    
+      <p style="font-weight:600;" id="signature"></p>
+      
     </section>
   </main>
 </div>
@@ -304,10 +328,12 @@
     buildNav(document.getElementById("mobileNav"), true);
 
     const isMeMenu = (selectedUser === me);
-    document.getElementById("title").textContent = `Cadeaux — ${selectedUser}`;
-    document.getElementById("hint").textContent = isMeMenu
-      ? "Ici tu vois uniquement les cadeaux dont tu es l’auteur. Tu peux ajouter et supprimer (si non sélectionné)."
-      : "Clique sur l’icône pour changer l’état (démo). Survol = personnes qui ont sélectionné.";
+    // document.getElementById("title").textContent = `Cadeaux — ${selectedUser}`;
+    // document.getElementById("hint").textContent = isMeMenu
+    //   ? "Ici tu vois uniquement les cadeaux dont tu es l’auteur. Tu peux ajouter et supprimer (si non sélectionné)."
+    //   : "Clique sur l’icône pour changer l’état (démo). Survol = personnes qui ont sélectionné.";
+
+    document.getElementById("signature").textContent = selectedUser;
 
     const block = getUserBlock(selectedUser);
     const list = document.getElementById("giftList");
