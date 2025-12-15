@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard</title>
+
   <style>
     :root{
       --bg:#f6f7fb;
@@ -12,10 +13,11 @@
       --muted:#6b7280;
       --line:#e5e7eb;
       --shadow: 0 10px 25px rgba(0,0,0,.08);
-      --radius: 14px;
+      --radius: 16px;
     }
 
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
       font-family: Arial, sans-serif;
@@ -23,7 +25,7 @@
       color: var(--text);
     }
 
-    /* Top bar */
+    /* ---------- HEADER ---------- */
     .topbar{
       position: sticky;
       top:0;
@@ -35,48 +37,45 @@
       background: var(--card);
       border-bottom: 1px solid var(--line);
     }
+
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
       font-weight: 700;
     }
-    .brand-badge{
-      width:34px;height:34px;border-radius:10px;
-      display:grid;place-items:center;
+
+    .menu-btn{
+      display:none;
       border:1px solid var(--line);
       background:#fff;
-    }
-
-    .top-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
     }
 
     .btn{
       border:1px solid var(--line);
-      background: #fff;
-      padding: 9px 12px;
-      border-radius: 10px;
+      background:#fff;
+      padding:8px 12px;
+      border-radius:10px;
       cursor:pointer;
-      font-size: 14px;
     }
-    .btn:hover{ filter: brightness(0.98); }
 
-    /* Layout */
+    /* ---------- LAYOUT ---------- */
     .layout{
       display:grid;
       grid-template-columns: 260px 1fr;
-      min-height: calc(100vh - 58px);
+      min-height: calc(100vh - 60px);
     }
 
-    /* Sidebar */
+    /* ---------- SIDEBAR ---------- */
     .sidebar{
       background: var(--card);
       border-right: 1px solid var(--line);
       padding: 14px;
     }
+
     .nav-title{
       font-size: 12px;
       color: var(--muted);
@@ -84,62 +83,71 @@
       text-transform: uppercase;
       letter-spacing: .06em;
     }
+
     .nav a{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding: 10px 10px;
-      margin: 6px 0;
+      display:block;
+      padding: 10px;
+      margin-bottom: 6px;
       border-radius: 10px;
-      color: var(--text);
       text-decoration:none;
-      border: 1px solid transparent;
-    }
-    .nav a:hover{
-      background:#f3f4f6;
-      border-color: var(--line);
-    }
-    .nav .active{
-      background:#eef2ff;
-      border-color:#c7d2fe;
+      color: var(--text);
     }
 
-    /* Main */
+    .nav a:hover{
+      background:#f3f4f6;
+    }
+
+    .active{
+      background:#eef2ff;
+    }
+
+    /* ---------- MAIN ---------- */
     main{
-      padding: 18px;
+      display:flex;
+      justify-content:center;
+      padding: 24px 16px;
     }
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-    .card{
+
+    .note{
+      width: 70%;
+      max-width: 900px;
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 16px;
-    }
-    h1{ margin: 0 0 6px; font-size: 20px; }
-    p{ margin: 8px 0; color: var(--muted); line-height: 1.5; }
-
-    .kpi{
-      display:flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    .pill{
-      border:1px solid var(--line);
-      background:#fff;
-      padding: 8px 10px;
-      border-radius: 999px;
-      font-size: 13px;
-      color: var(--text);
+      padding: 24px;
     }
 
-    /* Mobile menu overlay */
+    h1{
+      margin-top:0;
+      font-size: 22px;
+    }
+
+    p{
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ---------- MOBILE ---------- */
+    @media (max-width: 900px){
+      .layout{
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar{
+        display:none;
+      }
+
+      .menu-btn{
+        display:inline-block;
+      }
+
+      .note{
+        width: 100%;
+      }
+    }
+
+    /* ---------- MOBILE MENU ---------- */
     .overlay{
       position: fixed;
       inset: 0;
@@ -147,45 +155,32 @@
       display:none;
       z-index: 20;
     }
-    .overlay.show{ display:block; }
 
-    .mobile-drawer{
+    .overlay.show{
+      display:block;
+    }
+
+    .drawer{
       position: fixed;
-      top: 0;
-      left: -320px;
-      width: 300px;
-      height: 100%;
+      top:0;
+      left:-280px;
+      width:260px;
+      height:100%;
       background: var(--card);
       border-right: 1px solid var(--line);
-      padding: 14px;
-      transition: left .2s ease;
+      padding:14px;
+      transition:left .2s ease;
       z-index: 30;
-      box-shadow: var(--shadow);
-    }
-    .mobile-drawer.open{ left: 0; }
-    .drawer-header{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      padding: 6px 4px 10px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 10px;
     }
 
-    /* Responsive */
-    .menu-btn{ display:none; }
-    @media (max-width: 900px){
-      .layout{ grid-template-columns: 1fr; }
-      .sidebar{ display:none; }
-      .menu-btn{ display:inline-block; }
-      .grid{ grid-template-columns: 1fr; }
-      main{ padding: 14px; }
+    .drawer.open{
+      left:0;
     }
   </style>
 </head>
 <body>
 
-<!-- Demo login guard -->
+<!-- Login guard (demo only) -->
 <script>
   if (sessionStorage.getItem("loggedIn") !== "true") {
     window.location.href = "index.html";
@@ -194,18 +189,10 @@
 
 <header class="topbar">
   <div class="brand">
-    <!-- <div class="brand-badge">☰</div> -->
-    <button class="btn menu-btn" onclick="openMenu()">☰</button>
-    <div>
-      <div>Demo Dashboard</div>
-      <div style="font-size:12px;color:var(--muted);" id="subtitle"></div>
-    </div>
+    <button class="menu-btn" onclick="openMenu()">☰</button>
+    Demo Dashboard
   </div>
-
-  <div class="top-actions">
-    <!-- <button class="btn menu-btn" onclick="openMenu()">Menu</button> -->
-    <button class="btn" onclick="logout()">Logout</button>
-  </div>
+  <button class="btn" onclick="logout()">Logout</button>
 </header>
 
 <div class="layout">
@@ -213,79 +200,55 @@
   <aside class="sidebar">
     <div class="nav-title">Menu</div>
     <nav class="nav">
-      <a class="active" href="#">🏠 Dashboard</a>
-      <a href="#" onclick="demoNav(event, 'Profile')">👤 Profile</a>
-      <a href="#" onclick="demoNav(event, 'Settings')">⚙️ Settings</a>
-      <a href="#" onclick="demoNav(event, 'Help')">❓ Help</a>
+      <a class="active" href="#">Dashboard</a>
+      <a href="#">Profile</a>
+      <a href="#">Settings</a>
+      <a href="#">Help</a>
     </nav>
   </aside>
 
+  <!-- Main content -->
   <main>
-    <div class="grid">
-      <section class="card">
-        <h1 id="welcome"></h1>
-        <p>
-          This is a simple, responsive dashboard layout for your GitHub Pages login demo.
-          It includes a menu (sidebar on desktop, drawer on mobile) and a clean content area.
-        </p>
-        <div class="kpi">
-          <span class="pill">✅ Responsive</span>
-          <span class="pill">📱 Mobile menu</span>
-          <span class="pill">🖥️ Desktop sidebar</span>
-        </div>
-      </section>
-
-      <section class="card">
-        <h1>Quick Notes</h1>
-        <p id="message">
-          Click menu items to see a small demo message. Replace this text with your real content.
-        </p>
-        <p style="font-size:12px;color:var(--muted);">
-          Tip: Keep your demo simple. For real security you’d need a backend/auth service.
-        </p>
-      </section>
-    </div>
+    <section class="note">
+      <h1 id="welcome"></h1>
+      <p>
+        This is a single centered note. On a monitor it takes about 70% of the screen width,
+        and on mobile it becomes full width. This keeps the layout clean and readable.
+      </p>
+      <p>
+        You can replace this text with any message, documentation, or demo content you want.
+      </p>
+    </section>
   </main>
 </div>
 
-<!-- Mobile overlay + drawer -->
+<!-- Mobile drawer -->
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-<aside class="mobile-drawer" id="drawer" aria-label="Mobile Menu">
-  <div class="drawer-header">
-    <strong>Menu</strong>
-    <button class="btn" onclick="closeMenu()">Close</button>
-  </div>
-
-  <div class="nav-title">Navigate</div>
+<aside class="drawer" id="drawer">
+  <div class="nav-title">Menu</div>
   <nav class="nav">
-    <a class="active" href="#" onclick="closeMenu()">🏠 Dashboard</a>
-    <a href="#" onclick="demoNav(event, 'Profile'); closeMenu();">👤 Profile</a>
-    <a href="#" onclick="demoNav(event, 'Settings'); closeMenu();">⚙️ Settings</a>
-    <a href="#" onclick="demoNav(event, 'Help'); closeMenu();">❓ Help</a>
+    <a class="active" href="#" onclick="closeMenu()">Dashboard</a>
+    <a href="#" onclick="closeMenu()">Profile</a>
+    <a href="#" onclick="closeMenu()">Settings</a>
+    <a href="#" onclick="closeMenu()">Help</a>
   </nav>
 </aside>
 
 <script>
-  const username = sessionStorage.getItem("username") || "User";
-  document.getElementById("welcome").textContent = `Welcome, ${username}!`;
-  document.getElementById("subtitle").textContent = `Logged in as ${username}`;
+  const user = sessionStorage.getItem("username") || "User";
+  document.getElementById("welcome").textContent = `Welcome, ${user}!`;
 
   function logout(){
     sessionStorage.clear();
     window.location.href = "index.html";
   }
 
-  function demoNav(e, name){
-    e.preventDefault();
-    document.getElementById("message").textContent =
-      `You clicked: ${name}. This is where you’d show ${name} content in a real app.`;
-  }
-
   function openMenu(){
     document.getElementById("overlay").classList.add("show");
     document.getElementById("drawer").classList.add("open");
   }
+
   function closeMenu(){
     document.getElementById("overlay").classList.remove("show");
     document.getElementById("drawer").classList.remove("open");
