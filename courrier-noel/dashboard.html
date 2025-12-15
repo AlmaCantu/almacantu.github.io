@@ -382,7 +382,6 @@
     // document.getElementById("hint").textContent = isMeMenu
     //   ? "Ici tu vois uniquement les cadeaux dont tu es l’auteur. Tu peux ajouter et supprimer (si non sélectionné)."
     //   : "Clique sur l’icône pour changer l’état (démo). Survol = personnes qui ont sélectionné.";
-    const isNotSelectable = (gift.etat === "selectionne" && !gift.selectionne_par.includes(me))
 
     document.getElementById("signature").textContent = selectedUser;
 
@@ -403,6 +402,8 @@
     gifts.forEach(gift => {
       // gift.selectionne_par = gift.selectionne_par || [];
       // gift.etat = normalizeEtat(gift.selectionne_par);
+
+      const isNotSelectable = (gift.etat === "selectionne" && !gift.selectionne_par.includes(me))
 
       const row = document.createElement("div");
       row.className = "item";
