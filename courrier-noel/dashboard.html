@@ -19,8 +19,8 @@
       --pine-700: #146c43;   /* hover */
       --pine-text: #e9f5ef;  /* light text */
       --pine-line: #083628;
-      --my-icon-btn: #4E79A7;
-      --icon-btn: #E15759;
+      /* --my-icon-btn: #4E79A7; */
+      --gift: #E15759;
       --bg:#f6f7fb;
       --card:#ffffff;
       --text:#111827;
@@ -148,16 +148,12 @@
       font-size: 16px;
       cursor: pointer;
       user-select: none;
-      color: var(--icon-btn);
+      color: var(--gift);
       opacity: .85;
     }
 
     .stateBtn:hover{
       opacity: 1;
-    }
-
-    stateBtn.me{
-      color: var(--my-icon-btn);
     }
     
     .stateBtn.disabled{
@@ -304,7 +300,6 @@
 <!-- Mobile drawer -->
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 <aside class="drawer" id="drawer">
-  <!-- <div class="nav-title">Utilisateurs</div> -->
   <nav class="nav" id="mobileNav"></nav>
 </aside>
 
@@ -317,17 +312,15 @@
   const me = sessionStorage.getItem("username") || "User";
   let selectedUser = MENU.includes(me) ? me : MENU[0];
 
-  // document.getElementById("subline").textContent = `Connecté : ${me}`;
-
   // Données
   let db = null;
 
   // -------- Helpers état
-  function normalizeEtat(selectionne_par){
-    if (!selectionne_par || selectionne_par.length === 0) return "deselectionne";
-    if (selectionne_par.length === 1) return "selectionne";
-    return "selectionne_par_plusieurs";
-  }
+  // function normalizeEtat(selectionne_par){
+  //   if (!selectionne_par || selectionne_par.length === 0) return "deselectionne";
+  //   if (selectionne_par.length === 1) return "selectionne";
+  //   return "selectionne_par_plusieurs";
+  // }
 
   function stateIcon(etat){
     if (etat === "selectionne") return "fa-solid fa-gift";
@@ -352,12 +345,12 @@
     const res = await fetch("cadeaux.json");
     db = await res.json();
     // normalise les états au chargement (au cas où)
-    db.utilisateurs.forEach(u => {
-      u.cadeaux.forEach(g => {
-        g.selectionne_par = g.selectionne_par || [];
-        g.etat = normalizeEtat(g.selectionne_par);
-      });
-    });
+    // db.utilisateurs.forEach(u => {
+    //   u.cadeaux.forEach(g => {
+    //     g.selectionne_par = g.selectionne_par || [];
+    //     g.etat = normalizeEtat(g.selectionne_par);
+    //   });
+    // });
     save();
   }
 
@@ -409,8 +402,8 @@
     }
 
     gifts.forEach(gift => {
-      gift.selectionne_par = gift.selectionne_par || [];
-      gift.etat = normalizeEtat(gift.selectionne_par);
+      // gift.selectionne_par = gift.selectionne_par || [];
+      // gift.etat = normalizeEtat(gift.selectionne_par);
 
       const row = document.createElement("div");
       row.className = "item";
@@ -420,7 +413,7 @@
 
       // Bouton état uniquement pour les autres utilisateurs
       const stateBtn = document.createElement("i");
-      stateBtn.className = isMeMenu ? "stateBtn me fa-solid fa-gift" : ("stateBtn " + stateIcon(gift.etat));
+      stateBtn.className = "stateBtn " + stateIcon(gift.etat);
 
       const who = gift.selectionne_par.length ? gift.selectionne_par.join(", ") : "Personne";
       stateBtn.title = `Sélectionné par : ${who}`;
@@ -430,9 +423,6 @@
 
       if (!isMeMenu){
         stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
-      } else {
-        // côté "moi", c'est juste un indicateur
-        stateBtn.classList.add("disabled");
       }
 
       const title = document.createElement("div");
@@ -442,14 +432,15 @@
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
-
-      left.appendChild(stateBtn);
+      if (!isMeMenu){
+        left.appendChild(stateBtn);
+      }
       left.appendChild(labelWrap);
 
       const right = document.createElement("div");
 
       // Supprimer: seulement si je suis auteur + pas sélectionné
-      const canDelete = (gift.auteur === me) && (gift.selectionne_par.length === 0);
+      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || (gift.selectionne_par === [me]));
       const delBtn = document.createElement("i");
       delBtn.className = "delBtn fa-solid fa-trash";
       if (!canDelete){
