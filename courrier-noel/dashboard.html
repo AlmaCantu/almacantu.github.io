@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --shadow: 0 10px 25px rgba(0,0,0,.08);
+      --radius: 16px;
+    }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family: Arial, sans-serif; background: var(--bg); color: var(--text); }
+
+    /* Header */
+    .topbar{
+      position: sticky; top:0; z-index: 10;
+      display:flex; align-items:center; justify-content: space-between;
+      padding: 12px 16px; background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:700; }
+    .sub{ font-weight: normal; font-size: 12px; color: var(--muted); }
+    .menu-btn{
+      display:none; border:1px solid var(--line); background:#fff;
+      padding:8px 12px; border-radius:10px; cursor:pointer;
+    }
+    .btn{
+      border:1px solid var(--line); background:#fff;
+      padding:8px 12px; border-radius:10px; cursor:pointer;
+    }
+
+    /* Layout */
+    .layout{ display:grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 60px); }
+
+    /* Sidebar */
+    .sidebar{ background: var(--card); border-right: 1px solid var(--line); padding: 14px; }
+    .nav-title{
+      font-size: 12px; color: var(--muted);
+      margin: 6px 8px 10px; text-transform: uppercase; letter-spacing: .06em;
+    }
+    .nav a{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px; margin-bottom:6px;
+      border-radius: 10px; text-decoration:none; color: var(--text);
+    }
+    .nav a:hover{ background:#f3f4f6; }
+    .nav a.active{ background:#eef2ff; }
+    .meTag{
+      font-size: 11px;
+      padding: 2px 8px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    /* Main */
+    main{ display:flex; justify-content:center; padding: 24px 16px; }
+    .panel{
+      width: 70%;
+      max-width: 980px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    h1{ margin:0 0 6px; font-size: 20px; }
+    .hint{ margin:0 0 14px; color: var(--muted); line-height: 1.6; font-size: 14px; }
+
+    /* Gift list */
+    .list{
+      border-top: 1px solid var(--line);
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+    .item{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 8px;
+      border-radius: 12px;
+    }
+    .item:hover{ background:#f8fafc; }
+    .left{
+      display:flex; align-items:center; gap: 10px; min-width: 0;
+    }
+    .title{
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .meta{
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 8px;
+    }
+
+    .stateBtn{
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .stateBtn[disabled]{ opacity:.45; cursor:not-allowed; }
+
+    .danger{
+      border: 1px solid #fecaca;
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #991b1b;
+    }
+    .danger[disabled]{ opacity:.45; cursor:not-allowed; }
+
+    /* Add gift row */
+    .addRow{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      padding: 12px 8px;
+      border-top: 1px dashed var(--line);
+      margin-top: 10px;
+    }
+    .plusBtn{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background:#fff;
+      cursor:pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .giftInput{
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px){
+      .layout{ grid-template-columns: 1fr; }
+      .sidebar{ display:none; }
+      .menu-btn{ display:inline-block; }
+      .panel{ width: 100%; }
+    }
+
+    /* Mobile drawer */
+    .overlay{ position: fixed; inset:0; background: rgba(0,0,0,.35); display:none; z-index:20; }
+    .overlay.show{ display:block; }
+    .drawer{
+      position: fixed; top:0; left:-280px; width:260px; height:100%;
+      background: var(--card); border-right: 1px solid var(--line);
+      padding:14px; transition:left .2s ease; z-index:30;
+      box-shadow: var(--shadow);
+    }
+    .drawer.open{ left:0; }
+  </style>
+</head>
+<body>
+
+<script>
+  // Guard (démo)
+  if (sessionStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
+
+<header class="topbar">
+  <div>
+    <div class="brand">
+      <button class="menu-btn" onclick="openMenu()">☰</button>
+      Dashboard
+    </div>
+    <div class="sub" id="subline"></div>
+  </div>
+  <button class="btn" onclick="logout()">Logout</button>
+</header>
+
+<div class="layout">
+  <!-- Desktop sidebar -->
+  <aside class="sidebar">
+    <div class="nav-title">Utilisateurs</div>
+    <nav class="nav" id="desktopNav"></nav>
+  </aside>
+
+  <!-- Main content -->
+  <main>
+    <section class="panel">
+      <h1 id="title"></h1>
+      <p class="hint" id="hint"></p>
+
+      <div class="list" id="giftList"></div>
+
+      <div class="addRow">
+        <button class="plusBtn" id="addBtn" title="Ajouter un cadeau">+</button>
+        <input class="giftInput" id="giftInput" placeholder="Ajouter un cadeau..." />
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Mobile drawer -->
+<div class="overlay" id="overlay" onclick="clo
