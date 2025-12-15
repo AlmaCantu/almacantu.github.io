@@ -1,12 +1,12 @@
 {
   "users": [
-    {
-      "username": "admin",
-      "password": "1234"
-    },
-    {
-      "username": "demo",
-      "password": "demo"
-    }
+    { "username": "Admin",     "password": "1234" },
+    { "username": "Alma",      "password": "chat" },
+    { "username": "Anna",      "password": "chien" },
+    { "username": "Lise",      "password": "lapin" },
+    { "username": "Antoine",   "password": "tigre" },
+    { "username": "Guillaume", "password": "ours" },
+    { "username": "Coline",    "password": "panda" },
+    { "username": "Gabin",     "password": "loup" }
   ]
 }
