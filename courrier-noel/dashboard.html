@@ -596,8 +596,8 @@
     if (idx === -1) return;
 
     const g = block.cadeaux[idx];
-    if (g.auteur !== me) return;
-    if ((g.selectionne_par || []).length > 0) return;
+    // if (g.auteur !== me) return;
+    // if ((g.selectionne_par || []).length > 0) return;
 
     block.cadeaux.splice(idx, 1);
     save();
