@@ -451,25 +451,25 @@
       if (!isMeMenu){
         switch(gift.etat) {
           case "deselectionne":
-            stateBtn.className = "fa-regular fa-square green";
+            stateBtn.className = "stateBtn fa-regular fa-square green";
             stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
             stateBtn.title = "";
             break;
           case "selectionne":
             if (gift.selectionne_par.includes(me)) {
-              stateBtn.className = "fa-solid fa-gift red";
+              stateBtn.className = "stateBtn fa-solid fa-gift red";
               stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
             } else {
-              stateBtn.className = "fa-solid fa-gift disabled";
+              stateBtn.className = "stateBtn fa-solid fa-gift disabled";
             }
             stateBtn.title = "";
             break;
           default:
             if (gift.selectionne_par.includes(me)) {
-              stateBtn.className = "fa-solid fa-cubes-stacked red";
+              stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
               stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
             } else {
-              stateBtn.className = "fa-solid fa-cubes-stacked green";
+              stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
             }
             stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
         }
