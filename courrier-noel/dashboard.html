@@ -17,8 +17,7 @@
       --pine-700: #146c43;   /* hover */
       --pine-text: #e9f5ef;  /* light text */
       --pine-line: #083628;
-      /* --my-icon-btn: #4E79A7; */
-      --gift: #E15759;
+      --red: #E15759;
       --bg:#f6f7fb;
       --card:#ffffff;
       --text:#111827;
@@ -146,7 +145,6 @@
       font-size: 16px;
       cursor: pointer;
       user-select: none;
-      color: var(--gift);
       opacity: .85;
     }
 
@@ -156,8 +154,15 @@
     
     .stateBtn.disabled{
       color: #b3b3b3;
-      opacity: .85;
       cursor: not-allowed;
+    }
+
+    .stateBtn.green{
+      color: var(--pine-800);
+    }
+
+    .stateBtn.red{
+      color: var(--red);
     }
 
     .delBtn{
@@ -320,11 +325,13 @@
   //   return "selectionne_par_plusieurs";
   // }
 
-  function stateIcon(etat){
-    if (etat === "selectionne") return "fa-solid fa-gift";
-    if (etat === "selectionne_par_plusieurs") return "fa-solid fa-gift";
-    return "fa-regular fa-square";
-  }
+  // function stateIcon(etat, isOpen){
+  //   const classes = "";
+    
+  //   if (etat === "selectionne") return "fa-solid fa-gift";
+  //   if (etat === "selectionne_par_plusieurs") return "fa-solid fa-gift" + (isOpen ? " ");
+  //   return "fa-regular fa-square green";
+  // }
 
 
 //   <span class="double-icon stateIcon">
@@ -443,18 +450,28 @@
 
       const stateBtn = document.createElement("i");
       if (!isMeMenu){
-        stateBtn.className = "stateBtn " + stateIcon(gift.etat);
-
-        if (gift.selectionne_par.length > 0){
-          stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
-        }
-        else {
-          stateBtn.title = "";
-        }
-        if (isNotSelectable) {
-          stateBtn.classList.add("disabled");
-        } else {
-          stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+        switch(gift.etat) {
+          case "deselectionne":
+            stateBtn.className = "fa-regular fa-square green";
+            stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+            stateBtn.title = "";
+            break;
+          case "selectionne":
+            if (gift.selectionne_par.includes(me)) {
+              stateBtn.className = "fa-regular fa-gift red";
+              stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+            } else {
+              stateBtn.className = "fa-solid fa-gift disabled";
+            }
+            stateBtn.title = "";
+            break;
+          default:
+            if (gift.selectionne_par.includes(me)) {
+              stateBtn.className = "fa-regular fa-cubes-stacked red";
+              stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
+            } else {
+              stateBtn.className = "fa-regular fa-cubes-stacked green";
+            }
         }
       }
 
