@@ -491,28 +491,24 @@
     if (gift.etat === "deselectionne"){
       gift.selectionne_par = [me];
       gift.etat = "selectionne";
-    } else if (gift.etat === "selectionne"){
-      // si c'est moi seul, on passe en "plusieurs"
-      if (hasMe){
+    } else {
+      if (gift.etat === "selectionne"){
         gift.etat = "selectionne_par_plusieurs";
       } else {
-        // sinon on tente deselectionner (mais si d'autres restent => bloqué)
-        // (cas rare si JSON initial contient autre personne)
-        if (gift.selectionne_par.length > 1 && hasMe){
-          alert("Impossible de désélectionner : d'autres personnes l'ont sélectionné.");
-          return;
+        if (gift.etat === "selectionne_par_plusieurs"){
+          if (gift.selectionne_par.length === 1 && hasMe){
+            gift.etat = "deselectionne";
+          }
+          if (gift.selectionne_par.length > 1 && hasMe){
+            const others = gift.selectionne_par.filter(x => x !== me);
+            gift.selectionne_par = others;
+          }
+          if (!hasMe){
+            const others = gift.selectionne_par.filter(x => x !== me);
+            gift.selectionne_par.push(me);
+          }
         }
-        gift.selectionne_par = [];
       }
-    } else { // selectionne_par_plusieurs
-      // tenter de deselectionner
-      const others = gift.selectionne_par.filter(x => x !== me);
-      if (others.length > 0){
-        // si d'autres restent, pas le droit
-        alert("Impossible de désélectionner : d'autres personnes l'ont sélectionné.");
-        return;
-      }
-      gift.selectionne_par = [];
     }
 
     // gift.etat = normalizeEtat(gift.selectionne_par);
