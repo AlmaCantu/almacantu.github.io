@@ -8,8 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Rochester&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-
-  
   <title>Dashboard</title>
 
   <style>
@@ -480,8 +478,8 @@
     const gift = block.cadeaux.find(g => g.id === giftId);
     if (!gift) return;
 
-    gift.selectionne_par = gift.selectionne_par || [];
-    gift.etat = normalizeEtat(gift.selectionne_par);
+    // gift.selectionne_par = gift.selectionne_par || [];
+    // gift.etat = normalizeEtat(gift.selectionne_par);
 
     const hasMe = gift.selectionne_par.includes(me);
 
@@ -514,7 +512,7 @@
       gift.selectionne_par = [];
     }
 
-    gift.etat = normalizeEtat(gift.selectionne_par);
+    // gift.etat = normalizeEtat(gift.selectionne_par);
     save();
     render();
   }
