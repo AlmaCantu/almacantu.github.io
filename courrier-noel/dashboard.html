@@ -419,7 +419,7 @@
         stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
       } else {
         // côté "moi", c'est juste un indicateur
-        // stateBtn.disabled = true;
+        stateBtn.classList.add("disabled");
       }
 
       const title = document.createElement("div");
