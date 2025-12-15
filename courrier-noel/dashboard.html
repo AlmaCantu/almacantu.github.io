@@ -438,7 +438,7 @@
       const right = document.createElement("div");
 
       // Supprimer: seulement si je suis auteur + pas sélectionné
-      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || (gift.selectionne_par === [me]));
+      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || (gift.selectionne_par === [me])));
       const delBtn = document.createElement("i");
       delBtn.className = "delBtn fa-solid fa-trash";
       if (!canDelete){
