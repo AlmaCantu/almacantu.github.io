@@ -440,7 +440,7 @@
       const canDelete = (gift.auteur === me) && (gift.selectionne_par.length === 0);
       const delBtn = document.createElement("button");
       delBtn.className = "danger";
-      delBtn.textContent = "Supprimer";
+      delBtn.textContent = "x";
       delBtn.disabled = !canDelete;
       delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
 
