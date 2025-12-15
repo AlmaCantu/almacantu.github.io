@@ -413,11 +413,12 @@
       const stateBtn = document.createElement("i");
       stateBtn.className = "stateBtn " + stateIcon(gift.etat);
 
-      const who = gift.selectionne_par.length ? gift.selectionne_par.join(", ") : "Personne";
-      stateBtn.title = `Sélectionné par : ${who}`;
+      if (gift.selectionne_par.length > 0){
+        stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
+      }
 
       // Règle: si l'utilisateur veut deselectionner mais que d'autres restent, interdit
-      stateBtn.disabled = false;
+      // stateBtn.disabled = false;
 
       if (!isMeMenu){
         stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
