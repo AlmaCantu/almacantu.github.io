@@ -418,6 +418,9 @@
         if (gift.selectionne_par.length > 0){
           stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
         }
+        else {
+          stateBtn.title = "";
+        }
         if (isNotSelectable) {
           stateBtn.classList.add("disabled");
         } else {
