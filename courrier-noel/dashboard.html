@@ -322,9 +322,39 @@
 
   function stateIcon(etat){
     if (etat === "selectionne") return "fa-solid fa-gift";
-    if (etat === "selectionne_par_plusieurs") return "fa-solid fa-gift fa-stack-2x";
+    if (etat === "selectionne_par_plusieurs") return "fa-solid fa-gift";
     return "fa-regular fa-square";
   }
+
+
+//   <span class="double-icon stateIcon">
+//   <i class="fa-solid fa-gift"></i>
+//   <i class="fa-solid fa-gift"></i>
+// </span>
+// CSS
+// css
+// ￼Copy code
+// .double-icon{
+//   position: relative;
+//   display: inline-block;
+//   width: 22px;
+//   height: 22px;
+//   cursor: pointer;
+// }
+
+// .double-icon i{
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   font-size: 18px;
+// }
+
+// /* second icon slightly shifted */
+// .double-icon i:last-child{
+//   top: 4px;
+//   left: 4px;
+//   opacity: 0.85;
+// }
 
   function getUserBlock(name){
     return db.utilisateurs.find(u => u.nom === name);
