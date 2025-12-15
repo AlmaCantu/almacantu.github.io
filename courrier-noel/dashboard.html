@@ -393,7 +393,7 @@
       left.className = "left";
 
       // Bouton état uniquement pour les autres utilisateurs
-      const stateBtn = document.createElement("button");
+      const stateBtn = document.createElement("span");
       stateBtn.className = "stateBtn";
       stateBtn.textContent = isMeMenu ? "🎁" : stateIcon(gift.etat);
 
@@ -407,7 +407,7 @@
         stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
       } else {
         // côté "moi", c'est juste un indicateur
-        stateBtn.disabled = true;
+        // stateBtn.disabled = true;
       }
 
       const title = document.createElement("div");
