@@ -1,29 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --shadow: 0 10px 25px rgba(0,0,0,.08);
+      --radius: 14px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index: 10;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight: 700;
+    }
+    .brand-badge{
+      width:34px;height:34px;border-radius:10px;
+      display:grid;place-items:center;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-size: 14px;
+    }
+    .btn:hover{ filter: brightness(0.98); }
+
+    /* Layout */
+    .layout{
+      display:grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 58px);
+    }
+
+    /* Sidebar */
+    .sidebar{
+      background: var(--card);
+      border-right: 1px solid var(--line);
+      padding: 14px;
+    }
+    .nav-title{
+      font-size: 12px;
+      color: var(--muted);
+      margin: 6px 8px 10px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .nav a{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 10px 10px;
+      margin: 6px 0;
+      border-radius: 10px;
+      color: var(--text);
+      text-decoration:none;
+      border: 1px solid transparent;
+    }
+    .nav a:hover{
+      background:#f3f4f6;
+      border-color: var(--line);
+    }
+    .nav .active{
+      background:#eef2ff;
+      border-color:#c7d2fe;
+    }
+
+    /* Main */
+    main{
+      padding: 18px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    h1{ margin: 0 0 6px; font-size: 20px; }
+    p{ margin: 8px 0; color: var(--muted); line-height: 1.5; }
+
+    .kpi{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background:#fff;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    /* Mobile menu overlay */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.35);
+      display:none;
+      z-index: 20;
+    }
+    .overlay.show{ display:block; }
+
+    .mobile-drawer{
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 300px;
+      height: 100%;
+      background: var(--card);
+      border-right: 1px solid var(--line);
+      padding: 14px;
+      transition: left .2s ease;
+      z-index: 30;
+      box-shadow: var(--shadow);
+    }
+    .mobile-drawer.open{ left: 0; }
+    .drawer-header{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      padding: 6px 4px 10px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 10px;
+    }
+
+    /* Responsive */
+    .menu-btn{ display:none; }
+    @media (max-width: 900px){
+      .layout{ grid-template-columns: 1fr; }
+      .sidebar{ display:none; }
+      .menu-btn{ display:inline-block; }
+      .grid{ grid-template-columns: 1fr; }
+      main{ padding: 14px; }
+    }
+  </style>
 </head>
 <body>
 
-<h1>Welcome!</h1>
-<p id="user"></p>
+<!-- Demo login guard -->
+<script>
+  if (sessionStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
 
-<button onclick="logout()">Logout</button>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-badge">☰</div>
+    <div>
+      <div>Demo Dashboard</div>
+      <div style="font-size:12px;color:var(--muted);" id="subtitle"></div>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <button class="btn menu-btn" onclick="openMenu()">Menu</button>
+    <button class="btn" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- Desktop sidebar -->
+  <aside class="sidebar">
+    <div class="nav-title">Menu</div>
+    <nav class="nav">
+      <a class="active" href="#">🏠 Dashboard</a>
+      <a href="#" onclick="demoNav(event, 'Profile')">👤 Profile</a>
+      <a href="#" onclick="demoNav(event, 'Settings')">⚙️ Settings</a>
+      <a href="#" onclick="demoNav(event, 'Help')">❓ Help</a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="grid">
+      <section class="card">
+        <h1 id="welcome"></h1>
+        <p>
+          This is a simple, responsive dashboard layout for your GitHub Pages login demo.
+          It includes a menu (sidebar on desktop, drawer on mobile) and a clean content area.
+        </p>
+        <div class="kpi">
+          <span class="pill">✅ Responsive</span>
+          <span class="pill">📱 Mobile menu</span>
+          <span class="pill">🖥️ Desktop sidebar</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h1>Quick Notes</h1>
+        <p id="message">
+          Click menu items to see a small demo message. Replace this text with your real content.
+        </p>
+        <p style="font-size:12px;color:var(--muted);">
+          Tip: Keep your demo simple. For real security you’d need a backend/auth service.
+        </p>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- Mobile overlay + drawer -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<aside class="mobile-drawer" id="drawer" aria-label="Mobile Menu">
+  <div class="drawer-header">
+    <strong>Menu</strong>
+    <button class="btn" onclick="closeMenu()">Close</button>
+  </div>
+
+  <div class="nav-title">Navigate</div>
+  <nav class="nav">
+    <a class="active" href="#" onclick="closeMenu()">🏠 Dashboard</a>
+    <a href="#" onclick="demoNav(event, 'Profile'); closeMenu();">👤 Profile</a>
+    <a href="#" onclick="demoNav(event, 'Settings'); closeMenu();">⚙️ Settings</a>
+    <a href="#" onclick="demoNav(event, 'Help'); closeMenu();">❓ Help</a>
+  </nav>
+</aside>
 
 <script>
-if (sessionStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "index.html";
-}
+  const username = sessionStorage.getItem("username") || "User";
+  document.getElementById("welcome").textContent = `Welcome, ${username}!`;
+  document.getElementById("subtitle").textContent = `Logged in as ${username}`;
 
-document.getElementById("user").textContent =
-  "Logged in as: " + sessionStorage.getItem("username");
+  function logout(){
+    sessionStorage.clear();
+    window.location.href = "index.html";
+  }
 
-function logout() {
-  sessionStorage.clear();
-  window.location.href = "index.html";
-}
+  function demoNav(e, name){
+    e.preventDefault();
+    document.getElementById("message").textContent =
+      `You clicked: ${name}. This is where you’d show ${name} content in a real app.`;
+  }
+
+  function openMenu(){
+    document.getElementById("overlay").classList.add("show");
+    document.getElementById("drawer").classList.add("open");
+  }
+  function closeMenu(){
+    document.getElementById("overlay").classList.remove("show");
+    document.getElementById("drawer").classList.remove("open");
+  }
 </script>
 
 </body>
 </html>
+
