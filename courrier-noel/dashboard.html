@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,173 +15,77 @@
       --shadow: 0 10px 25px rgba(0,0,0,.08);
       --radius: 16px;
     }
-
     *{ box-sizing:border-box; }
+    body{ margin:0; font-family: Arial, sans-serif; background: var(--bg); color: var(--text); }
 
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    /* ---------- HEADER ---------- */
+    /* Header */
     .topbar{
-      position: sticky;
-      top:0;
-      z-index: 10;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      background: var(--card);
+      position: sticky; top:0; z-index: 10;
+      display:flex; align-items:center; justify-content: space-between;
+      padding: 12px 16px; background: var(--card);
       border-bottom: 1px solid var(--line);
     }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight: 700;
-    }
-
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:700; }
     .menu-btn{
-      display:none;
-      border:1px solid var(--line);
-      background:#fff;
-      padding:8px 12px;
-      border-radius:10px;
-      cursor:pointer;
+      display:none; border:1px solid var(--line); background:#fff;
+      padding:8px 12px; border-radius:10px; cursor:pointer;
     }
-
     .btn{
-      border:1px solid var(--line);
-      background:#fff;
-      padding:8px 12px;
-      border-radius:10px;
-      cursor:pointer;
+      border:1px solid var(--line); background:#fff;
+      padding:8px 12px; border-radius:10px; cursor:pointer;
     }
 
-    /* ---------- LAYOUT ---------- */
-    .layout{
-      display:grid;
-      grid-template-columns: 260px 1fr;
-      min-height: calc(100vh - 60px);
-    }
+    /* Layout */
+    .layout{ display:grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 60px); }
 
-    /* ---------- SIDEBAR ---------- */
-    .sidebar{
-      background: var(--card);
-      border-right: 1px solid var(--line);
-      padding: 14px;
-    }
-
+    /* Sidebar */
+    .sidebar{ background: var(--card); border-right: 1px solid var(--line); padding: 14px; }
     .nav-title{
-      font-size: 12px;
-      color: var(--muted);
-      margin: 6px 8px 10px;
-      text-transform: uppercase;
-      letter-spacing: .06em;
+      font-size: 12px; color: var(--muted);
+      margin: 6px 8px 10px; text-transform: uppercase; letter-spacing: .06em;
     }
-
     .nav a{
-      display:block;
-      padding: 10px;
-      margin-bottom: 6px;
-      border-radius: 10px;
-      text-decoration:none;
-      color: var(--text);
+      display:block; padding:10px; margin-bottom:6px;
+      border-radius: 10px; text-decoration:none; color: var(--text);
     }
+    .nav a:hover{ background:#f3f4f6; }
+    .nav a.active{ background:#eef2ff; }
 
-    .nav a:hover{
-      background:#f3f4f6;
-    }
-
-    .active{
-      background:#eef2ff;
-    }
-
-    /* ---------- MAIN ---------- */
-    main{
-      display:flex;
-      justify-content:center;
-      padding: 24px 16px;
-    }
-
+    /* Main */
+    main{ display:flex; justify-content:center; padding: 24px 16px; }
     .note{
-      width: 70%;
-      max-width: 900px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      width: 70%; max-width: 900px;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); box-shadow: var(--shadow);
       padding: 24px;
     }
+    h1{ margin:0 0 10px; font-size: 22px; }
+    p{ margin:0; color: var(--muted); line-height: 1.6; }
 
-    h1{
-      margin-top:0;
-      font-size: 22px;
-    }
-
-    p{
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* ---------- MOBILE ---------- */
+    /* Mobile */
     @media (max-width: 900px){
-      .layout{
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar{
-        display:none;
-      }
-
-      .menu-btn{
-        display:inline-block;
-      }
-
-      .note{
-        width: 100%;
-      }
+      .layout{ grid-template-columns: 1fr; }
+      .sidebar{ display:none; }
+      .menu-btn{ display:inline-block; }
+      .note{ width: 100%; }
     }
 
-    /* ---------- MOBILE MENU ---------- */
-    .overlay{
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.35);
-      display:none;
-      z-index: 20;
-    }
-
-    .overlay.show{
-      display:block;
-    }
-
+    /* Mobile drawer */
+    .overlay{ position: fixed; inset:0; background: rgba(0,0,0,.35); display:none; z-index:20; }
+    .overlay.show{ display:block; }
     .drawer{
-      position: fixed;
-      top:0;
-      left:-280px;
-      width:260px;
-      height:100%;
-      background: var(--card);
-      border-right: 1px solid var(--line);
-      padding:14px;
-      transition:left .2s ease;
-      z-index: 30;
+      position: fixed; top:0; left:-280px; width:260px; height:100%;
+      background: var(--card); border-right: 1px solid var(--line);
+      padding:14px; transition:left .2s ease; z-index:30;
+      box-shadow: var(--shadow);
     }
-
-    .drawer.open{
-      left:0;
-    }
+    .drawer.open{ left:0; }
   </style>
 </head>
 <body>
 
-<!-- Login guard (demo only) -->
 <script>
+  // Guard (demo)
   if (sessionStorage.getItem("loggedIn") !== "true") {
     window.location.href = "index.html";
   }
@@ -190,7 +94,7 @@
 <header class="topbar">
   <div class="brand">
     <button class="menu-btn" onclick="openMenu()">☰</button>
-    Demo Dashboard
+    Dashboard
   </div>
   <button class="btn" onclick="logout()">Logout</button>
 </header>
@@ -199,56 +103,74 @@
   <!-- Desktop sidebar -->
   <aside class="sidebar">
     <div class="nav-title">Menu</div>
-    <nav class="nav">
-      <a class="active" href="#">Dashboard</a>
-      <a href="#">Profile</a>
-      <a href="#">Settings</a>
-      <a href="#">Help</a>
-    </nav>
+    <nav class="nav" id="desktopNav"></nav>
   </aside>
 
   <!-- Main content -->
   <main>
     <section class="note">
       <h1 id="welcome"></h1>
-      <p>
-        This is a single centered note. On a monitor it takes about 70% of the screen width,
-        and on mobile it becomes full width. This keeps the layout clean and readable.
-      </p>
-      <p>
-        You can replace this text with any message, documentation, or demo content you want.
-      </p>
+      <p id="noteText"></p>
     </section>
   </main>
 </div>
 
 <!-- Mobile drawer -->
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
 <aside class="drawer" id="drawer">
   <div class="nav-title">Menu</div>
-  <nav class="nav">
-    <a class="active" href="#" onclick="closeMenu()">Dashboard</a>
-    <a href="#" onclick="closeMenu()">Profile</a>
-    <a href="#" onclick="closeMenu()">Settings</a>
-    <a href="#" onclick="closeMenu()">Help</a>
-  </nav>
+  <nav class="nav" id="mobileNav"></nav>
 </aside>
 
 <script>
-  const user = sessionStorage.getItem("username") || "User";
-  document.getElementById("welcome").textContent = `Welcome, ${user}!`;
+  const username = sessionStorage.getItem("username") || "User";
+  document.getElementById("welcome").textContent = `Bienvenue, ${username} !`;
+  document.getElementById("noteText").textContent =
+    `Menu sélectionné par défaut : ${username}. (Démo GitHub Pages, pas de vraie sécurité.)`;
+
+  // Ordre choisi
+  const menuItems = ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"];
+  // Si tu veux Admin dans le menu, décommente la ligne suivante :
+  // menuItems.unshift("Admin");
+
+  function buildNav(container, isMobile){
+    container.innerHTML = "";
+    menuItems.forEach(name => {
+      const a = document.createElement("a");
+      a.href = "#";
+      a.textContent = name;
+
+      if (name === username) a.classList.add("active");
+
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        // change l'actif visuellement
+        document.querySelectorAll("#desktopNav a, #mobileNav a").forEach(x => x.classList.remove("active"));
+        // active le même nom dans les 2 menus
+        document.querySelectorAll(`#desktopNav a, #mobileNav a`).forEach(x => {
+          if (x.textContent === name) x.classList.add("active");
+        });
+
+        document.getElementById("noteText").textContent = `Tu as sélectionné : ${name}.`;
+
+        if (isMobile) closeMenu();
+      });
+
+      container.appendChild(a);
+    });
+  }
+
+  buildNav(document.getElementById("desktopNav"), false);
+  buildNav(document.getElementById("mobileNav"), true);
 
   function logout(){
     sessionStorage.clear();
     window.location.href = "index.html";
   }
-
   function openMenu(){
     document.getElementById("overlay").classList.add("show");
     document.getElementById("drawer").classList.add("open");
   }
-
   function closeMenu(){
     document.getElementById("overlay").classList.remove("show");
     document.getElementById("drawer").classList.remove("open");
