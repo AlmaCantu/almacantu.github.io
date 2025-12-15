@@ -19,6 +19,8 @@
       --pine-700: #146c43;   /* hover */
       --pine-text: #e9f5ef;  /* light text */
       --pine-line: #083628;
+      --my-icon-btn: #4E79A7;
+      --icon-btn: #E15759;
       --bg:#f6f7fb;
       --card:#ffffff;
       --text:#111827;
@@ -30,10 +32,7 @@
     *{ box-sizing:border-box; }
     body{
       margin:0;
-      /* font-family: Arial,sans-serif; */
-      /* font-family: "League Script", cursive; */
       font-family: "Rochester", cursive;
-      /* background: var(--bg); */
       color: var(--text);
       background-image: url("background.jpg");
       background-size: cover;        /* fill screen */
@@ -47,7 +46,6 @@
       position: sticky; top:0; z-index: 10;
       display:flex; align-items:center; justify-content: space-between;
       padding: 12px 16px; background: var(--pine-900);
-      /* border-bottom: 1px solid var(--line); */
       color: var(--pine-text);
     }
     
@@ -97,6 +95,7 @@
 
     /* Main */
     main{ display:flex; justify-content:center; padding: 24px 16px; }
+    
     .panel{
       width: 70%;
       max-width: 980px;
@@ -106,7 +105,9 @@
       box-shadow: var(--shadow);
       padding: 20px;
     }
+    
     h1{ margin:0 0 6px; font-size: 20px; }
+    
     .hint{ margin:0 0 14px; color: var(--muted); line-height: 1.6; font-size: 14px; }
 
     /* Gift list */
@@ -147,7 +148,7 @@
       font-size: 16px;
       cursor: pointer;
       user-select: none;
-      color: var(--pine-text); /* or #333 if in white area */
+      color: var(--icon-btn); /* or #333 if in white area */
       opacity: .85;
     }
 
@@ -156,12 +157,13 @@
     }
     
     .stateBtn.disabled{
-      opacity: .4;
+      color: #b3b3b3; /* or #333 if in white area */
+      opacity: .85;
       cursor: not-allowed;
     }
 
     .delBtn{
-      font-size: 16px;
+      font-size: 13px;
       cursor: pointer;
       user-select: none;
       color: #991b1b; /* or #333 if in white area */
@@ -173,7 +175,8 @@
     }
     
     .delBtn.disabled{
-      opacity: .4;
+      color: #b3b3b3;
+      opacity: .85;
       cursor: not-allowed;
     }
 
