@@ -490,7 +490,7 @@
       const right = document.createElement("div");
 
       // Supprimer: seulement si je suis auteur + pas sélectionné
-      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || (gift.selectionne_par.includes(me))));
+      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || (gift.selectionne_par.lenght === 1 && gift.selectionne_par.includes(me))));
       const delBtn = document.createElement("i");
       delBtn.className = "delBtn fa-solid fa-trash";
       if (!canDelete){
@@ -516,9 +516,9 @@
     input.placeholder = `Ajouter un cadeau pour ${selectedUser}...`;
 
     const addBtn = document.getElementById("addBtn");
-    addBtn.onclick = () => addGift(selectedUser, input.value.trim());
+    addBtn.onclick = () => addGift(selectedUser, input.value.trim(), me);
     input.onkeydown = (e) => {
-      if (e.key === "Enter") addGift(selectedUser, input.value.trim());
+      if (e.key === "Enter") addGift(selectedUser, input.value.trim(), me);
     };
   }
 
@@ -566,7 +566,7 @@
     render();
   }
 
-  function addGift(ownerName, title){
+  function addGift(ownerName, title, author){
     if (!title) return;
 
     const block = getUserBlock(ownerName);
@@ -576,7 +576,7 @@
     const newGift = {
       id: `${ownerName.toLowerCase()}-${Date.now()}`,
       titre: title,
-      auteur: ownerName,
+      auteur: author,
       etat: "deselectionne",
       selectionne_par: []
     };
