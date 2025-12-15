@@ -1,0 +1,102 @@
+{
+  "utilisateurs": [
+    {
+      "nom": "Alma",
+      "cadeaux": [
+        {
+          "id": "alma-001",
+          "titre": "Livre",
+          "auteur": "Alma",
+          "etat": "deselectionne",
+          "selectionne_par": []
+        },
+        {
+          "id": "alma-002",
+          "titre": "Bougie parfumée",
+          "auteur": "Alma",
+          "etat": "selectionne",
+          "selectionne_par": ["Anna"]
+        },
+        {
+          "id": "alma-003",
+          "titre": "Plante",
+          "auteur": "Alma",
+          "etat": "selectionne_par_plusieurs",
+          "selectionne_par": ["Gabin", "Coline"]
+        }
+      ]
+    },
+    {
+      "nom": "Anna",
+      "cadeaux": [
+        {
+          "id": "anna-001",
+          "titre": "Écharpe",
+          "auteur": "Anna",
+          "etat": "deselectionne",
+          "selectionne_par": []
+        }
+      ]
+    },
+    {
+      "nom": "Lise",
+      "cadeaux": [
+        {
+          "id": "lise-001",
+          "titre": "Mug",
+          "auteur": "Lise",
+          "etat": "selectionne",
+          "selectionne_par": ["Guillaume"]
+        }
+      ]
+    },
+    {
+      "nom": "Antoine",
+      "cadeaux": [
+        {
+          "id": "antoine-001",
+          "titre": "Jeu de société",
+          "auteur": "Antoine",
+          "etat": "deselectionne",
+          "selectionne_par": []
+        }
+      ]
+    },
+    {
+      "nom": "Guillaume",
+      "cadeaux": [
+        {
+          "id": "guillaume-001",
+          "titre": "Chocolats",
+          "auteur": "Guillaume",
+          "etat": "selectionne_par_plusieurs",
+          "selectionne_par": ["Alma", "Anna", "Lise"]
+        }
+      ]
+    },
+    {
+      "nom": "Coline",
+      "cadeaux": [
+        {
+          "id": "coline-001",
+          "titre": "Coffret thé",
+          "auteur": "Coline",
+          "etat": "selectionne",
+          "selectionne_par": ["Antoine"]
+        }
+      ]
+    },
+    {
+      "nom": "Gabin",
+      "cadeaux": [
+        {
+          "id": "gabin-001",
+          "titre": "Casquette",
+          "auteur": "Gabin",
+          "etat": "deselectionne",
+          "selectionne_par": []
+        }
+      ]
+    }
+  ]
+}
