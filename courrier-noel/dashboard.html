@@ -382,6 +382,7 @@
     // document.getElementById("hint").textContent = isMeMenu
     //   ? "Ici tu vois uniquement les cadeaux dont tu es l’auteur. Tu peux ajouter et supprimer (si non sélectionné)."
     //   : "Clique sur l’icône pour changer l’état (démo). Survol = personnes qui ont sélectionné.";
+    const isNotSelectable = (gift.etat === "selectionne" && !gift.selectionne_par.includes(me))
 
     document.getElementById("signature").textContent = selectedUser;
 
@@ -409,19 +410,19 @@
       const left = document.createElement("div");
       left.className = "left";
 
-      // Bouton état uniquement pour les autres utilisateurs
-      const stateBtn = document.createElement("i");
-      stateBtn.className = "stateBtn " + stateIcon(gift.etat);
-
-      if (gift.selectionne_par.length > 0){
-        stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
-      }
-
-      // Règle: si l'utilisateur veut deselectionner mais que d'autres restent, interdit
-      // stateBtn.disabled = false;
-
       if (!isMeMenu){
-        stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+
+        const stateBtn = document.createElement("i");
+        stateBtn.className = "stateBtn " + stateIcon(gift.etat);
+
+        if (gift.selectionne_par.length > 0){
+          stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
+        }
+        if (isNotSelectable) {
+          stateBtn.classList.add("disabled");
+        } else {
+          stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+        }
       }
 
       const title = document.createElement("div");
@@ -439,7 +440,7 @@
       const right = document.createElement("div");
 
       // Supprimer: seulement si je suis auteur + pas sélectionné
-      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || (gift.selectionne_par === [me])));
+      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || (gift.selectionne_par.includes(me))));
       const delBtn = document.createElement("i");
       delBtn.className = "delBtn fa-solid fa-trash";
       if (!canDelete){
@@ -489,10 +490,11 @@
     // avec contrainte : si d'autres ont sélectionné, on ne peut pas désélectionner (si ça enlève les autres)
     if (gift.etat === "deselectionne"){
       gift.selectionne_par = [me];
+      gift.etat = "selectionne";
     } else if (gift.etat === "selectionne"){
-      // si c'est moi seul, on passe en "plusieurs" (ajout d'un second sélecteur démo)
-      if (gift.selectionne_par.length === 1 && hasMe){
-        gift.selectionne_par = [me, "Quelqu'un d'autre"];
+      // si c'est moi seul, on passe en "plusieurs"
+      if (hasMe){
+        gift.etat = "selectionne_par_plusieurs";
       } else {
         // sinon on tente deselectionner (mais si d'autres restent => bloqué)
         // (cas rare si JSON initial contient autre personne)
