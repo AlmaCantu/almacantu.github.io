@@ -6,6 +6,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rochester&display=swap" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4xJ6Z9oU3F2dQ9Xj2xk6xw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
   
   <title>Dashboard</title>
 
@@ -141,9 +149,10 @@
       /* background: #fff; */
       /* padding: 6px 10px; */
       /* border-radius: 10px; */
-      cursor: pointer;
       font-size: 16px;
+      cursor: pointer;
       user-select: none;
+      color: var(--pine-text); /* or #333 if in white area */
       opacity: .85;
       /* line-height: 1; */
     }
@@ -316,9 +325,9 @@
   }
 
   function stateIcon(etat){
-    if (etat === "selectionne") return "☑";
-    if (etat === "selectionne_par_plusieurs") return "👥";
-    return "☐";
+    if (etat === "selectionne") return "fa-regular fa-gift";
+    if (etat === "selectionne_par_plusieurs") return "fa-solid fa-gift";
+    return "fa-regular fa-square";
   }
 
   function getUserBlock(name){
@@ -405,9 +414,16 @@
       left.className = "left";
 
       // Bouton état uniquement pour les autres utilisateurs
-      const stateBtn = document.createElement("span");
-      stateBtn.className = "stateBtn";
-      stateBtn.textContent = isMeMenu ? "🎁" : stateIcon(gift.etat);
+      const stateBtn = document.createElement("i");
+      // stateBtn.className = "stateBtn";
+      // stateBtn.textContent = isMeMenu ? "fa-light fa-gift" : stateIcon(gift.etat);
+
+      // const icon = document.createElement("i");
+      stateBtn.className = isMeMenu ? "stateBtn fa-light fa-gift" : "stateBtn ${stateIconClass(gift.etat)}";
+
+      
+      // stateBtn.appendChild(icon);
+
 
       const who = gift.selectionne_par.length ? gift.selectionne_par.join(", ") : "Personne";
       stateBtn.title = `Sélectionné par : ${who}`;
