@@ -453,8 +453,9 @@
       const canDelete = (gift.auteur === me) && (gift.selectionne_par.length === 0);
       const delBtn = document.createElement("i");
       delBtn.className = "delBtn fa-solid fa-trash";
-      // delBtn.textContent = "x";
-      delBtn.disabled = !canDelete;
+      if (!canDelete){
+        delBtn.classList.add("disabled");
+      }
       delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
 
       delBtn.addEventListener("click", () => {
