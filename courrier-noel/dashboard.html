@@ -79,9 +79,9 @@
       border-radius: 10px; text-decoration:none; color: var(--pine-text);
     }
     
-    .nav a:hover{ background: var(--pine-900); }
+    .nav a:hover{ background: var(--pine-700); }
     
-    .nav a.active{ background: var(--pine-700); }
+    .nav a.active{ background: var(--pine-900); }
     
     .meTag{
       font-size: 11px;
@@ -137,15 +137,27 @@
     }
 
     .stateBtn{
-      border: 1px solid var(--line);
-      background: #fff;
-      padding: 6px 10px;
-      border-radius: 10px;
+      /* border: 1px solid var(--line); */
+      /* background: #fff; */
+      /* padding: 6px 10px; */
+      /* border-radius: 10px; */
       cursor: pointer;
       font-size: 16px;
-      line-height: 1;
+      user-select: none;
+      opacity: .85;
+      /* line-height: 1; */
     }
-    .stateBtn[disabled]{ opacity:.45; cursor:not-allowed; }
+
+    .stateIcon:hover{
+      opacity: 1;
+    }
+    
+    .stateIcon.disabled{
+      opacity: .4;
+      cursor: not-allowed;
+    }
+    
+    /* .stateBtn[disabled]{ opacity:.45; cursor:not-allowed; } */
 
     .danger{
       border: 1px solid #fecaca;
