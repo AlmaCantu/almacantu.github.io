@@ -411,9 +411,8 @@
       const left = document.createElement("div");
       left.className = "left";
 
+      const stateBtn = document.createElement("i");
       if (!isMeMenu){
-
-        const stateBtn = document.createElement("i");
         stateBtn.className = "stateBtn " + stateIcon(gift.etat);
 
         if (gift.selectionne_par.length > 0){
