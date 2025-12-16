@@ -26,8 +26,8 @@
       <button class="menu-btn" onclick="openMenu()">☰</button>
       Lettre au Père Noël
     </div>
-    <!-- <div class="sub" id="subline"></div> -->
   </div>
+  <button class="btn" onclick="openHelp()">Help</button>
   <button class="btn" onclick="logout()">Logout</button>
 </header>
 
@@ -87,6 +87,30 @@
   <nav class="nav" id="mobileNav"></nav>
 </aside>
 
+<!-- Help popup -->
+<div class="modal-overlay" id="helpModal" onclick="closeHelp()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h2>Instructions</h2>
+
+    <p>
+      <!-- This page is a demo dashboard. Use the menu to navigate and read the content -->
+      <!-- inside the letter panel. -->
+    </p>
+
+    <ul>
+      <li><i class="fa-regular fa-square green"></i></li>
+      <li><i class="fa-solid fa-gift red"></i></li>
+      <li><i class="fa-solid fa-gift disabled"></i></li>
+      <li><i class="fa-solid fa-gift disabled"></i></li>
+      <li><i class="fa-solid fa-cubes-stacked red"></i></li>
+      <li><i class="fa-solid fa-cubes-stacked green"></i></li>
+    </ul>
+
+    <button class="btn" onclick="closeHelp()">Close</button>
+  </div>
+</div>
+
+
 <script>
   // -------- Config menus
   const MENU = ["Alma","Anna","Antoine","Coline","Gabin","Guillaume","Lise"];
@@ -115,13 +139,6 @@
     }
     const res = await fetch("cadeaux.json");
     db = await res.json();
-    // normalise les états au chargement (au cas où)
-    // db.utilisateurs.forEach(u => {
-    //   u.cadeaux.forEach(g => {
-    //     g.selectionne_par = g.selectionne_par || [];
-    //     g.etat = normalizeEtat(g.selectionne_par);
-    //   });
-    // });
     save();
   }
 
