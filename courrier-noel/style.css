@@ -4,7 +4,7 @@
     --pine-700: #146c43;   /* hover */
     --pine-text: #e9f5ef;  /* light text */
     --pine-line: #083628;
-    --red: #C30F16;
+    --red: #dc2626;
     --bg:#f6f7fb;
     --card:#ffffff;
     --text:#111827;
@@ -79,7 +79,7 @@
   }
 
   /* Main */
-  main{ display:flex; justify-content:center; padding: 24px 16px; }
+  main{ display:flex; justify-content:center; padding: 24px 16px; align-items: flex-start;}
   
   .panel{
     width: 70%;
@@ -93,7 +93,7 @@
     linear-gradient(#fffdf7, #fffdf7),
     repeating-linear-gradient(
       45deg,
-      #dc2626 0 10px,
+      var(--red) 0 10px,
       transparent 10px 20px
     );
     background-origin: border-box;
@@ -102,6 +102,8 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 20px;
+
+    height: auto;
   }
   
   h1{ margin:0 0 6px; font-size: 20px; }
