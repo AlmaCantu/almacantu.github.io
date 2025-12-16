@@ -253,6 +253,8 @@
             }
             stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
         }
+      } else {
+        stateBtn.className = "stateBtn fa-solid fa-minus red";
       }
 
       const title = document.createElement("div");
@@ -262,9 +264,7 @@
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
-      if (!isMeMenu){
-        left.appendChild(stateBtn);
-      }
+      left.appendChild(stateBtn);
       left.appendChild(labelWrap);
 
       const right = document.createElement("div");
