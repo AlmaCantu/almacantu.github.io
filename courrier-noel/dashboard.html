@@ -88,7 +88,7 @@
 </aside>
 
 <script>
-  // -------- Config menus (ordre choisi)
+  // -------- Config menus
   const MENU = ["Alma","Anna","Antoine","Coline","Gabin","Guillaume","Lise"];
   const STORAGE_KEY = "cadeauxData_v1";
 
@@ -98,51 +98,6 @@
 
   // Données
   let db = null;
-
-  // -------- Helpers état
-  // function normalizeEtat(selectionne_par){
-  //   if (!selectionne_par || selectionne_par.length === 0) return "deselectionne";
-  //   if (selectionne_par.length === 1) return "selectionne";
-  //   return "selectionne_par_plusieurs";
-  // }
-
-  // function stateIcon(etat, isOpen){
-  //   const classes = "";
-    
-  //   if (etat === "selectionne") return "fa-solid fa-gift";
-  //   if (etat === "selectionne_par_plusieurs") return "fa-solid fa-gift" + (isOpen ? " ");
-  //   return "fa-regular fa-square green";
-  // }
-
-
-//   <span class="double-icon stateIcon">
-//   <i class="fa-solid fa-gift"></i>
-//   <i class="fa-solid fa-gift"></i>
-// </span>
-// CSS
-// css
-// ￼Copy code
-// .double-icon{
-//   position: relative;
-//   display: inline-block;
-//   width: 22px;
-//   height: 22px;
-//   cursor: pointer;
-// }
-
-// .double-icon i{
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   font-size: 18px;
-// }
-
-// /* second icon slightly shifted */
-// .double-icon i:last-child{
-//   top: 4px;
-//   left: 4px;
-//   opacity: 0.85;
-// }
 
   function getUserBlock(name){
     return db.utilisateurs.find(u => u.nom === name);
@@ -218,8 +173,6 @@
     }
 
     gifts.forEach(gift => {
-      // gift.selectionne_par = gift.selectionne_par || [];
-      // gift.etat = normalizeEtat(gift.selectionne_par);
 
       const hasMe = gift.selectionne_par.includes(me);
       const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && hasMe))));
@@ -307,9 +260,6 @@
     const gift = block.cadeaux.find(g => g.id === giftId);
     if (!gift) return;
 
-    // gift.selectionne_par = gift.selectionne_par || [];
-    // gift.etat = normalizeEtat(gift.selectionne_par);
-
     const hasMe = gift.selectionne_par.includes(me);
 
     switch(gift.etat) {
@@ -333,12 +283,10 @@
           gift.selectionne_par = others;
         }
         if (!hasMe){
-          const others = gift.selectionne_par.filter(x => x !== me);
           gift.selectionne_par.push(me);
         }
     }
 
-    // gift.etat = normalizeEtat(gift.selectionne_par);
     save();
     render();
   }
@@ -373,8 +321,6 @@
     if (idx === -1) return;
 
     const g = block.cadeaux[idx];
-    // if (g.auteur !== me) return;
-    // if ((g.selectionne_par || []).length > 0) return;
 
     block.cadeaux.splice(idx, 1);
     save();
