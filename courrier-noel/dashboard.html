@@ -267,7 +267,7 @@
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
-      
+
       left.appendChild(stateBtn);
       left.appendChild(labelWrap);
 
@@ -315,7 +315,7 @@
     switch(gift.etat) {
 
       case "deselectionne":
-        gift.selectionne_par = [me];
+        gift.selectionne_par.push(me);
         gift.etat = "selectionne";
         break;
 
