@@ -356,6 +356,14 @@
     document.getElementById("drawer").classList.remove("open");
   }
 
+  function openHelp(){
+    document.getElementById("helpModal").classList.add("show");
+  }
+
+  function closeHelp(){
+    document.getElementById("helpModal").classList.remove("show");
+  }
+
   function logout(){
     sessionStorage.clear();
     window.location.href = "index.html";
