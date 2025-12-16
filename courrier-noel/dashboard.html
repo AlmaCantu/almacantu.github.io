@@ -176,6 +176,7 @@
 
       const hasMe = gift.selectionne_par.includes(me);
       const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && hasMe))));
+      console.dir(gift.selectionne_par);
 
       const row = document.createElement("div");
       row.className = "item";
@@ -332,6 +333,7 @@
     document.getElementById("overlay").classList.add("show");
     document.getElementById("drawer").classList.add("open");
   }
+
   function closeMenu(){
     document.getElementById("overlay").classList.remove("show");
     document.getElementById("drawer").classList.remove("open");
