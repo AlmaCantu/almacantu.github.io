@@ -176,6 +176,7 @@
 
       const hasMe = gift.selectionne_par.includes(me);
       const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && hasMe))));
+      console.dir(hasMe);
       console.dir(gift.selectionne_par);
 
       const row = document.createElement("div");
