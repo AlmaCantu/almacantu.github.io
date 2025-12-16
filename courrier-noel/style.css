@@ -86,7 +86,19 @@
     max-width: 980px;
     background: var(--card);
     /* border: 1px solid var(--line); */
-    border: 3px dashed #dc2626; /* red dashed letter border */
+    /* border: 3px dashed #dc2626; */
+
+    border: 8px solid transparent;
+    background-image:
+    linear-gradient(#fffdf7, #fffdf7),
+    repeating-linear-gradient(
+      45deg,
+      #dc2626 0 10px,
+      transparent 10px 20px
+    );
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+      
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 20px;
