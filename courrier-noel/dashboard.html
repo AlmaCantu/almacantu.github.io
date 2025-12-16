@@ -221,6 +221,8 @@
       // gift.selectionne_par = gift.selectionne_par || [];
       // gift.etat = normalizeEtat(gift.selectionne_par);
 
+      const hasMe = gift.selectionne_par.includes(me);
+
       const row = document.createElement("div");
       row.className = "item";
 
@@ -236,7 +238,7 @@
             stateBtn.title = "";
             break;
           case "selectionne":
-            if (gift.selectionne_par.includes(me)) {
+            if (hasMe) {
               stateBtn.className = "stateBtn fa-solid fa-gift red";
               stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
             } else {
@@ -245,7 +247,7 @@
             stateBtn.title = "";
             break;
           default:
-            if (gift.selectionne_par.includes(me)) {
+            if (hasMe) {
               stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
               stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
             } else {
@@ -270,12 +272,12 @@
       const right = document.createElement("div");
 
       // Supprimer: seulement si je suis auteur + pas sélectionné
-      const canDelete = isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && (gift.selectionne_par.includes(me)))));
+      const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && hasMe))));
       const delBtn = document.createElement("i");
-      delBtn.className = "delBtn fa-solid fa-trash";
-      if (!canDelete){
-        delBtn.classList.add("disabled");
-      }
+      delBtn.className = "delBtn fa-solid fa-trash" + (!canDelete ? " disabled" : "");
+      // if (!canDelete){
+      //   delBtn.classList.add("disabled");
+      // }
       delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
 
       delBtn.addEventListener("click", () => {
