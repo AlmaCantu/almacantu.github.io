@@ -172,12 +172,16 @@
       list.appendChild(empty);
     }
 
+    console.dir("isMeMenu: " + isMeMenu);
+
     gifts.forEach(gift => {
 
       const hasMe = gift.selectionne_par.includes(me);
       const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && hasMe))));
-      console.dir(hasMe);
-      console.dir(gift.selectionne_par);
+      console.dir("hasMe: " + hasMe);
+      console.dir("selectionne_par: " + gift.selectionne_par);
+      console.dir("selectionne_par.length: " + gift.selectionne_par.length);
+      console.dir("auteur: " + gift.auteur);
 
       const row = document.createElement("div");
       row.className = "item";
