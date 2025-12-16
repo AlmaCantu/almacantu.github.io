@@ -222,6 +222,7 @@
       // gift.etat = normalizeEtat(gift.selectionne_par);
 
       const hasMe = gift.selectionne_par.includes(me);
+      const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && hasMe))));
 
       const row = document.createElement("div");
       row.className = "item";
@@ -266,24 +267,18 @@
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
+      
       left.appendChild(stateBtn);
       left.appendChild(labelWrap);
 
       const right = document.createElement("div");
 
-      // Supprimer: seulement si je suis auteur + pas sélectionné
-      const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.lenght === 1) && hasMe))));
       const delBtn = document.createElement("i");
       delBtn.className = "delBtn fa-solid fa-trash" + (!canDelete ? " disabled" : "");
-      // if (!canDelete){
-      //   delBtn.classList.add("disabled");
-      // }
       delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
-
-      delBtn.addEventListener("click", () => {
-        if (!canDelete) return;
-        deleteGift(selectedUser, gift.id);
-      });
+      if (canDelete) {
+        delBtn.addEventListener("click", () => deleteGift(selectedUser, gift.id));
+      }
 
       right.appendChild(delBtn);
 
