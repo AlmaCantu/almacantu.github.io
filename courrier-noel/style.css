@@ -32,6 +32,11 @@
     margin: 0;
   }
 
+  li {
+    list-style: none;
+  }
+}
+
   /* Header */
   .topbar{
     position: sticky; top:0; z-index: 10;
