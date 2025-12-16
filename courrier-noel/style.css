@@ -247,3 +247,36 @@
     color: var(--pine-text);
 }
 .drawer.open{ left:0; }
+
+/* Modal help */
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-overlay.show{
+  display: flex;
+}
+
+.modal{
+  background: #fff;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.2);
+}
+
+.modal h2{
+  margin-top: 0;
+}
+
+.modal p, .modal li{
+  color: #374151;
+  line-height: 1.5;
+}
