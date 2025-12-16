@@ -315,30 +315,30 @@
 
     const hasMe = gift.selectionne_par.includes(me);
 
-    // Cycle demandé (démo) :
-    // deselectionne -> selectionne -> selectionne_par_plusieurs -> deselectionne
-    // avec contrainte : si d'autres ont sélectionné, on ne peut pas désélectionner (si ça enlève les autres)
-    if (gift.etat === "deselectionne"){
-      gift.selectionne_par = [me];
-      gift.etat = "selectionne";
-    } else {
-      if (gift.etat === "selectionne"){
+    switch(gift.etat) {
+
+      case "deselectionne":
+        gift.selectionne_par = [me];
+        gift.etat = "selectionne";
+        break;
+
+      case "selectionne":
         gift.etat = "selectionne_par_plusieurs";
-      } else {
-        if (gift.etat === "selectionne_par_plusieurs"){
-          if (gift.selectionne_par.length === 1 && hasMe){
+        break;
+
+      default:
+        if (gift.selectionne_par.length === 1 && hasMe){
+            gift.selectionne_par = [];
             gift.etat = "deselectionne";
-          }
-          if (gift.selectionne_par.length > 1 && hasMe){
-            const others = gift.selectionne_par.filter(x => x !== me);
-            gift.selectionne_par = others;
-          }
-          if (!hasMe){
-            const others = gift.selectionne_par.filter(x => x !== me);
-            gift.selectionne_par.push(me);
-          }
         }
-      }
+        if (gift.selectionne_par.length > 1 && hasMe){
+          const others = gift.selectionne_par.filter(x => x !== me);
+          gift.selectionne_par = others;
+        }
+        if (!hasMe){
+          const others = gift.selectionne_par.filter(x => x !== me);
+          gift.selectionne_par.push(me);
+        }
     }
 
     // gift.etat = normalizeEtat(gift.selectionne_par);
