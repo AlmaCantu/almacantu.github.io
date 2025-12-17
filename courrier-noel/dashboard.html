@@ -220,12 +220,12 @@
     //   meBlock?.visible.includes(name)
     // );
 
-    const { data: vis, error: e2 } = await db
+    const { data: vis, error: dbError } = await db
       .from("user_visibility")
       .select("visible_user_id")
-      .eq("viewer_id", user.id);
+      .eq("viewer_id", user_id);
 
-    if (e2) { console.error(e2); return; }
+    if (dbError) { console.error(dbError); return; }
 
     menu = vis.map(v => v.visible_user_id).sort((a,b) => a.localeCompare(b,"fr"));
 
