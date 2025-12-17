@@ -291,7 +291,7 @@
     if (gifts.length === 0){
       const empty = document.createElement("div");
       empty.className = "item";
-      empty.innerHTML = `<div class="title" style="color:var(--muted);">Aucun cadeau à afficher.</div>`;
+      empty.innerHTML = `<div class="title empty" style="color:var(--muted);">Aucun cadeau à afficher.</div>`;
       list.appendChild(empty);
     }
 
@@ -504,11 +504,16 @@
 
     // console.log(gift_data);
 
+    const list = document.getElementById("giftList");
+    const empty = list.querySelector(".empty");
+    if(empty) {
+      list.innerHTML = "";
+    }
+
     const input = document.getElementById("giftInput");
     input.value = "";
     input.placeholder = "Ajouter un cadeau pour" + owner_id + "...";
 
-    const list = document.getElementById("giftList");
     addNewGiftItem(owner_id == author_id, gift_data, list);
 
     // await render();
