@@ -125,7 +125,7 @@
 
   // Utilisateur connecté
   const user_id = sessionStorage.getItem("user_id");
-  console.log(user_id);
+  // console.log(user_id);
   let selectedUser = "";
 
   // Menu
@@ -135,74 +135,9 @@
   //   return db.utilisateurs.find(u => u.nom === name);
   // }
 
-  function save(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-  }
-
-  async function getUserName(id){
-    const { data: user, error: e1 } = await supabase
-      .from("users")
-      .select("id, username")
-      .eq("id", id)
-      .single();
-
-    if (e1) { console.error(e1); return; }
-
-    return user.username;
-  }
-
-  // Load database
-  async function loadDb(){
-
-
-    // const { data: users, error: e1 } = await supabase
-    //   .from("users")
-    //   .select("id, username")
-    //   .eq("id", id)
-    //   .single();
-    // if (e1) { console.error(e1); return; }
-
-    // const SUPABASE_URL = sessionStorage.getItem("SUPABASE_URL");
-    // const SUPABASE_ANON_KEY = sessionStorage.getItem("SUPABASE_ANON_KEY");
-    // console.log(SUPABASE_URL)
-    // console.log(SUPABASE_ANON_KEY)
-  
-    // db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-
-    // const fromStorage = localStorage.getItem(STORAGE_KEY);
-    // if (fromStorage){
-    //   db = JSON.parse(fromStorage);
-    //   return;
-    // }
-
-    // const res = await fetch("cadeaux.json");
-    // db = await res.json();
-
-
-
-    // const { data: meUser, error: e1 } = await supabase
-    //   .from("gifts")
-    //   .select("id, username")
-    //   .eq("username", me)
-    //   .single();
-
-    // if (e1) { console.error(e1); menu = [me]; return; }
-
-    // // get who I can see
-    // const { data: vis, error: e2 } = await supabase
-    //   .from("user_visibility")
-    //   .select("visible_username")
-    //   .eq("viewer_id", meUser.id);
-
-    // if (e2) { console.error(e2); menu = [me]; return; }
-
-    // menu = vis.map(v => v.visible_username).sort((a,b) => a.localeCompare(b,"fr"));
-
-
-
-    // save();
-  }
+  // function save(){
+  //   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  // }
 
   async function loadMenu(){
 
@@ -262,7 +197,7 @@
     buildNav(document.getElementById("desktopNav"), false);
     buildNav(document.getElementById("mobileNav"), true);
 
-    const isMeMenu = (selectedUser === me);
+    const isMeMenu = (selectedUser === user_id);
 
     let query = db
       .from("gifts")
@@ -298,38 +233,7 @@
 
       const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
 
-      // const { data: gift_selection, error: error } = await db
-      //   .from("gift_selection")
-      //   .select("selector_id")
-      //   .eq("gift_id", gift.id);
-
-      // if (error) {
-      //   console.error("Failed to get gift selectors:", error);
-      //   return;
-      // }
-
-      // const selectionne_par = gift_selection.map(o => o.selector_id);
-      // console.log(selectionne_par);
-
-      // const hasMe = selectionne_par.includes(user_id);
-
-      // retun (selectionne_par, hasMe);
-
-
-      // const { data: gift_selection, error: e2 } = await db
-      //   .from("gift_selection")
-      //   .select("selector_id")
-      //   .eq("gift_id", gift.id);
-      // if (e2) { console.error(e2); return; }
-
-      // const selectionne_par = gift_selection
-      //   .map(o => o.selector_id);
-      // console.log(selectionne_par);
-
-      // const hasMe = selectionne_par.includes(user_id);
-
       const canDelete = (isMeMenu || ((gift.author_id === me) && ((selectionne_par.length === 0) || ((selectionne_par.length === 1) && hasMe))));
-
 
       const row = document.createElement("div");
       row.className = "item";
@@ -400,7 +304,6 @@
       row.appendChild(right);
       list.appendChild(row);
 
-
       document.getElementById("signature").textContent = selectedUser;
     });
 
@@ -410,8 +313,8 @@
     input.placeholder = `Ajouter un cadeau pour ${selectedUser}...`;
 
     const addBtn = document.getElementById("addBtn");
-    addBtn.onclick = () => addGift(selectedUser, input.value.trim(), me);
-    input.onkeydown = (e) => {
+    addBtn.onclick = async () => addGift(selectedUser, input.value.trim(), me);
+    input.onkeydown = async (e) => {
       if (e.key === "Enter") addGift(selectedUser, input.value.trim(), me);
     };
   }
@@ -538,7 +441,7 @@
     await render();
   }
 
-  function addGift(ownerName, title, author){
+  async function addGift(ownerName, title, author){
     if (!title) return;
 
     const block = getUserBlock(ownerName);
@@ -560,7 +463,7 @@
     render();
   }
 
-  function deleteGift(ownerName, giftId){
+  async function deleteGift(ownerName, giftId){
     const block = getUserBlock(ownerName);
     if (!block) return;
 
