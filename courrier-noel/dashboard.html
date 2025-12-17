@@ -180,6 +180,7 @@
   }
 
   function setBtnAsDeselected(stateBtn, gift_id) {
+    console.log(stateBtn);
     stateBtn.className = "stateBtn fa-regular fa-square green";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
@@ -189,6 +190,7 @@
   }
 
   function setBtnAsSelectedByMe(stateBtn, gift_id) {
+    console.log(stateBtn);
     stateBtn.className = "stateBtn fa-solid fa-gift red";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
@@ -215,7 +217,7 @@
 
     let query = db
       .from("gifts")
-      .select("id, title, status, owner_id, author_id")
+      .select("id, title, status, owner_id, author_id, created_at")
       .eq("owner_id", selectedUser)
       .order("created_at", { ascending: true });
 
@@ -229,6 +231,8 @@
       console.error("Failed to get gifts:", error);
       return;
     }
+
+    gifts.sort((a,b) => a.created_at.localeCompare(b.created_at,"fr"));
 
     // const block = getUserBlock(selectedUser);
     const list = document.getElementById("giftList");
@@ -389,7 +393,12 @@
     const status = await getGiftStatus(gift_id);
     const {selectionne_par, hasMe} = await getGiftSelectors(gift_id);
 
+
+    console.log(btn);
+
     const stateBtn = btn.currentTarget;
+
+    console.log(stateBtn);
 
     switch(status) {
 
