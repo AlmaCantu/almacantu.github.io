@@ -152,7 +152,15 @@
   }
 
   // Load database
-  async function loadDB(){
+  async function loadDb(){
+
+
+    // const { data: users, error: e1 } = await supabase
+    //   .from("users")
+    //   .select("id, username")
+    //   .eq("id", id)
+    //   .single();
+    // if (e1) { console.error(e1); return; }
 
     // const SUPABASE_URL = sessionStorage.getItem("SUPABASE_URL");
     // const SUPABASE_ANON_KEY = sessionStorage.getItem("SUPABASE_ANON_KEY");
@@ -197,52 +205,14 @@
   }
 
   async function loadMenu(){
-    
-    // const res = await fetch("users.json");
-    // const usersDb = await res.json();
 
-    // const meBlock = usersDb.users.find(u => u.username === me);
-
-    // const all_users = (usersDb.users || [])
-    //   .map(u => u.username)
-    //   .filter(Boolean)
-    //   .sort((a,b) => a.localeCompare(b, "fr"));
-
-    // menu = all_users;
-
-    // menu = all_users.filter(name => 
-    //   meBlock?.visible.includes(name)
-    // );
-
-    // const { data: user, error: e1 } = await db
-    //   .from("users")
-    //   .select("id")
-    //   .eq("id", user_id)
-    //   .single();
-
-    // if (e1) { console.error(e1); return; }
-
-    // const all_users = (usersDb.users || [])
-    //   .map(u => u.username)
-    //   .filter(Boolean)
-    //   .sort((a,b) => a.localeCompare(b, "fr"));
-
-    // // menu = all_users;
-
-    // menu = all_users.filter(name => 
-    //   meBlock?.visible.includes(name)
-    // );
-
-    const { data: vis, error: e1 } = await db
+    const { data: vis, error: dbError } = await db
       .from("user_visibility")
       .select("visible_user_id")
       .eq("viewer_id", user_id);
-
     if (dbError) { console.error(dbError); return; }
 
     menu = vis.map(v => v.visible_user_id).sort((a,b) => a.localeCompare(b,"fr"));
-
-    console.log(menu);
   }
 
   // -------- Nav
@@ -265,25 +235,53 @@
     });
   }
 
+  async function getGiftSelectors(gift_id){
+
+    const { data: gift_selection, error: error } = await db
+      .from("gift_selection")
+      .select("selector_id")
+      .eq("gift_id", gift.id);
+
+    if (error) {
+      console.error("Failed to update gift status:", error);
+      return;
+    }
+
+    const selectionne_par = gift_selection.map(o => o.selector_id);
+    console.log(selectionne_par);
+
+    const hasMe = selectionne_par.includes(user_id);
+
+    retun (selectionne_par, hasMe);
+  }
+
+
   // -------- Rendu liste cadeaux
-  function render(){
+  async function render(){
+
     buildNav(document.getElementById("desktopNav"), false);
     buildNav(document.getElementById("mobileNav"), true);
 
     const isMeMenu = (selectedUser === me);
-    // document.getElementById("title").textContent = `Cadeaux — ${selectedUser}`;
-    // document.getElementById("hint").textContent = isMeMenu
-    //   ? "Ici tu vois uniquement les cadeaux dont tu es l’auteur. Tu peux ajouter et supprimer (si non sélectionné)."
-    //   : "Clique sur l’icône pour changer l’état (démo). Survol = personnes qui ont sélectionné.";
 
-    document.getElementById("signature").textContent = selectedUser;
+    let query = db
+      .from("gifts")
+      .select("id, title, status, owner_id, author_id")
+      .eq("owner_id", user_id);
 
-    const block = getUserBlock(selectedUser);
+    if (isMeMenu) {
+      query = query.eq("author_id", user_id);
+    }
+
+    const { data: gifts, error: e1 } = await query;
+    if (e1) { console.error(e1); return; }
+
+    // // Filtrage pour la personne loggée: n'afficher que auteur = moi
+    // const gifts = (block?.cadeaux || []).filter(g => !isMeMenu || g.auteur === me);
+
+    // const block = getUserBlock(selectedUser);
     const list = document.getElementById("giftList");
     list.innerHTML = "";
-
-    // Filtrage pour la personne loggée: n'afficher que auteur = moi
-    const gifts = (block?.cadeaux || []).filter(g => !isMeMenu || g.auteur === me);
 
     if (gifts.length === 0){
       const empty = document.createElement("div");
@@ -294,8 +292,21 @@
 
     gifts.forEach(gift => {
 
-      const hasMe = gift.selectionne_par.includes(me);
-      const canDelete = (isMeMenu || ((gift.auteur === me) && ((gift.selectionne_par.length === 0) || ((gift.selectionne_par.length === 1) && hasMe))));
+      const (selectionne_par, hasMe) = await getGiftSelectors(gift.id);
+
+      // const { data: gift_selection, error: e2 } = await db
+      //   .from("gift_selection")
+      //   .select("selector_id")
+      //   .eq("gift_id", gift.id);
+      // if (e2) { console.error(e2); return; }
+
+      // const selectionne_par = gift_selection
+      //   .map(o => o.selector_id);
+      // console.log(selectionne_par);
+
+      // const hasMe = selectionne_par.includes(user_id);
+
+      const canDelete = (isMeMenu || ((gift.author_id === me) && ((selectionne_par.length === 0) || ((selectionne_par.length === 1) && hasMe))));
 
 
       const row = document.createElement("div");
@@ -306,7 +317,7 @@
 
       const stateBtn = document.createElement("i");
       if (!isMeMenu){
-        switch(gift.etat) {
+        switch(gift.status) {
           case "deselectionne":
             stateBtn.className = "stateBtn fa-regular fa-square green";
             stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
@@ -324,7 +335,7 @@
           default:
             if (hasMe) {
               stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
-              stateBtn.title = "Sélectionné par : " + gift.selectionne_par.join(", ");
+              stateBtn.title = "Sélectionné par : " + selectionne_par.join(", ");
             } else {
               stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
             }
@@ -340,12 +351,12 @@
 
       const meta = document.createElement("div");
       meta.className = "meta";
-      meta.textContent = "Sélectionné par : " + gift.selectionne_par.join(", ");
+      meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
 
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
-      if (gift.etat === "selectionne_par_plusieurs" && !isMeMenu) {
+      if (gift.status === "selectionne_par_plusieurs" && !isMeMenu) {
         labelWrap.appendChild(meta);
       }
 
@@ -366,6 +377,9 @@
       row.appendChild(left);
       row.appendChild(right);
       list.appendChild(row);
+
+
+      document.getElementById("signature").textContent = selectedUser;
     });
 
     // Ajout cadeau
@@ -380,42 +394,125 @@
     };
   }
 
+  async function getGiftStatus(gift_id, newStatus) {
+    const { gift, error } = await db
+      .from("gifts")
+      .select("status")
+      .eq("id", giftId)
+      .single();
+
+    if (error) {
+      console.error("Failed to get gift status:", error);
+      return;
+    }
+
+    return gift.status;
+  }
+
+  async function setGiftStatus(gift_id) {
+    const { error } = await db
+      .from("gifts")
+      .update({ status: newStatus })
+      .eq("id", giftId);
+
+    if (error) {
+      console.error("Failed to update gift status:", error);
+      return;
+    }
+  }
+
+  async function addGiftSelector(gift_id, selector_id) {
+    const { error } = await db
+      .from("gift_selections")
+      .upsert({ gift_id: gift_id, selector_id: selector_id });
+
+
+    if (error) {
+      console.error("Failed to add gift selector:", error);
+      return;
+    }
+  }
+
+  async function removeGiftSelector(gift_id, selector_id) {
+    const { error } = await db
+      .from("gift_selections")
+      .delete()
+      .eq("gift_id", gift_id)
+      .eq("selector_id", selector_idd);
+
+    if (error) {
+      console.error("Failed to remove gift selector:", error);
+      return;
+    }
+  }
+
+  // async function removeAllGiftSelector(gift_id) {
+  //   const { error } = await db
+  //     .from("gift_selections")
+  //     .delete()
+  //     .eq("gift_id", gift_id)
+  //     .eq("selector_id", selector_idd);
+
+  //   if (error) {
+  //     console.error("Failed to remove gift selector:", error);
+  //     return;
+  //   }
+  // }
+
   // -------- Logique clic (cycle / contraintes)
-  function toggleStateForGift(ownerName, giftId){
-    const block = getUserBlock(ownerName);
-    if (!block) return;
+  function toggleStateForGift(gift_id){
 
-    const gift = block.cadeaux.find(g => g.id === giftId);
-    if (!gift) return;
+    // const block = getUserBlock(ownerName);
+    // if (!block) return;
 
-    const hasMe = gift.selectionne_par.includes(me);
+    // const gift = block.cadeaux.find(g => g.id === giftId);
+    // if (!gift) return;
 
-    switch(gift.etat) {
+    // const { data: gift, error: e2 } = await db
+    //   .from("gifts")
+    //   .select("id, status")
+    //   .eq("id", gift_id)
+    //   .single();
+    // if (e1) { console.error(e1); return; }
+
+    // const { data: gift_selection, error: e2 } = await db
+    //   .from("gift_selection")
+    //   .select("selector_id")
+    //   .eq("gift_id", gift.id);
+    // if (e2) { console.error(e2); return; }
+
+    // const selectionne_par = gift_selection
+    //   .map(o => o.selector_id);
+    // console.log(selectionne_par);
+
+    const status = getGiftStatus(gift_id);
+    const (selectionne_par, hasMe) = await getGiftSelectors(gift.id);
+
+    switch(gift.status) {
 
       case "deselectionne":
-        gift.selectionne_par.push(me);
-        gift.etat = "selectionne";
+        addGiftSelector(gift_id, user_id);
+        setGiftStatus(gift_id, "selectionne");
         break;
 
       case "selectionne":
-        gift.etat = "selectionne_par_plusieurs";
+        setGiftStatus(gift_id, "selectionne_par_plusieurs");
         break;
 
       default:
-        if (gift.selectionne_par.length === 1 && hasMe){
-            gift.selectionne_par = [];
-            gift.etat = "deselectionne";
+        if (selectionne_par.length === 1 && hasMe){
+          removeGiftSelector(gift_id, user_id);
+          setGiftStatus(gift_id, "deselectionne");
         }
-        if (gift.selectionne_par.length > 1 && hasMe){
-          const others = gift.selectionne_par.filter(x => x !== me);
-          gift.selectionne_par = others;
+        if (selectionne_par.length > 1 && hasMe){
+          removeGiftSelector(gift_id, user_id);
         }
         if (!hasMe){
-          gift.selectionne_par.push(me);
+          addGiftSelector(gift_id, user_id);
         }
     }
 
-    save();
+    // save();
     render();
   }
 
@@ -482,12 +579,12 @@
   // -------- Init
   (async function init(){
 
-    await loadDB();
+    // await loadDB();
     await loadMenu();
 
-    selectedUser = menu.includes(me) ? me : menu[0];
+    selectedUser = menu.includes(user_id) ? user_id : menu[0];
 
-    render();
+    await render();
   })();
 </script>
 
