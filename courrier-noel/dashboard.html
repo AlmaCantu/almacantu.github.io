@@ -222,6 +222,13 @@
     //   meBlock?.visible.includes(name)
     // );
 
+
+    const { data: user, error: dbError } = await db
+      .from("users")
+      .select("id, password")
+      .eq("id", user_id)
+      .maybeSingle();
+
     const { data: vis, error: dbError } = await db
       .from("user_visibility")
       .select("visible_user_id")
