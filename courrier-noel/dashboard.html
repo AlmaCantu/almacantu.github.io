@@ -296,7 +296,7 @@
 
     gifts.forEach(gift => {
 
-      const (selectionne_par, hasMe) = await getGiftSelectors(gift.id);
+      const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
 
       // const { data: gift_selection, error: e2 } = await db
       //   .from("gift_selection")
@@ -490,7 +490,7 @@
     // console.log(selectionne_par);
 
     const status = await getGiftStatus(gift_id);
-    const (selectionne_par, hasMe) = await getGiftSelectors(gift.id);
+    const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
 
     switch(gift.status) {
 
