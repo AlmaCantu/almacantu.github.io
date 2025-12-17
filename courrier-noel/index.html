@@ -49,7 +49,7 @@
 <script>
   const SUPABASE_URL = "https://doufxlvmjmmxerrutwai.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_eRXmtQptpnH3VF0g3UkGrA_vwDDROEB";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 </script>
 
 <script>
@@ -60,15 +60,15 @@ async function login() {
 
   error.textContent = "";
 
-  const { data: user, error: supaError } = await supabase
+  const { data: user, error: dbError } = await db
     .from("users")
     .select("username, password")
     .eq("username", username)
     .eq("password", password)
     .maybeSingle();
 
-  if (supaError) {
-    console.error(supaError);
+  if (dbError) {
+    console.error(dbError);
     error.textContent = "Login error";
     return;
   }
@@ -80,7 +80,7 @@ async function login() {
 
   sessionStorage.setItem("loggedIn", "true");
   sessionStorage.setItem("username", user.username);
-  sessionStorage.setItem("db", supabase);
+  sessionStorage.setItem("db", db);
 
   window.location.href = "dashboard.html";
 
