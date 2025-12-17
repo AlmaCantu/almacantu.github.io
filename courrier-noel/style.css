@@ -256,6 +256,45 @@
     .sidebar{ display:none; }
     .menu-btn{ display:inline-block; }
     .panel{ width: 100%; }
+
+
+  /* Make the row not force one-line layout */
+  .item{
+    min-width: 0;
+    gap: 8px;
+  }
+
+  /* Left side must be allowed to shrink */
+  .left{
+    flex: 1;
+    min-width: 0;
+    align-items: flex-start; /* better when title uses 2 lines */
+  }
+
+  /* This targets your labelWrap (the div after the icon) */
+  .left > .stateBtn + div{
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Keep the delete area fixed so it doesn't steal width */
+  .item > div:last-child{
+    flex-shrink: 0;
+    width: 34px;            /* reserve space for trash icon */
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* ✅ Two-line clamp on mobile (recommended) */
+  .title{
+    min-width: 0;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+    
 }
 
 /* Mobile drawer */
