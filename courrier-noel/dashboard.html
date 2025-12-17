@@ -275,14 +275,14 @@
       query = query.eq("author_id", user_id);
     }
 
-    const { data: gifts, error: error } = await query;
+    let { data: gifts, error: error } = await query;
 
     if (error) {
       console.error("Failed to get gifts:", error);
       return;
     }
 
-    gifts.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    gifts = gifts.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
     // const block = getUserBlock(selectedUser);
     const list = document.getElementById("giftList");
