@@ -135,7 +135,7 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   }
 
-  function getUserName(id){
+  async function getUserName(id){
     const { data: user, error: e1 } = await supabase
       .from("users")
       .select("id, username")
@@ -227,7 +227,7 @@
 
     if (e2) { console.error(e2); return; }
 
-    menu = vis.map(v => getUsername(v.visible_user_id)).sort((a,b) => a.localeCompare(b,"fr"));
+    menu = vis.map(v => await getUsername(v.visible_user_id)).sort((a,b) => a.localeCompare(b,"fr"));
 
     console.log(menu);
   }
