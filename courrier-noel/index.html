@@ -60,27 +60,52 @@ async function login() {
 
   error.textContent = "";
 
-  try {
-    const res = await fetch("users.json");
-    const data = await res.json();
+  const { data: user, error: supaError } = await supabase
+    .from("users")
+    .select("username, password")
+    .eq("username", username)
+    .eq("password", password)
+    .maybeSingle();
 
-    const user = data.users.find(
-      u => u.username === username && u.password === password
-    );
-
-    if (user) {
-      // store login state (demo only)
-      sessionStorage.setItem("loggedIn", "true");
-      sessionStorage.setItem("username", username);
-      sessionStorage.setItem("visible", JSON.stringify(user.visible || []));
-
-      window.location.href = "dashboard.html";
-    } else {
-      error.textContent = "Invalid username or password";
-    }
-  } catch {
-    error.textContent = "Login system error";
+  if (supaError) {
+    console.error(supaError);
+    error.textContent = "Login error";
+    return;
   }
+
+  if (!user) {
+    error.textContent = "Invalid username or password";
+    return;
+  }
+
+  sessionStorage.setItem("loggedIn", "true");
+  sessionStorage.setItem("username", user.username);
+
+  window.location.href = "dashboard.html";
+
+
+
+  // try {
+  //   const res = await fetch("users.json");
+  //   const data = await res.json();
+
+  //   const user = data.users.find(
+  //     u => u.username === username && u.password === password
+  //   );
+
+  //   if (user) {
+  //     // store login state (demo only)
+  //     sessionStorage.setItem("loggedIn", "true");
+  //     sessionStorage.setItem("username", username);
+  //     sessionStorage.setItem("visible", JSON.stringify(user.visible || []));
+
+  //     window.location.href = "dashboard.html";
+  //   } else {
+  //     error.textContent = "Invalid username or password";
+  //   }
+  // } catch {
+  //   error.textContent = "Login system error";
+  // }
 }
 </script>
 
