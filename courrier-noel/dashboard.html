@@ -222,7 +222,7 @@
       const a = document.createElement("a");
       a.href = "#";
       a.className = (name === selectedUser) ? "active" : "";
-      a.innerHTML = `<span>${name}</span>${name===me ? '<span class="meTag">moi</span>' : ""}`;
+      a.innerHTML = `<span>${name}</span>${name===user_id ? '<span class="meTag">moi</span>' : ""}`;
 
       a.addEventListener("click", (e) => {
         e.preventDefault();
