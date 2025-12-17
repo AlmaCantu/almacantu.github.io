@@ -204,6 +204,17 @@
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
+  function createDelBtn(canDelete, gift_id) {
+    const delBtn = document.createElement("i");
+    delBtn.className = "delBtn fa-solid fa-trash" + (!canDelete ? " disabled" : "");
+    delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
+    if (canDelete) {
+      delBtn.addEventListener("click", async (btn) => deleteGift(btn, gift_id));
+    }
+
+    return delBtn;
+  }
+
   function addNewGiftItem(isMeMenu, gift_data, container) {
       const row = document.createElement("div");
       row.className = "item";
@@ -238,16 +249,18 @@
 
       const right = document.createElement("div");
 
-      const delBtn = document.createElement("i");
-      delBtn.className = "delBtn fa-solid fa-trash";
-      delBtn.title = "Supprimer ce cadeau";
-      delBtn.addEventListener("click", async () => deleteGift(gift.id));
+      const delBtn = createDelBtn(canDelete, gift.id);
 
       right.appendChild(delBtn);
 
       row.appendChild(left);
       row.appendChild(right);
       container.appendChild(row);
+  }
+
+
+  function removeGiftItem(b, gift_data, item){
+
   }
 
 
@@ -345,12 +358,7 @@
 
       const right = document.createElement("div");
 
-      const delBtn = document.createElement("i");
-      delBtn.className = "delBtn fa-solid fa-trash" + (!canDelete ? " disabled" : "");
-      delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
-      if (canDelete) {
-        delBtn.addEventListener("click", async () => deleteGift(gift.id));
-      }
+      const delBtn = createDelBtn(canDelete, gift.id);
 
       right.appendChild(delBtn);
 
@@ -490,7 +498,7 @@
       return;
     }
 
-    console.log(gift_data);
+    // console.log(gift_data);
 
     const list = document.getElementById("giftList");
     addNewGiftItem(owner_id == author_id, gift_data, list);
@@ -498,7 +506,11 @@
     // await render();
   }
 
-  async function deleteGift(gift_id){
+  async function deleteGift(btn, gift_id){
+
+    const delBtn = btn.target.closest(".delBtn");
+    console.log(delBtn);
+    // removeGiftItem(owner_id == author_id, gift_data, list);
 
     const { e1 } = await db
       .from("gifts")
