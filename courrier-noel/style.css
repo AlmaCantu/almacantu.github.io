@@ -257,35 +257,22 @@
     .menu-btn{ display:inline-block; }
     .panel{ width: 100%; }
 
-
-  /* Make the row not force one-line layout */
-  .item{
-    min-width: 0;
-    gap: 8px;
-  }
-
-  /* Left side must be allowed to shrink */
   .left{
-    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;   /* ✅ stop wrapping */
+    align-items: center; /* ✅ align icon with text */
+    gap: 10px;
     min-width: 0;
-    align-items: flex-start; /* better when title uses 2 lines */
+    flex: 1;
   }
 
-  /* This targets your labelWrap (the div after the icon) */
+  /* The wrapper that contains .title + .meta must shrink */
   .left > .stateBtn + div{
     flex: 1;
     min-width: 0;
   }
 
-  /* Keep the delete area fixed so it doesn't steal width */
-  .item > div:last-child{
-    flex-shrink: 0;
-    width: 34px;            /* reserve space for trash icon */
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  /* ✅ Two-line clamp on mobile (recommended) */
+  /* If you want the title to be 2 lines but still next to icon */
   .title{
     min-width: 0;
     white-space: normal;
@@ -294,7 +281,7 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-    
+
 }
 
 /* Mobile drawer */
