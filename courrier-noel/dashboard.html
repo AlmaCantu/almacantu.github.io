@@ -321,11 +321,11 @@
     };
   }
 
-  async function getGiftStatus(gift_id, newStatus) {
+  async function getGiftStatus(gift_id) {
     const { gift, error } = await db
       .from("gifts")
       .select("status")
-      .eq("id", giftId)
+      .eq("id", gift_id)
       .single();
 
     if (error) {
@@ -336,7 +336,7 @@
     return gift.status;
   }
 
-  async function setGiftStatus(gift_id) {
+  async function setGiftStatus(gift_id, newStatus) {
     const { error } = await db
       .from("gifts")
       .update({ status: newStatus })
@@ -365,7 +365,7 @@
       .from("gift_selections")
       .delete()
       .eq("gift_id", gift_id)
-      .eq("selector_id", selector_idd);
+      .eq("selector_id", selector_id);
 
     if (error) {
       console.error("Failed to remove gift selector:", error);
