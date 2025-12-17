@@ -183,10 +183,9 @@
     }
 
     const selectionne_par = gift_selection.map(o => o.selector_id);
-
     const hasMe = selectionne_par.includes(user_id);
 
-    return (selectionne_par, hasMe);
+    return {selectionne_par, hasMe};
   }
 
 
