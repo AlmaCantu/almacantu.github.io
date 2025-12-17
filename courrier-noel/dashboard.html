@@ -183,11 +183,10 @@
     }
 
     const selectionne_par = gift_selection.map(o => o.selector_id);
-    console.log(selectionne_par);
 
     const hasMe = selectionne_par.includes(user_id);
 
-    retun (selectionne_par, hasMe);
+    return (selectionne_par, hasMe);
   }
 
 
@@ -214,8 +213,6 @@
       console.error("Failed to get gifts:", error);
       return;
     }
-
-    console.log(gifts);
 
     // // Filtrage pour la personne loggée: n'afficher que auteur = moi
     // const gifts = (block?.cadeaux || []).filter(g => !isMeMenu || g.auteur === me);
