@@ -79,7 +79,7 @@ async function login() {
   }
 
   sessionStorage.setItem("loggedIn", "true");
-  sessionStorage.setItem("username", user.username);
+  sessionStorage.setItem("user_id", user.id);
   sessionStorage.setItem("db", db);
 
   window.location.href = "dashboard.html";

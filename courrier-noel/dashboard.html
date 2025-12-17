@@ -121,7 +121,7 @@
   let db = sessionStorage.getItem("db");
 
   // Utilisateur connecté
-  const me = sessionStorage.getItem("username");
+  const user_id = sessionStorage.getItem("user_id");
   let selectedUser = "";
 
   // Menu
@@ -137,36 +137,101 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   }
 
+  function getUserName(id){
+    const { data: user, error: e1 } = await supabase
+      .from("users")
+      .select("id, username")
+      .eq("id", id)
+      .single();
+
+    if (e1) { console.error(e1); return; }
+
+    return user.username;
+  }
+
+  // Load database
+  async function loadDB(){
+    // const fromStorage = localStorage.getItem(STORAGE_KEY);
+    // if (fromStorage){
+    //   db = JSON.parse(fromStorage);
+    //   return;
+    // }
+
+    // const res = await fetch("cadeaux.json");
+    // db = await res.json();
+
+
+
+    // const { data: meUser, error: e1 } = await supabase
+    //   .from("gifts")
+    //   .select("id, username")
+    //   .eq("username", me)
+    //   .single();
+
+    // if (e1) { console.error(e1); menu = [me]; return; }
+
+    // // get who I can see
+    // const { data: vis, error: e2 } = await supabase
+    //   .from("user_visibility")
+    //   .select("visible_username")
+    //   .eq("viewer_id", meUser.id);
+
+    // if (e2) { console.error(e2); menu = [me]; return; }
+
+    // menu = vis.map(v => v.visible_username).sort((a,b) => a.localeCompare(b,"fr"));
+
+
+
+    // save();
+  }
+
   async function loadMenu(){
     
-    const res = await fetch("users.json");
-    const usersDb = await res.json();
+    // const res = await fetch("users.json");
+    // const usersDb = await res.json();
 
-    const meBlock = usersDb.users.find(u => u.username === me);
+    // const meBlock = usersDb.users.find(u => u.username === me);
 
-    const all_users = (usersDb.users || [])
-      .map(u => u.username)
-      .filter(Boolean)
-      .sort((a,b) => a.localeCompare(b, "fr"));
+    // const all_users = (usersDb.users || [])
+    //   .map(u => u.username)
+    //   .filter(Boolean)
+    //   .sort((a,b) => a.localeCompare(b, "fr"));
 
     // menu = all_users;
 
-    menu = all_users.filter(name => 
-      meBlock?.visible.includes(name)
-    );
-  }
+    // menu = all_users.filter(name => 
+    //   meBlock?.visible.includes(name)
+    // );
 
-  async function loadDB(){
-    const fromStorage = localStorage.getItem(STORAGE_KEY);
-    if (fromStorage){
-      db = JSON.parse(fromStorage);
-      return;
-    }
+    const { data: user, error: e1 } = await supabase
+      .from("users")
+      .select("id")
+      .eq("id", user_id)
+      .single();
 
-    const res = await fetch("cadeaux.json");
-    db = await res.json();
+    if (e1) { console.error(e1); return; }
 
-    save();
+    // const all_users = (usersDb.users || [])
+    //   .map(u => u.username)
+    //   .filter(Boolean)
+    //   .sort((a,b) => a.localeCompare(b, "fr"));
+
+    // // menu = all_users;
+
+    // menu = all_users.filter(name => 
+    //   meBlock?.visible.includes(name)
+    // );
+
+    const { data: vis, error: e2 } = await supabase
+      .from("user_visibility")
+      .select("visible_user_id")
+      .eq("viewer_id", user.id);
+
+    if (e2) { console.error(e2); return; }
+
+    menu = vis.map(v => getUsername(v.visible_user_id)).sort((a,b) => a.localeCompare(b,"fr"));
+
+    console.log(menu);
   }
 
   // -------- Nav
