@@ -229,7 +229,7 @@
       .eq("id", user_id)
       .maybeSingle();
 
-    const { data: vis, error: dbError } = await db
+    const { data: vis, error: e1 } = await db
       .from("user_visibility")
       .select("visible_user_id")
       .eq("viewer_id", user_id);
