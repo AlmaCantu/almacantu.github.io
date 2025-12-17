@@ -389,7 +389,7 @@
     const status = await getGiftStatus(gift_id);
     const {selectionne_par, hasMe} = await getGiftSelectors(gift_id);
 
-    const stateBtn = e.currentTarget;
+    const stateBtn = btn.currentTarget;
 
     switch(status) {
 
