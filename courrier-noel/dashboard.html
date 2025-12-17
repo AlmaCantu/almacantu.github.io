@@ -152,7 +152,7 @@
       db = JSON.parse(fromStorage);
       return;
     }
-    
+
     const res = await fetch("cadeaux.json");
     db = await res.json();
 
@@ -252,9 +252,16 @@
       title.className = "title";
       title.textContent = gift.titre;
 
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = "Sélectionné par : " + gift.selectionne_par.join(", ");
+
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
+      if (gift.etat === "selectionne_par_plusieurs") {
+        labelWrap.appendChild(meta);
+      }
 
       left.appendChild(stateBtn);
       left.appendChild(labelWrap);
@@ -390,23 +397,9 @@
   (async function init(){
 
     await loadDB();
-
     await loadMenu();
 
-    // Si l'utilisateur connecté n'existe pas dans cadeaux.json, on laisse le menu par défaut
-    // if (!getUserBlock(selectedUser)) selectedUser = MENU[0];
-
-
-
-
-
     selectedUser = menu.includes(me) ? me : menu[0];
-
-    // // Ensure selectedUser is valid
-    // if (menu.includes(me)) selectedUser = me;
-    // else selectedUser = menu[0];
-
-
 
     render();
   })();
