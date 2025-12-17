@@ -180,7 +180,6 @@
   }
 
   function setBtnAsDeselected(stateBtn, gift_id) {
-    console.log(stateBtn);
     stateBtn.className = "stateBtn fa-regular fa-square green";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
@@ -475,7 +474,7 @@
 
   async function addGift(owner_id, title, author_id){
 
-    const {gift_data, error } = await db
+    const {data: gift_data, error } = await db
       .from("gifts")
       .insert({
         title: title,
