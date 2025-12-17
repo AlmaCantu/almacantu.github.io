@@ -220,7 +220,7 @@
     //   meBlock?.visible.includes(name)
     // );
 
-    const { data: vis, error: e2 } = await supabase
+    const { data: vis, error: e2 } = await db
       .from("user_visibility")
       .select("visible_user_id")
       .eq("viewer_id", user.id);
