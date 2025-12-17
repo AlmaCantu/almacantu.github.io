@@ -205,6 +205,52 @@
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
+  function addNewGiftItem(isMeMenu, gift_data, container) {
+      const row = document.createElement("div");
+      row.className = "item";
+
+      const left = document.createElement("div");
+      left.className = "left";
+
+      const stateBtn = document.createElement("i");
+      if (!isMeMenu){
+        setBtnAsDeselected(stateBtn, gift_data.id);
+      } else {
+        stateBtn.className = "stateBtn fa-solid fa-minus red";
+      }
+
+      const title = document.createElement("div");
+      title.className = "title";
+      title.textContent = gift_data.title;
+
+      // const meta = document.createElement("div");
+      // meta.className = "meta";
+      // meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
+
+      const labelWrap = document.createElement("div");
+      labelWrap.style.minWidth = "0";
+      labelWrap.appendChild(title);
+      // if (gift.status === "selectionne_par_plusieurs" && !isMeMenu) {
+      //   labelWrap.appendChild(meta);
+      // }
+
+      left.appendChild(stateBtn);
+      left.appendChild(labelWrap);
+
+      const right = document.createElement("div");
+
+      const delBtn = document.createElement("i");
+      delBtn.className = "delBtn fa-solid fa-trash";
+      delBtn.title = "Supprimer ce cadeau";
+      delBtn.addEventListener("click", async () => deleteGift(gift.id));
+
+      right.appendChild(delBtn);
+
+      row.appendChild(left);
+      row.appendChild(right);
+      container.appendChild(row);
+  }
+
 
   // -------- Rendu liste cadeaux
   async function render(){
@@ -230,8 +276,6 @@
       console.error("Failed to get gifts:", error);
       return;
     }
-
-    // gifts.sort((a,b) => a.created_at.localeCompare(b.created_at,"fr"));
 
     gifts.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
@@ -396,8 +440,6 @@
 
     const stateBtn = btn.target.closest(".stateBtn");
 
-    // const stateBtn = btn.currentTarget;
-
     switch(status) {
 
       case "deselectionne":
@@ -433,7 +475,7 @@
 
   async function addGift(owner_id, title, author_id){
 
-    const { error } = await db
+    const {gift_data, error } = await db
       .from("gifts")
       .insert({
         title: title,
@@ -449,7 +491,10 @@
       return;
     }
 
-    await render();
+    const list = document.getElementById("giftList");
+    addNewGiftItem(owner_id == author_id, gift_data, list);
+
+    // await render();
   }
 
   async function deleteGift(gift_id){
