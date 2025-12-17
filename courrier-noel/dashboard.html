@@ -198,7 +198,6 @@
   function setBtnAsOpenWithMe(stateBtn, gift_id) {
     stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
-
   }
 
   function setBtnAsOpenWithoutMe(stateBtn, gift_id) {
@@ -232,7 +231,9 @@
       return;
     }
 
-    gifts.sort((a,b) => a.created_at.localeCompare(b.created_at,"fr"));
+    // gifts.sort((a,b) => a.created_at.localeCompare(b.created_at,"fr"));
+
+    gifts.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
     // const block = getUserBlock(selectedUser);
     const list = document.getElementById("giftList");
@@ -393,38 +394,35 @@
     const status = await getGiftStatus(gift_id);
     const {selectionne_par, hasMe} = await getGiftSelectors(gift_id);
 
+    const stateBtn = btn.target.closest(".stateBtn");
 
-    console.log(btn);
-
-    const stateBtn = btn.currentTarget;
-
-    console.log(stateBtn);
+    // const stateBtn = btn.currentTarget;
 
     switch(status) {
 
       case "deselectionne":
-        setBtnAsSelectedByMe(btn, gift_id);
+        setBtnAsSelectedByMe(stateBtn, gift_id);
         await addGiftSelector(gift_id, user_id);
         await setGiftStatus(gift_id, "selectionne");
         break;
 
       case "selectionne":
-        setBtnAsOpenWithMe(btn, gift_id);
+        setBtnAsOpenWithMe(stateBtn, gift_id);
         await setGiftStatus(gift_id, "selectionne_par_plusieurs");
         break;
 
       default:
         if (selectionne_par.length === 1 && hasMe){
-          setBtnAsDeselected(btn, gift_id);
+          setBtnAsDeselected(stateBtn, gift_id);
           await removeGiftSelector(gift_id, user_id);
           await setGiftStatus(gift_id, "deselectionne");
         }
         if (selectionne_par.length > 1 && hasMe){
-          setBtnAsOpenWithoutMe(btn, gift_id);
+          setBtnAsOpenWithoutMe(stateBtn, gift_id);
           await removeGiftSelector(gift_id, user_id);
         }
         if (!hasMe){
-          setBtnAsOpenWithMe(btn, gift_id);
+          setBtnAsOpenWithMe(stateBtn, gift_id);
           await addGiftSelector(gift_id, user_id);
         }
     }
