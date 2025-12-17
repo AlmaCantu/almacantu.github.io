@@ -179,8 +179,9 @@
     return {selectionne_par, hasMe};
   }
 
-  function setBtnAsDeselected(stateBtn, gift_id, metaText) {
+  function setBtnAsDeselected(stateBtn, gift_id, meta) {
     stateBtn.className = "stateBtn fa-regular fa-square green";
+    meta.textContent = "";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
@@ -188,19 +189,22 @@
     stateBtn.className = "stateBtn fa-solid fa-gift disabled";
   }
 
-  function setBtnAsSelectedByMe(stateBtn, gift_id, metaText) {
+  function setBtnAsSelectedByMe(stateBtn, gift_id, meta) {
     // console.log(stateBtn);
     stateBtn.className = "stateBtn fa-solid fa-gift red";
+    meta.textContent = "";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
-  function setBtnAsOpenWithMe(stateBtn, gift_id, metaText) {
+  function setBtnAsOpenWithMe(stateBtn, gift_id, meta, selectionne_par) {
     stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
+    meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
-  function setBtnAsOpenWithoutMe(stateBtn, gift_id, metaText) {
+  function setBtnAsOpenWithoutMe(stateBtn, gift_id, meta, selectionne_par) {
     stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
+    meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
@@ -443,34 +447,33 @@
     const stateBtn = btn.target.closest(".stateBtn");
 
     const meta = stateBtn.parentElement.parentElement.querySelector(".meta");
-
     meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
 
     switch(status) {
 
       case "deselectionne":
-        setBtnAsSelectedByMe(stateBtn, gift_id);
+        setBtnAsSelectedByMe(stateBtn, gift_id, meta);
         await addGiftSelector(gift_id, user_id);
         await setGiftStatus(gift_id, "selectionne");
         break;
 
       case "selectionne":
-        setBtnAsOpenWithMe(stateBtn, gift_id, selectionne_par);
+        setBtnAsOpenWithMe(stateBtn, gift_id, meta, selectionne_par);
         await setGiftStatus(gift_id, "selectionne_par_plusieurs");
         break;
 
       default:
         if (selectionne_par.length === 1 && hasMe){
-          setBtnAsDeselected(stateBtn, gift_id);
+          setBtnAsDeselected(stateBtn, gift_id, meta);
           await removeGiftSelector(gift_id, user_id);
           await setGiftStatus(gift_id, "deselectionne");
         }
         if (selectionne_par.length > 1 && hasMe){
-          setBtnAsOpenWithoutMe(stateBtn, gift_id, selectionne_par);
+          setBtnAsOpenWithoutMe(stateBtn, gift_id, meta, selectionne_par);
           await removeGiftSelector(gift_id, user_id);
         }
         if (!hasMe){
-          setBtnAsOpenWithMe(stateBtn, gift_id, selectionne_par);
+          setBtnAsOpenWithMe(stateBtn, gift_id, meta, selectionne_par);
           await addGiftSelector(gift_id, user_id);
         }
     }
