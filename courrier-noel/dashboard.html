@@ -324,8 +324,7 @@
     const { gift, error } = await db
       .from("gifts")
       .select("status")
-      .eq("id", gift_id)
-      .single();
+      .eq("id", gift_id);
 
     if (error) {
       console.error("Failed to get gift status:", error);
