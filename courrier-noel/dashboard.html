@@ -120,6 +120,7 @@
 
   // Données
   let db = sessionStorage.getItem("db");
+  console.log(db);
 
   // Utilisateur connecté
   const user_id = sessionStorage.getItem("user_id");
@@ -128,9 +129,9 @@
   // Menu
   let menu = [];
 
-  function getUserBlock(name){
-    return db.utilisateurs.find(u => u.nom === name);
-  }
+  // function getUserBlock(name){
+  //   return db.utilisateurs.find(u => u.nom === name);
+  // }
 
   function save(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
