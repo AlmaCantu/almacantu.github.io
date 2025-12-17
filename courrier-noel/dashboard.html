@@ -413,7 +413,7 @@
     const status = await getGiftStatus(gift_id);
     const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
 
-    switch(gift.status) {
+    switch(status) {
 
       case "deselectionne":
         await addGiftSelector(gift_id, user_id);
