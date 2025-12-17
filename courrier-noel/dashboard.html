@@ -140,10 +140,16 @@
     const res = await fetch("users.json");
     const usersDb = await res.json();
 
-    menu = (usersDb.users || [])
+    const meBlock = usersDb.users.find(u => u.username === me);
+
+    const all_users = (usersDb.users || [])
       .map(u => u.username)
       .filter(Boolean)
       .sort((a,b) => a.localeCompare(b, "fr"));
+
+    menu = all_users.filter(name => 
+      meBlock.visible.includes(name)
+    );
   }
 
   async function loadDB(){

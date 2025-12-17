@@ -10,3 +10,52 @@
     { "username": "Gabin",     "password": "loup" }
   ]
 }
+{
+  "users": [
+    {
+      "username": "Admin",
+      "password": "1234",
+      "visible": ["Admin", "Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin", "Patrick"]
+    },
+    {
+      "username": "Alma",
+      "password": "chat",
+      "visible": ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"]
+    },
+    {
+      "username": "Anna",
+      "password": "chien",
+      "visible": ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"]
+    },
+    {
+      "username": "Lise",
+      "password": "lapin",
+      "visible": ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"]
+    },
+    {
+      "username": "Antoine",
+      "password": "tigre",
+      "visible": ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"]
+    },
+    {
+      "username": "Guillaume",
+      "password": "ours",
+      "visible": ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"]
+    },
+    {
+      "username": "Coline",
+      "password": "panda",
+      "visible": ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"]
+    },
+    {
+      "username": "Gabin",
+      "password": "loup",
+      "visible": ["Alma", "Anna", "Lise", "Antoine", "Guillaume", "Coline", "Gabin"]
+    },
+    {
+      "username": "Patrick",
+      "password": "tomate",
+      "visible": ["Lise", "Alma"]
+    }
+  ]
+}
