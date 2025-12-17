@@ -125,19 +125,10 @@
 
   // Utilisateur connecté
   const user_id = sessionStorage.getItem("user_id");
-  // console.log(user_id);
   let selectedUser = "";
 
   // Menu
   let menu = [];
-
-  // function getUserBlock(name){
-  //   return db.utilisateurs.find(u => u.nom === name);
-  // }
-
-  // function save(){
-  //   localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-  // }
 
   async function loadMenu(){
 
@@ -188,6 +179,31 @@
     return {selectionne_par, hasMe};
   }
 
+  function setBtnAsDeselected(stateBtn, gift_id) {
+    stateBtn.className = "stateBtn fa-regular fa-square green";
+    stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
+  }
+
+  function setBtnAsSelectedByOther(stateBtn) {
+    stateBtn.className = "stateBtn fa-solid fa-gift disabled";
+  }
+
+  function setBtnAsSelectedByMe(stateBtn, gift_id) {
+    stateBtn.className = "stateBtn fa-solid fa-gift red";
+    stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
+  }
+
+  function setBtnAsOpenWithMe(stateBtn, gift_id) {
+    stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
+    stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
+
+  }
+
+  function setBtnAsOpenWithoutMe(stateBtn, gift_id) {
+    stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
+    stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
+  }
+
 
   // -------- Rendu liste cadeaux
   async function render(){
@@ -213,11 +229,6 @@
       console.error("Failed to get gifts:", error);
       return;
     }
-
-    // console.log(gifts);
-
-    // // Filtrage pour la personne loggée: n'afficher que auteur = moi
-    // const gifts = (block?.cadeaux || []).filter(g => !isMeMenu || g.auteur === me);
 
     // const block = getUserBlock(selectedUser);
     const list = document.getElementById("giftList");
@@ -246,27 +257,21 @@
       if (!isMeMenu){
         switch(gift.status) {
           case "deselectionne":
-            stateBtn.className = "stateBtn fa-regular fa-square green";
-            stateBtn.addEventListener("click", async () => toggleStateForGift(gift.id));
-            stateBtn.title = "";
+            setBtnAsDeselected(stateBtn, gift.id);
             break;
           case "selectionne":
             if (hasMe) {
-              stateBtn.className = "stateBtn fa-solid fa-gift red";
-              stateBtn.addEventListener("click", async () => toggleStateForGift(gift.id));
+              setBtnAsSelectedByMe(stateBtn, gift.id);
             } else {
-              stateBtn.className = "stateBtn fa-solid fa-gift disabled";
+              setBtnAsSelectedByOther(stateBtn);
             }
-            stateBtn.title = "";
             break;
           default:
             if (hasMe) {
-              stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
-              stateBtn.title = "Sélectionné par : " + selectionne_par.join(", ");
+              setBtnAsOpenWithMe(stateBtn, gift.id);
             } else {
-              stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
+              setBtnAsOpenWithoutMe(stateBtn, gift.id);
             }
-            stateBtn.addEventListener("click", async () => toggleStateForGift(gift.id));
         }
       } else {
         stateBtn.className = "stateBtn fa-solid fa-minus red";
@@ -276,16 +281,16 @@
       title.className = "title";
       title.textContent = gift.title;
 
-      const meta = document.createElement("div");
-      meta.className = "meta";
-      meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
+      // const meta = document.createElement("div");
+      // meta.className = "meta";
+      // meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
 
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
-      if (gift.status === "selectionne_par_plusieurs" && !isMeMenu) {
-        labelWrap.appendChild(meta);
-      }
+      // if (gift.status === "selectionne_par_plusieurs" && !isMeMenu) {
+      //   labelWrap.appendChild(meta);
+      // }
 
       left.appendChild(stateBtn);
       left.appendChild(labelWrap);
@@ -379,37 +384,44 @@
     }
   }
 
-  async function toggleStateForGift(gift_id){
+  async function toggleStateForGift(btn, gift_id){
 
     const status = await getGiftStatus(gift_id);
     const {selectionne_par, hasMe} = await getGiftSelectors(gift_id);
 
+    const stateBtn = e.currentTarget;
+
     switch(status) {
 
       case "deselectionne":
+        setBtnAsSelectedByMe(btn, gift_id);
         await addGiftSelector(gift_id, user_id);
         await setGiftStatus(gift_id, "selectionne");
         break;
 
       case "selectionne":
+        setBtnAsOpenWithMe(btn, gift_id);
         await setGiftStatus(gift_id, "selectionne_par_plusieurs");
         break;
 
       default:
         if (selectionne_par.length === 1 && hasMe){
+          setBtnAsDeselected(btn, gift_id);
           await removeGiftSelector(gift_id, user_id);
           await setGiftStatus(gift_id, "deselectionne");
         }
         if (selectionne_par.length > 1 && hasMe){
+          setBtnAsOpenWithoutMe(btn, gift_id);
           await removeGiftSelector(gift_id, user_id);
         }
         if (!hasMe){
+          setBtnAsOpenWithMe(btn, gift_id);
           await addGiftSelector(gift_id, user_id);
         }
     }
 
-    // save();
-    await render();
+    // update icon
+    // render();
   }
 
   async function addGift(owner_id, title, author_id){
