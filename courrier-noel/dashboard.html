@@ -119,8 +119,7 @@
   const STORAGE_KEY = "cadeauxData_v1";
 
   // Données
-  let db = sessionStorage.getItem("db");
-  console.log(db);
+  const db = null;
 
   // Utilisateur connecté
   const user_id = sessionStorage.getItem("user_id");
@@ -151,6 +150,13 @@
 
   // Load database
   async function loadDB(){
+
+    const SUPABASE_URL = sessionStorage.getItem("SUPABASE_URL");
+    const SUPABASE_ANON_KEY = sessionStorage.getItem("SUPABASE_ANON_KEY");
+  
+    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
     // const fromStorage = localStorage.getItem(STORAGE_KEY);
     // if (fromStorage){
     //   db = JSON.parse(fromStorage);

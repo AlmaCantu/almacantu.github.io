@@ -49,40 +49,41 @@
 <script>
   const SUPABASE_URL = "https://doufxlvmjmmxerrutwai.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_eRXmtQptpnH3VF0g3UkGrA_vwDDROEB";
+  
   const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-</script>
 
-<script>
-async function login() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  const error = document.getElementById("error");
+  async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const error = document.getElementById("error");
 
-  error.textContent = "";
+    error.textContent = "";
 
-  const { data: user, error: dbError } = await db
-    .from("users")
-    .select("id, password")
-    .eq("id", username)
-    .eq("password", password)
-    .maybeSingle();
+    const { data: user, error: dbError } = await db
+      .from("users")
+      .select("id, password")
+      .eq("id", username)
+      .eq("password", password)
+      .maybeSingle();
 
-  if (dbError) {
-    console.error(dbError);
-    error.textContent = "Login error";
-    return;
-  }
+    if (dbError) {
+      console.error(dbError);
+      error.textContent = "Login error";
+      return;
+    }
 
-  if (!user) {
-    error.textContent = "Invalid username or password";
-    return;
-  }
+    if (!user) {
+      error.textContent = "Invalid username or password";
+      return;
+    }
 
-  sessionStorage.setItem("loggedIn", "true");
-  sessionStorage.setItem("user_id", user.id);
-  sessionStorage.setItem("db", db);
+    sessionStorage.setItem("loggedIn", "true");
+    sessionStorage.setItem("user_id", user.id);
+    // sessionStorage.setItem("db", db);
+    sessionStorage.setItem("SUPABASE_URL", SUPABASE_URL);
+    sessionStorage.setItem("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
 
-  window.location.href = "dashboard.html";
+    window.location.href = "dashboard.html";
 
 
 
