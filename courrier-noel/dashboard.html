@@ -505,6 +505,10 @@
     const delBtn = btn.target.closest(".delBtn");
     console.log(delBtn);
     delBtn.parentElement.parentElement.remove();
+    
+    const input = document.getElementById("giftInput");
+    input.value = "";
+    input.placeholder = "Ajouter un cadeau pour ${selectedUser}...";
 
     const { e1 } = await db
       .from("gifts")
