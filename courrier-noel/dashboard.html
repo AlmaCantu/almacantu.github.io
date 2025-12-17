@@ -173,7 +173,7 @@
   async function getGiftSelectors(gift_id){
 
     const { data: gift_selection, error: error } = await db
-      .from("gift_selection")
+      .from("gift_selections")
       .select("selector_id")
       .eq("gift_id", gift_id);
 
