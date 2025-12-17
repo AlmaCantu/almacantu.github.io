@@ -247,13 +247,13 @@
         switch(gift.status) {
           case "deselectionne":
             stateBtn.className = "stateBtn fa-regular fa-square green";
-            stateBtn.addEventListener("click", async () => toggleStateForGift(selectedUser, gift.id));
+            stateBtn.addEventListener("click", async () => toggleStateForGift(gift.id));
             stateBtn.title = "";
             break;
           case "selectionne":
             if (hasMe) {
               stateBtn.className = "stateBtn fa-solid fa-gift red";
-              stateBtn.addEventListener("click", async () => toggleStateForGift(selectedUser, gift.id));
+              stateBtn.addEventListener("click", async () => toggleStateForGift(gift.id));
             } else {
               stateBtn.className = "stateBtn fa-solid fa-gift disabled";
             }
@@ -266,7 +266,7 @@
             } else {
               stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
             }
-            stateBtn.addEventListener("click", async () => toggleStateForGift(selectedUser, gift.id));
+            stateBtn.addEventListener("click", async () => toggleStateForGift(gift.id));
         }
       } else {
         stateBtn.className = "stateBtn fa-solid fa-minus red";
