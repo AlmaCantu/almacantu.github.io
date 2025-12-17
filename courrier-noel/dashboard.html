@@ -267,7 +267,7 @@
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
-      if (gift.etat === "selectionne_par_plusieurs") {
+      if (gift.etat === "selectionne_par_plusieurs" && !isMeMenu) {
         labelWrap.appendChild(meta);
       }
 
