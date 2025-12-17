@@ -525,6 +525,14 @@
     console.log(delBtn);
     delBtn.parentElement.parentElement.remove();
 
+    const list = document.getElementById("giftList");
+    if(list.innerHTML == ""){
+      const empty = document.createElement("div");
+      empty.className = "item";
+      empty.innerHTML = `<div class="title empty" style="color:var(--muted);">Aucun cadeau à afficher.</div>`;
+      list.appendChild(empty);
+    }
+
     const { e1 } = await db
       .from("gifts")
       .delete()
