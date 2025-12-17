@@ -324,13 +324,13 @@
         switch(gift.status) {
           case "deselectionne":
             stateBtn.className = "stateBtn fa-regular fa-square green";
-            stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+            stateBtn.addEventListener("click", async () => toggleStateForGift(selectedUser, gift.id));
             stateBtn.title = "";
             break;
           case "selectionne":
             if (hasMe) {
               stateBtn.className = "stateBtn fa-solid fa-gift red";
-              stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+              stateBtn.addEventListener("click", async () => toggleStateForGift(selectedUser, gift.id));
             } else {
               stateBtn.className = "stateBtn fa-solid fa-gift disabled";
             }
@@ -343,7 +343,7 @@
             } else {
               stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
             }
-            stateBtn.addEventListener("click", () => toggleStateForGift(selectedUser, gift.id));
+            stateBtn.addEventListener("click", async () => toggleStateForGift(selectedUser, gift.id));
         }
       } else {
         stateBtn.className = "stateBtn fa-solid fa-minus red";
@@ -464,7 +464,7 @@
   // }
 
   // -------- Logique clic (cycle / contraintes)
-  function toggleStateForGift(gift_id){
+  async function toggleStateForGift(gift_id){
 
     // const block = getUserBlock(ownerName);
     // if (!block) return;
@@ -517,7 +517,7 @@
     }
 
     // save();
-    render();
+    await render();
   }
 
   function addGift(ownerName, title, author){
