@@ -194,12 +194,12 @@
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
-  function setBtnAsOpenWithMe(stateBtn, gift_id) {
+  function setBtnAsOpenWithMe(stateBtn, gift_id, selectionne_par) {
     stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
-  function setBtnAsOpenWithoutMe(stateBtn, gift_id) {
+  function setBtnAsOpenWithoutMe(stateBtn, gift_id, selectionne_par) {
     stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
@@ -336,15 +336,16 @@
       title.className = "title";
       title.textContent = gift.title;
 
-      // const meta = document.createElement("div");
-      // meta.className = "meta";
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = "";
       // meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
 
       const labelWrap = document.createElement("div");
       labelWrap.style.minWidth = "0";
       labelWrap.appendChild(title);
       // if (gift.status === "selectionne_par_plusieurs" && !isMeMenu) {
-      //   labelWrap.appendChild(meta);
+        labelWrap.appendChild(meta);
       // }
 
       left.appendChild(stateBtn);
@@ -450,7 +451,7 @@
         break;
 
       case "selectionne":
-        setBtnAsOpenWithMe(stateBtn, gift_id);
+        setBtnAsOpenWithMe(stateBtn, gift_id, selectionne_par);
         await setGiftStatus(gift_id, "selectionne_par_plusieurs");
         break;
 
@@ -461,11 +462,11 @@
           await setGiftStatus(gift_id, "deselectionne");
         }
         if (selectionne_par.length > 1 && hasMe){
-          setBtnAsOpenWithoutMe(stateBtn, gift_id);
+          setBtnAsOpenWithoutMe(stateBtn, gift_id, selectionne_par);
           await removeGiftSelector(gift_id, user_id);
         }
         if (!hasMe){
-          setBtnAsOpenWithMe(stateBtn, gift_id);
+          setBtnAsOpenWithMe(stateBtn, gift_id, selectionne_par);
           await addGiftSelector(gift_id, user_id);
         }
     }
@@ -505,7 +506,7 @@
     const delBtn = btn.target.closest(".delBtn");
     console.log(delBtn);
     delBtn.parentElement.parentElement.remove();
-    
+
     const input = document.getElementById("giftInput");
     input.value = "";
     input.placeholder = "Ajouter un cadeau pour ${selectedUser}...";
