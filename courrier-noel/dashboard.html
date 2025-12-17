@@ -442,7 +442,8 @@
 
     const stateBtn = btn.target.closest(".stateBtn");
 
-    const meta = btn.target.closest(".meta");
+    const meta = stateBtn.parentElement.parentElement.querySelector(".meta");
+
     meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
 
     switch(status) {
