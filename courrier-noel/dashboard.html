@@ -322,9 +322,9 @@
 
   async function getGiftStatus(gift_id) {
 
-    console.log(gift_id);
+    // console.log(gift_id);
 
-    console.log(db);
+    // console.log(db);
 
     const { data: gift, error: error } = await db
       .from("gifts")
@@ -337,7 +337,7 @@
       return;
     }
 
-    console.log(gift);
+    // console.log(gift);
 
     return gift.status;
   }
@@ -346,7 +346,7 @@
     const { error } = await db
       .from("gifts")
       .update({ status: newStatus })
-      .eq("id", giftId);
+      .eq("id", gift_id);
 
     if (error) {
       console.error("Failed to update gift status:", error);
