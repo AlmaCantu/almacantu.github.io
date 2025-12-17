@@ -114,17 +114,20 @@
 
 <script>
 
-  // -------- Config
-  let menu = [];
-  // const MENU = ["Alma","Anna","Antoine","Coline","Gabin","Guillaume","Lise"];
+  // Storage key
   const STORAGE_KEY = "cadeauxData_v1";
+
+  // Données
+  let db = sessionStorage.getItem("db");
 
   // Utilisateur connecté
   const me = sessionStorage.getItem("username");
   let selectedUser = "";
 
-  // Données
-  let db = null;
+  // Menu
+  let menu = [];
+  // const MENU = ["Alma","Anna","Antoine","Coline","Gabin","Guillaume","Lise"];
+  const STORAGE_KEY = "cadeauxData_v1";
 
   function getUserBlock(name){
     return db.utilisateurs.find(u => u.nom === name);
