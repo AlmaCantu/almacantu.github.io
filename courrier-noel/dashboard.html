@@ -382,7 +382,7 @@
   async function toggleStateForGift(gift_id){
 
     const status = await getGiftStatus(gift_id);
-    const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
+    const {selectionne_par, hasMe} = await getGiftSelectors(gift_id);
 
     switch(status) {
 
