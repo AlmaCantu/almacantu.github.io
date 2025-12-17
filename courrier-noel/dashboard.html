@@ -296,7 +296,7 @@
       delBtn.className = "delBtn fa-solid fa-trash" + (!canDelete ? " disabled" : "");
       delBtn.title = canDelete ? "Supprimer ce cadeau" : "Impossible (sélectionné ou pas auteur)";
       if (canDelete) {
-        delBtn.addEventListener("click", () => deleteGift(selectedUser, gift.id));
+        delBtn.addEventListener("click", async () => deleteGift(gift.id));
       }
 
       right.appendChild(delBtn);
@@ -311,12 +311,12 @@
     // Ajout cadeau
     const input = document.getElementById("giftInput");
     input.value = "";
-    input.placeholder = `Ajouter un cadeau pour ${selectedUser}...`;
+    input.placeholder = "Ajouter un cadeau pour ${selectedUser}...";
 
     const addBtn = document.getElementById("addBtn");
-    addBtn.onclick = async () => addGift(selectedUser, input.value.trim(), me);
+    addBtn.onclick = async () => addGift(selectedUser, input.value.trim(), user_id);
     input.onkeydown = async (e) => {
-      if (e.key === "Enter") addGift(selectedUser, input.value.trim(), me);
+      if (e.key === "Enter") await addGift(selectedUser, input.value.trim(), user_id);
     };
   }
 
