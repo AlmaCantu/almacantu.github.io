@@ -201,13 +201,13 @@
     //   meBlock?.visible.includes(name)
     // );
 
-    const { data: user, error: e1 } = await supabase
-      .from("users")
-      .select("id")
-      .eq("id", user_id)
-      .single();
+    // const { data: user, error: e1 } = await db
+    //   .from("users")
+    //   .select("id")
+    //   .eq("id", user_id)
+    //   .single();
 
-    if (e1) { console.error(e1); return; }
+    // if (e1) { console.error(e1); return; }
 
     // const all_users = (usersDb.users || [])
     //   .map(u => u.username)
@@ -227,7 +227,7 @@
 
     if (e2) { console.error(e2); return; }
 
-    menu = vis.map(v => (await getUserName(v.visible_user_id))).sort((a,b) => a.localeCompare(b,"fr"));
+    menu = vis.map(v => v.visible_user_id).sort((a,b) => a.localeCompare(b,"fr"));
 
     console.log(menu);
   }

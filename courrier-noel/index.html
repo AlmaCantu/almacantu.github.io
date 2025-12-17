@@ -62,8 +62,8 @@ async function login() {
 
   const { data: user, error: dbError } = await db
     .from("users")
-    .select("username, password")
-    .eq("username", username)
+    .select("id, password")
+    .eq("id", username)
     .eq("password", password)
     .maybeSingle();
 
