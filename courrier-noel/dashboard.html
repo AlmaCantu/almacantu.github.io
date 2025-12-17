@@ -232,6 +232,9 @@
 
       const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
 
+      console.log("selectionne_par");
+      console.log(selectionne_par);
+
       const canDelete = (isMeMenu || ((gift.author_id === user_id) && ((selectionne_par.length === 0) || ((selectionne_par.length === 1) && hasMe))));
 
       const row = document.createElement("div");
