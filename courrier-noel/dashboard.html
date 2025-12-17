@@ -175,7 +175,7 @@
     const { data: gift_selection, error: error } = await db
       .from("gift_selection")
       .select("selector_id")
-      .eq("gift_id", gift.id);
+      .eq("gift_id", gift_id);
 
     if (error) {
       console.error("Failed to get gift selectors:", error);
