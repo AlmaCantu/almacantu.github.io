@@ -10,7 +10,7 @@
       "cadeaux": [
         {
           "id": "anna-002",
-          "titre": "Une petite broderie (pique et colegram - petit bouquet)",
+          "titre": "une petite broderie (pique et colegram - petit bouquet)",
           "auteur": "Anna",
           "etat": "deselectionne",
           "selectionne_par": []
@@ -161,7 +161,7 @@
         },
         {
           "id": "gabin-003",
-          "titre": "Lego (réfs 60034-60036, 60050-60052, 60090–60093, 60094)",
+          "titre": "Lego (réfs 60034-60036, 60050-60052, 60090–60093, 60095)",
           "auteur": "Gabin",
           "etat": "deselectionne",
           "selectionne_par": []
