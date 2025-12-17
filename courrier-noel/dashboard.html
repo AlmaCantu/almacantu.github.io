@@ -179,7 +179,7 @@
     return {selectionne_par, hasMe};
   }
 
-  function setBtnAsDeselected(stateBtn, gift_id) {
+  function setBtnAsDeselected(stateBtn, gift_id, metaText) {
     stateBtn.className = "stateBtn fa-regular fa-square green";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
@@ -188,18 +188,18 @@
     stateBtn.className = "stateBtn fa-solid fa-gift disabled";
   }
 
-  function setBtnAsSelectedByMe(stateBtn, gift_id) {
-    console.log(stateBtn);
+  function setBtnAsSelectedByMe(stateBtn, gift_id, metaText) {
+    // console.log(stateBtn);
     stateBtn.className = "stateBtn fa-solid fa-gift red";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
-  function setBtnAsOpenWithMe(stateBtn, gift_id, selectionne_par) {
+  function setBtnAsOpenWithMe(stateBtn, gift_id, metaText) {
     stateBtn.className = "stateBtn fa-solid fa-cubes-stacked red";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
 
-  function setBtnAsOpenWithoutMe(stateBtn, gift_id, selectionne_par) {
+  function setBtnAsOpenWithoutMe(stateBtn, gift_id, metaText) {
     stateBtn.className = "stateBtn fa-solid fa-cubes-stacked green";
     stateBtn.addEventListener("click", async (btn) => toggleStateForGift(btn, gift_id), { once: true });
   }
@@ -441,6 +441,9 @@
     const {selectionne_par, hasMe} = await getGiftSelectors(gift_id);
 
     const stateBtn = btn.target.closest(".stateBtn");
+
+    const meta = btn.target.closest(".meta");
+    meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
 
     switch(status) {
 
