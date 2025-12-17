@@ -294,24 +294,24 @@
       list.appendChild(empty);
     }
 
-    gifts.forEach(gift => {
+    gifts.forEach(async gift => {
 
-      // const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
+      const {selectionne_par, hasMe} = await getGiftSelectors(gift.id);
 
-      const { data: gift_selection, error: error } = await db
-        .from("gift_selection")
-        .select("selector_id")
-        .eq("gift_id", gift.id);
+      // const { data: gift_selection, error: error } = await db
+      //   .from("gift_selection")
+      //   .select("selector_id")
+      //   .eq("gift_id", gift.id);
 
-      if (error) {
-        console.error("Failed to get gift selectors:", error);
-        return;
-      }
+      // if (error) {
+      //   console.error("Failed to get gift selectors:", error);
+      //   return;
+      // }
 
-      const selectionne_par = gift_selection.map(o => o.selector_id);
-      console.log(selectionne_par);
+      // const selectionne_par = gift_selection.map(o => o.selector_id);
+      // console.log(selectionne_par);
 
-      const hasMe = selectionne_par.includes(user_id);
+      // const hasMe = selectionne_par.includes(user_id);
 
       // retun (selectionne_par, hasMe);
 
