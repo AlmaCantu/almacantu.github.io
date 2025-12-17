@@ -258,12 +258,6 @@
       container.appendChild(row);
   }
 
-
-  function removeGiftItem(b, gift_data, item){
-
-  }
-
-
   // -------- Rendu liste cadeaux
   async function render(){
 
@@ -510,7 +504,7 @@
 
     const delBtn = btn.target.closest(".delBtn");
     console.log(delBtn);
-    // removeGiftItem(owner_id == author_id, gift_data, list);
+    delBtn.parentElement.parentElement.remove();
 
     const { e1 } = await db
       .from("gifts")
