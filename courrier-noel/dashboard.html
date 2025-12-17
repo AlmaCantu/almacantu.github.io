@@ -149,7 +149,7 @@
   // -------- Nav
   function buildNav(container, isMobile){
     container.innerHTML = "";
-    MENU.forEach(name => {
+    menu.forEach(name => {
       const a = document.createElement("a");
       a.href = "#";
       a.className = (name === selectedUser) ? "active" : "";
