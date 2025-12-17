@@ -227,7 +227,7 @@
 
     if (e2) { console.error(e2); return; }
 
-    menu = vis.map(v => await getUsername(v.visible_user_id)).sort((a,b) => a.localeCompare(b,"fr"));
+    menu = vis.map(v => (await getUsername(v.visible_user_id))).sort((a,b) => a.localeCompare(b,"fr"));
 
     console.log(menu);
   }
