@@ -202,7 +202,7 @@
     let query = db
       .from("gifts")
       .select("id, title, status, owner_id, author_id")
-      .eq("owner_id", user_id);
+      .eq("owner_id", selectedUser);
 
     if (isMeMenu) {
       query = query.eq("author_id", user_id);
@@ -214,6 +214,8 @@
       console.error("Failed to get gifts:", error);
       return;
     }
+
+    console.log(gifts);
 
     // // Filtrage pour la personne loggée: n'afficher que auteur = moi
     // const gifts = (block?.cadeaux || []).filter(g => !isMeMenu || g.auteur === me);
