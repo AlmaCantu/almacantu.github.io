@@ -214,7 +214,7 @@
       return;
     }
 
-    console.log(gifts);
+    // console.log(gifts);
 
     // // Filtrage pour la personne loggée: n'afficher que auteur = moi
     // const gifts = (block?.cadeaux || []).filter(g => !isMeMenu || g.auteur === me);
@@ -430,43 +430,10 @@
       return;
     }
 
-
-
-    // if (!title) return;
-
-    // const block = getUserBlock(ownerName);
-    // if (!block) return;
-
-    // // auteur = propriétaire de la liste
-    // const newGift = {
-    //   id: `${ownerName.toLowerCase()}-${Date.now()}`,
-    //   titre: title,
-    //   auteur: author,
-    //   etat: "deselectionne",
-    //   selectionne_par: []
-    // };
-
-    // block.cadeaux = block.cadeaux || [];
-    // block.cadeaux.push(newGift);
-
-    // save();
     await render();
   }
 
   async function deleteGift(gift_id){
-    // const block = getUserBlock(ownerName);
-    // if (!block) return;
-
-    // const idx = block.cadeaux.findIndex(g => g.id === giftId);
-    // if (idx === -1) return;
-
-    // const g = block.cadeaux[idx];
-
-    // block.cadeaux.splice(idx, 1);
-    // save();
-    // render();
-
-
 
     const { e1 } = await db
       .from("gifts")
@@ -487,6 +454,8 @@
       console.error("Failed to remove gift selections:", e2);
       return;
     }
+
+    await render();
   }
 
   // -------- Menu mobile
