@@ -200,7 +200,8 @@
     let query = db
       .from("gifts")
       .select("id, title, status, owner_id, author_id")
-      .eq("owner_id", selectedUser);
+      .eq("owner_id", selectedUser)
+      .order("created_at", { ascending: true });
 
     if (isMeMenu) {
       query = query.eq("author_id", user_id);
