@@ -49,7 +49,7 @@
 <script>
   const SUPABASE_URL = "https://doufxlvmjmmxerrutwai.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_eRXmtQptpnH3VF0g3UkGrA_vwDDROEB";
-  
+
   const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   async function login() {
@@ -82,6 +82,7 @@
     // sessionStorage.setItem("db", db);
     sessionStorage.setItem("SUPABASE_URL", SUPABASE_URL);
     sessionStorage.setItem("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
+    console.log(SUPABASE_URL);
 
     window.location.href = "dashboard.html";
 
