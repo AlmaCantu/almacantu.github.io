@@ -118,7 +118,7 @@
   // -------- Config
   let menu = [];
   // const MENU = ["Alma","Anna","Antoine","Coline","Gabin","Guillaume","Lise"];
-  // const STORAGE_KEY = "cadeauxData_v1";
+  const STORAGE_KEY = "cadeauxData_v1";
 
   // Utilisateur connecté
   const me = sessionStorage.getItem("username");
@@ -136,11 +136,7 @@
   }
 
   async function loadMenu(){
-    // const fromStorage = localStorage.getItem(STORAGE_KEY);
-    // if (fromStorage){
-    //   db = JSON.parse(fromStorage);
-    //   return;
-    // }
+    
     const res = await fetch("users.json");
     const usersDb = await res.json();
 
@@ -148,18 +144,18 @@
       .map(u => u.username)
       .filter(Boolean)
       .sort((a,b) => a.localeCompare(b, "fr"));
-
-    save();
   }
 
   async function loadDB(){
-    // const fromStorage = localStorage.getItem(STORAGE_KEY);
-    // if (fromStorage){
-    //   db = JSON.parse(fromStorage);
-    //   return;
-    // }
+    const fromStorage = localStorage.getItem(STORAGE_KEY);
+    if (fromStorage){
+      db = JSON.parse(fromStorage);
+      return;
+    }
+    
     const res = await fetch("cadeaux.json");
     db = await res.json();
+
     save();
   }
 
