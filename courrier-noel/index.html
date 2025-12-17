@@ -80,6 +80,7 @@ async function login() {
 
   sessionStorage.setItem("loggedIn", "true");
   sessionStorage.setItem("username", user.username);
+  sessionStorage.setItem("db", supabase);
 
   window.location.href = "dashboard.html";
 
