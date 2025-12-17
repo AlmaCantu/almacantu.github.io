@@ -368,7 +368,7 @@
     // Ajout cadeau
     const input = document.getElementById("giftInput");
     input.value = "";
-    input.placeholder = "Ajouter un cadeau pour ${selectedUser}...";
+    input.placeholder = "Ajouter un cadeau pour " + selectedUser + "...";
 
     const addBtn = document.getElementById("addBtn");
     addBtn.onclick = async () => addGift(selectedUser, input.value.trim(), user_id);
@@ -504,6 +504,10 @@
 
     // console.log(gift_data);
 
+    const input = document.getElementById("giftInput");
+    input.value = "";
+    input.placeholder = "Ajouter un cadeau pour" + owner_id + "...";
+
     const list = document.getElementById("giftList");
     addNewGiftItem(owner_id == author_id, gift_data, list);
 
@@ -515,10 +519,6 @@
     const delBtn = btn.target.closest(".delBtn");
     console.log(delBtn);
     delBtn.parentElement.parentElement.remove();
-
-    const input = document.getElementById("giftInput");
-    input.value = "";
-    input.placeholder = "Ajouter un cadeau pour ${selectedUser}...";
 
     const { e1 } = await db
       .from("gifts")
