@@ -231,8 +231,8 @@
 
     const { data: vis, error: e1 } = await db
       .from("user_visibility")
-      .select("visible_user_id")
-      .eq("viewer_id", user_id);
+      .select("visible_user_id");
+      // .eq("viewer_id", user_id);
 
     if (dbError) { console.error(dbError); return; }
 
