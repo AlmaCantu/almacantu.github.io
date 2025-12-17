@@ -114,13 +114,15 @@
 
 
 <script>
-  // -------- Config menus
-  const MENU = ["Alma","Anna","Antoine","Coline","Gabin","Guillaume","Lise"];
+
+  // -------- Config
+  const menu = [];
+  // const MENU = ["Alma","Anna","Antoine","Coline","Gabin","Guillaume","Lise"];
   const STORAGE_KEY = "cadeauxData_v1";
 
   // Utilisateur connecté
-  const me = sessionStorage.getItem("username") || "User";
-  let selectedUser = MENU.includes(me) ? me : MENU[0];
+  const me = sessionStorage.getItem("username");
+  let selectedUser = "";
 
   // Données
   let db = null;
@@ -376,7 +378,23 @@
     await loadDB();
 
     // Si l'utilisateur connecté n'existe pas dans cadeaux.json, on laisse le menu par défaut
-    if (!getUserBlock(selectedUser)) selectedUser = MENU[0];
+    // if (!getUserBlock(selectedUser)) selectedUser = MENU[0];
+
+
+
+    menu = (db.users || [])
+      .map(u => u.username)
+      .filter(Boolean)
+      .sort((a,b) => a.localeCompare(b, "fr"));
+
+
+    selectedUser = menu.includes(me) ? me : menu[0];
+
+    // // Ensure selectedUser is valid
+    // if (menu.includes(me)) selectedUser = me;
+    // else selectedUser = menu[0];
+
+
 
     render();
   })();
