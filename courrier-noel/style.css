@@ -144,7 +144,7 @@
   }
 
   .left > .stateBtn + div{
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
   }
 
@@ -156,43 +156,32 @@
   }
   
   .title{
-    font-size: 14px;
+    margin: 0;
     min-width: 0;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 
-/*  .left{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-    flex: 1;
-  }
-
-  .left > .stateBtn + div{
-    flex: 1;
-    min-width: 0;
-  }
-
-  .title{
-    min-width: 0;
-    white-space: normal;
-    overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-  }*/
+    -webkit-line-clamp: 3;
+
+    overflow: hidden;
+    word-break: break-word;  /* helps long words */
+  }
   
    .meta{
     font-size: 12px;
-    color: var(--muted);
     margin-left: 8px;
     color: var(--red);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   } 
+
+  .right{
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
   .stateBtn{
     font-size: 16px;
@@ -281,22 +270,20 @@
     .menu-btn{ display:inline-block; }
     .panel{ width: 100%; }
 
-  .left{
+  /*.left{
     display: flex;
-    flex-wrap: nowrap;   /* ✅ stop wrapping */
-    align-items: center; /* ✅ align icon with text */
+    flex-wrap: nowrap;
+    align-items: center;
     gap: 10px;
     min-width: 0;
     flex: 1;
   }
 
-  /* The wrapper that contains .title + .meta must shrink */
   .left > .stateBtn + div{
     flex: 1;
     min-width: 0;
   }
 
-  /* If you want the title to be 2 lines but still next to icon */
   .title{
     min-width: 0;
     white-space: normal;
@@ -304,7 +291,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-  }
+  }*/
 
 }
 
