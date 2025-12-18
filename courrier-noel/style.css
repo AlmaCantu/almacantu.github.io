@@ -133,11 +133,12 @@
     padding: 10px 8px;
     border-radius: 12px;
     in-width: 0;
+    min-width: 0; 
   }
   
   .item:hover{ background:#f8fafc; }
   
-  /*.left{
+  .left{
     min-width: 0;
     flex: 1;
   }
@@ -161,12 +162,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }*/
+  }
 
-  .left{
+/*  .left{
     display: flex;
-    flex-wrap: nowrap;   /* ✅ stop wrapping */
-    align-items: center; /* ✅ align icon with text */
+    flex-wrap: nowrap;
+    align-items: center;
     gap: 10px;
     min-width: 0;
     flex: 1;
@@ -184,7 +185,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-  }
+  }*/
   
    .meta{
     font-size: 12px;
