@@ -155,7 +155,7 @@
     flex-direction: column;
   }
   
-  .title{
+  /*.title{
     margin: 0;
     min-width: 0;
 
@@ -164,7 +164,16 @@
     -webkit-line-clamp: 3;
 
     overflow: hidden;
-    word-break: break-word;  /* helps long words */
+    word-break: break-word;
+  }*/
+
+  .title{
+    min-width: 0;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
   
    .meta{
