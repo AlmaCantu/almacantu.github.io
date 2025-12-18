@@ -133,7 +133,7 @@
     padding: 10px 8px;
     border-radius: 12px;
     in-width: 0;
-    min-width: 0; 
+    /*min-width: 0; */
   }
   
   .item:hover{ background:#f8fafc; }
@@ -200,12 +200,12 @@
     -webkit-box-orient: vertical;
   } 
 
-  .right{
+/*  .right{
     flex: 0 0 auto;
     display: flex;
     align-items: center;
     gap: 8px;
-  }
+  }*/
 
   .stateBtn{
     font-size: 16px;
