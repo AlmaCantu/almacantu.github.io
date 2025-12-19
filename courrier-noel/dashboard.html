@@ -357,8 +357,6 @@
       row.appendChild(left);
       row.appendChild(right);
       list.appendChild(row);
-
-      document.getElementById("signature").textContent = selectedUser;
     });
 
     // Ajout cadeau
@@ -371,6 +369,8 @@
     input.onkeydown = async (e) => {
       if (e.key === "Enter") await addGift(selectedUser, input.value.trim(), user_id);
     };
+
+    document.getElementById("signature").textContent = selectedUser;
   }
 
   async function getGiftStatus(gift_id) {
