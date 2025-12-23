@@ -193,6 +193,8 @@
 
       sessionStorage.setItem("loggedIn", "true");
       sessionStorage.setItem("user_id", user.id);
+      sessionStorage.setItem("SUPABASE_URL", SUPABASE_URL);
+      sessionStorage.setItem("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
 
       window.location.href = "dashboard.html";
     }
