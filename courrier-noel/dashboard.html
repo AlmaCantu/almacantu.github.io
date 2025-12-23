@@ -466,13 +466,13 @@
         }
         if (selectionne_par.length > 1 && hasMe){
           setBtnAsOpenWithoutMe(stateBtn, gift_id);
-          meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
           await removeGiftSelector(gift_id, user_id);
+          meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
         }
         if (!hasMe){
           setBtnAsOpenWithMe(stateBtn, gift_id);
-          meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
           await addGiftSelector(gift_id, user_id);
+          meta.textContent = "Sélectionné par : " + selectionne_par.join(", ");
         }
     }
 
