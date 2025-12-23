@@ -72,7 +72,7 @@
       padding: 30px 26px;
       border-radius: 12px;
     
-      background: white; /* ← solid white */
+      background: white;
       box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     
       color: #333;
@@ -80,20 +80,40 @@
     }
 
     .login-box h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
       color: #222;
     }
     
     input {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 0.95rem;
       background: #f4f4f4;
-      border: 1px solid #ddd;
       color: #333;
+      border: 1px solid #ddd;
     }
     
-    input::placeholder {
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      font-size: 1rem;
+      cursor: pointer;
       color: #999;
     }
     
     .error {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      min-height: 1em;
       color: #d32f2f;
     }
 
