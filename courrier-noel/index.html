@@ -3,112 +3,172 @@
 <head>
   <meta charset="UTF-8">
   <title>Demo Login</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
+      margin: 0;
+      font-family: "Poppins", sans-serif;
       height: 100vh;
+
+      /* Snowy Christmas forest background */
+      background-image: url("https://images.unsplash.com/photo-1516455590571-18256e5bb9ff");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      display: flex;
       align-items: center;
       justify-content: center;
     }
+
+    /* Dark overlay for contrast */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 0;
+    }
+
     .login-box {
-      background: white;
-      padding: 20px;
-      width: 280px;
+      position: relative;
+      z-index: 1;
+
+      width: 320px;
+      padding: 30px 26px;
+      border-radius: 12px;
+
+      /* Glassmorphism effect */
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      color: #fff;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 8px 0;
+
       border-radius: 6px;
-      box-shadow: 0 0 10px rgba(0,0,0,.1);
+      border: none;
+      outline: none;
+
+      font-size: 0.95rem;
     }
-    input, button {
-      width: 90% !important;
-      padding: 8px;
-      margin: 6px 0;
+
+    input::placeholder {
+      color: #777;
     }
+
     button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+
+      border: none;
+      border-radius: 6px;
+
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white;
+
+      font-size: 1rem;
+      font-weight: 500;
       cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
     .error {
-      color: red;
-      font-size: 0.9em;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #ffb3b3;
+      min-height: 1em;
+    }
+
+    /* Small festive touch */
+    .login-box::after {
+      content: "❄️";
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      font-size: 1.8rem;
     }
   </style>
 </head>
+
 <body>
 
-<div class="login-box">
-  <h2>Login</h2>
+  <div class="login-box">
+    <h2>🎄 Login</h2>
 
-  <input id="username" placeholder="Username">
-  <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
 
-  <div id="error" class="error"></div>
-</div>
+    <div id="error" class="error"></div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://doufxlvmjmmxerrutwai.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_eRXmtQptpnH3VF0g3UkGrA_vwDDROEB";
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://doufxlvmjmmxerrutwai.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_eRXmtQptpnH3VF0g3UkGrA_vwDDROEB";
 
-  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  async function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const error = document.getElementById("error");
+    async function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const error = document.getElementById("error");
 
-    error.textContent = "";
+      error.textContent = "";
 
-    const { data: user, error: dbError } = await db
-      .from("users")
-      .select("id, password")
-      .eq("id", username)
-      .eq("password", password)
-      .maybeSingle();
+      const { data: user, error: dbError } = await db
+        .from("users")
+        .select("id, password")
+        .eq("id", username)
+        .eq("password", password)
+        .maybeSingle();
 
-    if (dbError) {
-      console.error(dbError);
-      error.textContent = "Login error";
-      return;
+      if (dbError) {
+        console.error(dbError);
+        error.textContent = "Login error";
+        return;
+      }
+
+      if (!user) {
+        error.textContent = "Invalid username or password";
+        return;
+      }
+
+      sessionStorage.setItem("loggedIn", "true");
+      sessionStorage.setItem("user_id", user.id);
+      sessionStorage.setItem("SUPABASE_URL", SUPABASE_URL);
+      sessionStorage.setItem("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
+
+      window.location.href = "dashboard.html";
     }
-
-    if (!user) {
-      error.textContent = "Invalid username or password";
-      return;
-    }
-
-    sessionStorage.setItem("loggedIn", "true");
-    sessionStorage.setItem("user_id", user.id);
-    sessionStorage.setItem("SUPABASE_URL", SUPABASE_URL);
-    sessionStorage.setItem("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
-
-    window.location.href = "dashboard.html";
-
-
-
-  // try {
-  //   const res = await fetch("users.json");
-  //   const data = await res.json();
-
-  //   const user = data.users.find(
-  //     u => u.username === username && u.password === password
-  //   );
-
-  //   if (user) {
-  //     // store login state (demo only)
-  //     sessionStorage.setItem("loggedIn", "true");
-  //     sessionStorage.setItem("username", username);
-  //     sessionStorage.setItem("visible", JSON.stringify(user.visible || []));
-
-  //     window.location.href = "dashboard.html";
-  //   } else {
-  //     error.textContent = "Invalid username or password";
-  //   }
-  // } catch {
-  //   error.textContent = "Login system error";
-  // }
-}
-</script>
+  </script>
 
 </body>
 </html>
