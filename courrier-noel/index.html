@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Demo Login</title>
+  <title>Christmas Login</title>
 
-  <!-- Google Font -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -14,10 +14,9 @@
 
     body {
       margin: 0;
-      font-family: "Poppins", sans-serif;
       height: 100vh;
+      font-family: "Poppins", sans-serif;
 
-      /* Snowy Christmas forest background */
       background-image: url("https://images.unsplash.com/photo-1516455590571-18256e5bb9ff");
       background-size: cover;
       background-position: center;
@@ -26,77 +25,87 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
-    /* Dark overlay for contrast */
+    /* Dark overlay */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0,0,0,0.45);
       z-index: 0;
     }
 
+    /* Snow layer */
+    #snow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      width: var(--size);
+      height: var(--size);
+      background: white;
+      border-radius: 50%;
+      opacity: var(--opacity);
+      animation: fall var(--duration) linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translate3d(var(--x-end), 110vh, 0);
+      }
+    }
+
+    /* Login card */
     .login-box {
       position: relative;
-      z-index: 1;
+      z-index: 2;
 
       width: 320px;
       padding: 30px 26px;
       border-radius: 12px;
 
-      /* Glassmorphism effect */
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
 
       box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      color: #fff;
+      color: white;
       text-align: center;
     }
 
     .login-box h2 {
       margin-bottom: 20px;
       font-weight: 600;
-      letter-spacing: 0.5px;
     }
 
     input {
       width: 100%;
       padding: 10px 12px;
       margin: 8px 0;
-
       border-radius: 6px;
       border: none;
       outline: none;
-
       font-size: 0.95rem;
-    }
-
-    input::placeholder {
-      color: #777;
     }
 
     button {
       width: 100%;
       padding: 10px;
       margin-top: 12px;
-
       border: none;
       border-radius: 6px;
-
       background: linear-gradient(135deg, #2ecc71, #27ae60);
       color: white;
-
       font-size: 1rem;
-      font-weight: 500;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     }
 
     .error {
@@ -105,20 +114,15 @@
       color: #ffb3b3;
       min-height: 1em;
     }
-
-    /* Small festive touch */
-    .login-box::after {
-      content: "❄️";
-      position: absolute;
-      top: -18px;
-      right: -18px;
-      font-size: 1.8rem;
-    }
   </style>
 </head>
 
 <body>
 
+  <!-- Snow -->
+  <div id="snow"></div>
+
+  <!-- Login -->
   <div class="login-box">
     <h2>🎄 Login</h2>
 
@@ -129,11 +133,12 @@
     <div id="error" class="error"></div>
   </div>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
     const SUPABASE_URL = "https://doufxlvmjmmxerrutwai.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_eRXmtQptpnH3VF0g3UkGrA_vwDDROEB";
-
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     async function login() {
@@ -150,24 +155,47 @@
         .eq("password", password)
         .maybeSingle();
 
-      if (dbError) {
-        console.error(dbError);
-        error.textContent = "Login error";
-        return;
-      }
-
-      if (!user) {
+      if (dbError || !user) {
         error.textContent = "Invalid username or password";
         return;
       }
 
       sessionStorage.setItem("loggedIn", "true");
       sessionStorage.setItem("user_id", user.id);
-      sessionStorage.setItem("SUPABASE_URL", SUPABASE_URL);
-      sessionStorage.setItem("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY);
 
       window.location.href = "dashboard.html";
     }
+
+    /* ❄️ Snow generator */
+    (function createSnow() {
+      const snow = document.getElementById("snow");
+      const FLAKES = 90;
+
+      function rand(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      for (let i = 0; i < FLAKES; i++) {
+        const flake = document.createElement("div");
+        flake.className = "snowflake";
+
+        const size = rand(2, 5);
+        const startX = rand(0, window.innerWidth);
+        const drift = rand(-80, 80);
+        const duration = rand(8, 18);
+        const delay = rand(0, 10);
+        const opacity = rand(0.4, 0.9);
+
+        flake.style.setProperty("--size", `${size}px`);
+        flake.style.setProperty("--opacity", opacity.toFixed(2));
+        flake.style.setProperty("--duration", `${duration}s`);
+        flake.style.setProperty("--x-end", `${startX + drift}px`);
+        flake.style.left = `${startX}px`;
+        flake.style.animationDelay = `${delay}s`;
+
+        snow.appendChild(flake);
+      }
+    })();
   </script>
 
 </body>
