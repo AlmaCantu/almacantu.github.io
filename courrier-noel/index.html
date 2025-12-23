@@ -232,6 +232,11 @@
         snow.appendChild(flake);
       }
     })();
+
+    input.onkeydown = async (e) => {
+      if (e.key === "Enter") await login();
+    };
+    
   </script>
 
 </body>
