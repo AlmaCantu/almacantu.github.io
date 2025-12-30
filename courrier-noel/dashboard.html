@@ -111,6 +111,21 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
+  function getSeason(date = new Date()) {
+    const month = date.getMonth(); // 0–11
+    const day = date.getDate();
+
+    // Christmas: Nov 1 – Jan 6
+    const isChristmas =
+      month === 10 ||           // November
+      month === 11 ||           // December
+      (month === 0 && day <= 6) // January 1–6
+
+    return isChristmas ? "christmas" : "birthday";
+  }
+
+  document.documentElement.dataset.season = getSeason();
+
   // Storage key
   const STORAGE_KEY = "cadeauxData_v1";
 
