@@ -118,18 +118,18 @@
     const isChristmas = season === "christmas";
 
     // Browser tab title
-    document.title = isChristmas ? "Courrier du Père Noël" : "Liste d'anniversaire";
+    document.title = isChristmas ? "Courrier du Père Noël" : "Listes d'anniversaire";
 
     // Header brand text
     const brandTitle = document.getElementById("brandTitle");
     if (brandTitle) {
-      brandTitle.textContent = isChristmas ? "Courrier du Père Noël" : "Liste d'anniversaire";
+      brandTitle.textContent = isChristmas ? "Courrier du Père Noël" : "Listes d'anniversaire";
     }
 
     // Letter greeting line
     const greeting = document.getElementById("letter-intro");
     if (greeting) {
-      greeting.textContent = isChristmas ? "<p>Cher Père Noël,</p><p>J’espère que tu vas bien et j’ai hâte que tu arrives.</p><p>J’ai rassemblé quelques idées de cadeaux qui pourraient me faire plaisir au cas où tu manquerais d’idées.</p>" : "<p>Liste d’idées cadeaux</p>";
+      greeting.textContent = isChristmas ? "<p>Cher Père Noël,</p><p>J’espère que tu vas bien et j’ai hâte que tu arrives.</p><p>J’ai rassemblé quelques idées de cadeaux qui pourraient me faire plaisir au cas où tu manquerais d’idées.</p>" : "<p>Liste d’idées cadeaux:</p>";
     }
 
     // Letter greeting line
