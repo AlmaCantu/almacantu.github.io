@@ -153,12 +153,15 @@ main{
   border: 8px solid transparent;
 
   background-image:
-    linear-gradient(#fffdf7, #fffdf7),
+    linear-gradient(var(--main-background), var(--main-background)),
     repeating-linear-gradient(
       45deg,
       var(--icon-primary) 0 10px,
       transparent 10px 20px
     );
+
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 
 h1{
