@@ -190,9 +190,9 @@ h1{
   padding-top: 12px;
 }
 
-:root[data-season="christmas"] .list{
+/*:root[data-season="christmas"] .list{
   border-top: 1px solid var(--button-line);
-}
+}*/
 
 .item{
   display:flex;
