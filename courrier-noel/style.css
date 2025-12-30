@@ -30,9 +30,9 @@
   --icon-secondary: #EA4A24;   /* confetti orange */
 
   --menu-text: #1F2937;
-  --menu-background-dark: #F6A28F;   /* peach */
-  --menu-background: #FFF4EF;        /* soft peach */
-  --menu-background-light: #FFFFFF;
+  --menu-background-dark: #E88973;   /* peach */
+  --menu-background: #F6A28F;        /* soft peach */
+  --menu-background-light: #FFF4EF;
 }
 
 
@@ -54,8 +54,28 @@ body{
   background-image: url("christmas-background.jpg");
 }
 
-:root[data-season="birthday"] body{
+:r/*oot[data-season="birthday"] body{
   background-image: url("birthday-background.jpeg");
+
+  filter: blur(18px) saturate(1.1);
+  opacity: 0.35;
+
+  z-index: -1;
+}
+*/
+:root[data-season="birthday"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background-image: url("birthday-background.jpeg");
+  background-size: cover;
+  background-position: center;
+
+  filter: blur(18px);
+  opacity: 0.35;
+
+  z-index: -1;
 }
 
 /* Header */
