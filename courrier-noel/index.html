@@ -18,7 +18,7 @@
       height: 100vh;
       font-family: "Borel", cursive;
 
-      background-image: url("index-background.png");
+      background-image: url("index-background.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -39,7 +39,7 @@
     }
 
     /* Snow layer */
-    #snow {
+    /*#snow {
       position: fixed;
       inset: 0;
       pointer-events: none;
@@ -62,7 +62,7 @@
       to {
         transform: translate3d(var(--x-end), 110vh, 0);
       }
-    }
+    }*/
 
     /* Login card */
     .login-box {
@@ -97,6 +97,10 @@
       background: #f4f4f4;
       color: #333;
       border: 1px solid #ddd;
+    }
+    
+    input::placeholder {
+      font-family: "Borel", cursive;
     }
     
     button {
@@ -154,7 +158,7 @@
 <body>
 
   <!-- Snow -->
-  <div id="snow"></div>
+  <!-- <div id="snow"></div> -->
 
   <!-- Login -->
   <div class="login-box">
