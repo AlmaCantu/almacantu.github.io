@@ -39,15 +39,23 @@
 *{ box-sizing:border-box; }
 
 body{
-  margin:0;
-  /* font-family: "Rochester", cursive; */
   font-family: "Borel", cursive;
   color: var(--text);
-  background-image: url("background.jpg");
+
+  margin:0;
+
   background-size: cover;        /* fill screen */
   background-position: center;   /* center image */
   background-repeat: no-repeat;  /* no tiling */
   background-attachment: fixed;  /* optional: parallax effect */
+}
+
+:root[data-season="christmas"] body{
+  background-image: url("christmas-background.jpg");
+}
+
+:root[data-season="birthday"] body{
+  background-image: url("birthday-background.jpg");
 }
 
 /* Header */
