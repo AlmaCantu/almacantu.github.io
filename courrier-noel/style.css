@@ -26,8 +26,8 @@
 }
 
 :root[data-season="birthday"] {
-  --icon-primary: #5A4CCD;     /* confetti blue */
-  --icon-secondary: #EA4A24;   /* confetti orange */
+  --icon-primary: #EA4A24;   /* confetti orange */
+  --icon-secondary: #5A4CCD;     /* confetti blue */
 
   --menu-text: #1F2937;
   --menu-background-dark: #E88973;   /* peach */
