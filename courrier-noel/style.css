@@ -26,13 +26,13 @@
 }
 
 :root[data-season="birthday"] {
-  --icon-primary: #2CB1A6;     /* teal */
-  --icon-secondary: #99F6E4;   /* soft mint */
+  --icon-primary: #5A4CCD;     /* confetti blue */
+  --icon-secondary: #EA4A24;   /* confetti orange */
 
-  --menu-text: #0F172A;
-  --menu-background-dark: #0F766E;
-  --menu-background: #2CB1A6;
-  --menu-background-light: #ECFEFF;
+  --menu-text: #1F2937;
+  --menu-background-dark: #F6A28F;   /* peach */
+  --menu-background: #FFF4EF;        /* soft peach */
+  --menu-background-light: #FFFFFF;
 }
 
 
