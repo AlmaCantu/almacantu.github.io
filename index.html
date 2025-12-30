@@ -1,25 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
 
+  <title>Alma's Personal Website</title>
+
   <style>
     body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       font-family: "Poiret One", sans-serif;
+      background: linear-gradient(180deg, #fff4ef, #ffffff);
+      color: #1f2937;
+    }
+
+    .container {
+      text-align: center;
+      padding: 40px 32px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
       font-weight: 400;
-      font-style: normal;
+    }
+
+    p {
+      margin-bottom: 24px;
+      opacity: 0.8;
+    }
+
+    a {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+
+      color: #5a4ccd;
+      border: 1px solid rgba(90, 76, 205, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    a:hover {
+      background-color: rgba(90, 76, 205, 0.08);
+      transform: translateY(-1px);
     }
   </style>
-}
-
-  <title>Alma's Personal Website</title>
 </head>
-<body>
-  <h1>Welcome to my website</h1>
-  <p>GitHub Projects:</p>
 
-  <a href="courrier-noel/">✉️ Christmas Letters</a>
+<body>
+  <div class="container">
+    <h1>Welcome to my website</h1>
+    <p>GitHub Projects</p>
+
+    <a href="courrier-noel/">✉️ Christmas Letters</a>
+  </div>
 </body>
 </html>
