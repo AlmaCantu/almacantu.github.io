@@ -110,9 +110,9 @@
     return isChristmas ? "christmas" : "birthday";
   }
 
-  const season = getSeason(); 
-  // document.documentElement.dataset.season = season;
-  document.documentElement.dataset.season = "birthday";
+  const season = getSeason();
+  const season = "birthday";
+  document.documentElement.dataset.season = season;
 
   function applySeasonText(season) {
     const isChristmas = season === "christmas";
