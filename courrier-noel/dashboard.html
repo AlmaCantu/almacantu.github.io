@@ -129,13 +129,13 @@
     // Letter greeting line
     const greeting = document.getElementById("letter-intro");
     if (greeting) {
-      greeting.textContent = isChristmas ? "<p>Cher Père Noël,</p><p>J’espère que tu vas bien et j’ai hâte que tu arrives.</p><p>J’ai rassemblé quelques idées de cadeaux qui pourraient me faire plaisir au cas où tu manquerais d’idées.</p>" : "<p>Liste d’idées cadeaux:</p>";
+      greeting.innerHTML = isChristmas ? "<p>Cher Père Noël,</p><p>J’espère que tu vas bien et j’ai hâte que tu arrives.</p><p>J’ai rassemblé quelques idées de cadeaux qui pourraient me faire plaisir au cas où tu manquerais d’idées.</p>" : "<p>Liste d’idées cadeaux:</p>";
     }
 
     // Letter greeting line
     const end = document.getElementById("letter-end");
     if (end) {
-      end.textContent = isChristmas ? "<p>Mille bisous,</p>" : "";
+      end.innerHTML = isChristmas ? "<p>Mille bisous,</p>" : "";
     }
   }
 
