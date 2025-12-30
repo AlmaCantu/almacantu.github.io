@@ -139,29 +139,19 @@ main{
 .panel{
   width: 70%;
   max-width: 980px;
-  background: var(--main-background);
 
-  /*border: 8px solid transparent;
-  background-image:
-    linear-gradient(#fffdf7, #fffdf7),
-    repeating-linear-gradient(
-      45deg,
-      var(--icon-primary) 0 10px,
-      transparent 10px 20px
-    );
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-    
+  background: var(--main-background);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 20px;*/
+  padding: 20px;
 
   display: flex;
   flex-direction: column;
 }
 
-.panel[data-season="christmas"]{
+:root[data-season="christmas"] .panel{
   border: 8px solid transparent;
+
   background-image:
     linear-gradient(#fffdf7, #fffdf7),
     repeating-linear-gradient(
@@ -169,8 +159,6 @@ main{
       var(--icon-primary) 0 10px,
       transparent 10px 20px
     );
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
 }
 
 h1{
