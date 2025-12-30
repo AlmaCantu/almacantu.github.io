@@ -26,16 +26,21 @@
 }
 
 :root[data-season="birthday"] {
-  /*--icon-primary: #EA4A24;   *//* confetti orange */
-  /*--icon-secondary: #5A4CCD;     *//* confetti blue */
-
-  --icon-primary: #FCBA03;
+  /*--icon-primary: #FCBA03;
   --icon-secondary: #5A4CCD;
 
   --menu-text: #1F2937;
-  --menu-background-dark: #DA7A63;   /* peach */
-  --menu-background: #E88973;        /* soft peach */
-  --menu-background-light: #F6A28F;
+  --menu-background-dark: #DA7A63;
+  --menu-background: #E88973;
+  --menu-background-light: #F6A28F;*/
+
+  --icon-primary: #fb9900;
+  --icon-secondary: #67aab2;
+
+  --menu-text: #1F2937;
+  --menu-background-dark: #2c475c;
+  --menu-background: #2c475c;
+  --menu-background-light: #2c475c;
 }
 
 
@@ -58,7 +63,7 @@ body{
 }
 
 :root[data-season="birthday"] body{
-  background-image: url("birthday-background.jpeg");
+  background-image: url("birthday-background2.jpeg");
 }
 
 /* Header */
