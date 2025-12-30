@@ -1,6 +1,6 @@
 :root{
   --text:#111827;                 /* navy */
-  --icon-muted: #E5E7EB;          /* gray */
+  --icon-muted: #6B7280;          /* gray */
   
   --main-background: #FFFFFF;     /* white */
 
@@ -9,7 +9,7 @@
   --button-line:#E5E7EB;          /* gray */
   --button-background:#FFFFFF;    /* white */
 
-  --delete: #DC2626;              /* red */
+  --delete: #991B1B;              /* deep red */
 
   --shadow: 0 10px 25px rgba(0,0,0,.08);
   --radius: 16px;
@@ -26,6 +26,13 @@
 }
 
 :root[data-season="birthday"] {
+  --icon-primary: #2563EB;          /* blue */
+  --icon-secondary: #FACC15;        /* yellow */
+
+  --menu-text: #111827;
+  --menu-background-dark: #EFF6FF;
+  --menu-background: #DBEAFE;
+  --menu-background-light: #FEF9C3;
 }
 
 
