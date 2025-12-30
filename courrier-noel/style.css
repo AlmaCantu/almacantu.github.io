@@ -26,14 +26,6 @@
 }
 
 :root[data-season="birthday"] {
-  /*--icon-primary: #FCBA03;
-  --icon-secondary: #5A4CCD;
-
-  --menu-text: #1F2937;
-  --menu-background-dark: #DA7A63;
-  --menu-background: #E88973;
-  --menu-background-light: #F6A28F;*/
-
   --icon-primary: #fb9900;
   --icon-secondary: #67aab2;
 
@@ -194,9 +186,12 @@ h1{
 
 /* Gift list */
 .list{
-  border-top: 1px solid var(--button-line);
   margin-top: 12px;
   padding-top: 12px;
+}
+
+:root[data-season="christmas"] .list{
+  border-top: 1px solid var(--button-line);
 }
 
 .item{
