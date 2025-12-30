@@ -24,7 +24,7 @@
   <div>
     <div class="brand">
       <button class="menu-btn" onclick="openMenu()">☰</button>
-      Lettre au Père Noël
+      <span id="brandTitle">Courrier du Père Noël</span>
     </div>
   </div>
   <div class="header-actions">
@@ -36,27 +36,18 @@
 <div class="layout">
   <!-- Desktop sidebar -->
   <aside class="sidebar">
-    <!-- <div class="nav-title">Utilisateurs</div> -->
     <nav class="nav" id="desktopNav"></nav>
   </aside>
 
   <!-- Main content -->
   <main>
     <section class="panel">
-      <!-- <h1 id="title"></h1>
-      <p class="hint" id="hint"></p> -->
       <div class="letter-body">
-        <p>
-          Cher Père Noël,
-        </p>
-      
-        <p>
-          J’espère que tu vas bien et j’ai hâte que tu arrives.
-        </p>
-      
-        <p>
-          J’ai rassemblé quelques idées de cadeaux qui pourraient me faire plaisir au cas où tu manquerais d’idées.
-        </p>
+        <div class="letter-intro">
+          <p>Cher Père Noël,</p>
+          <p>J’espère que tu vas bien et j’ai hâte que tu arrives.</p>
+          <p>J’ai rassemblé quelques idées de cadeaux qui pourraient me faire plaisir au cas où tu manquerais d’idées.</p>
+        </div>
   
         <div class="list" id="giftList"></div>
   
@@ -68,9 +59,9 @@
 
       <div class="letter-footer">
       
-        <p>
-          Mille bisous,
-        </p>
+        <div class="letter-end">
+          <p>Mille bisous,</p>
+        </div>
       
         <p id="signature"></p>
       </div>
@@ -90,11 +81,6 @@
 <div class="modal-overlay" id="helpModal" onclick="closeHelp()">
   <div class="modal" onclick="event.stopPropagation()">
     <h2>Instructions</h2>
-
-    <p>
-      <!-- This page is a demo dashboard. Use the menu to navigate and read the content -->
-      <!-- inside the letter panel. -->
-    </p>
 
     <div>
       <p><i class="stateBtn fa-regular fa-square green"></i>&nbsp;Idée de cadeau disponible</p>
@@ -124,8 +110,36 @@
     return isChristmas ? "christmas" : "birthday";
   }
 
-  // document.documentElement.dataset.season = getSeason();
+  const season = getSeason(); 
+  // document.documentElement.dataset.season = season;
   document.documentElement.dataset.season = "birthday";
+
+  function applySeasonText(season) {
+    const isChristmas = season === "christmas";
+
+    // Browser tab title
+    document.title = isChristmas ? "Courrier du Père Noël" : "Liste d'anniversaire";
+
+    // Header brand text
+    const brandTitle = document.getElementById("brandTitle");
+    if (brandTitle) {
+      brandTitle.textContent = isChristmas ? "Courrier du Père Noël" : "Liste d'anniversaire";
+    }
+
+    // Letter greeting line
+    const greeting = document.getElementById("letter-intro");
+    if (greeting) {
+      greeting.textContent = isChristmas ? "<p>Cher Père Noël,</p><p>J’espère que tu vas bien et j’ai hâte que tu arrives.</p><p>J’ai rassemblé quelques idées de cadeaux qui pourraient me faire plaisir au cas où tu manquerais d’idées.</p>" : "<p>Liste d’idées cadeaux</p>";
+    }
+
+    // Letter greeting line
+    const end = document.getElementById("letter-end");
+    if (end) {
+      end.textContent = isChristmas ? "<p>Mille bisous,</p>" : "";
+    }
+  }
+
+  applySeasonText(season);
 
   // Storage key
   const STORAGE_KEY = "cadeauxData_v1";
