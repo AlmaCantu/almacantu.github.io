@@ -30,7 +30,8 @@
   }
 
 :root[data-season="christmas"] {
-  --icon-primary: #DC2626;          /* red */
+  --icon-primary: #8cb324;          /* red */
+  /*--icon-primary: #DC2626;*/
   --icon-secondary: #0F5132;        /* green */
 
   --menu-text: #E9F5EF;             /* white */
