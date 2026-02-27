@@ -1033,7 +1033,13 @@ Key fixes are:
     
     async function init(){
 
-      await loadCSV();
+      ALL = await loadCSV();
+
+      OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
+      OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
+      OPTIONS.expertises = uniqSorted(ALL.flatMap(p => p.expertises || []));
+      OPTIONS.dataTypes = uniqSorted(ALL.flatMap(p => p.dataTypes || []));
+      OPTIONS.applications = uniqSorted(ALL.flatMap(p => p.applications || []));
 
       $("#searchInput").addEventListener("input", (e) => {
         state.query = e.target.value || "";
