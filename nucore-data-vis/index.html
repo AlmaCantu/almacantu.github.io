@@ -637,7 +637,7 @@ Key fixes are:
       <aside>
         <details>
           <summary>
-            <span class="summaryTitle">Role</span>
+            <span class="summaryTitle">Roles</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -647,7 +647,7 @@ Key fixes are:
 
         <details>
           <summary>
-            <span class="summaryTitle">Affiliation</span>
+            <span class="summaryTitle">Affiliations</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -657,27 +657,47 @@ Key fixes are:
 
         <details>
           <summary>
-            <span class="summaryTitle">General expertise</span>
+            <span class="summaryTitle">Visual representations</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </summary>
-          <div id="filter-expertises" class="filterList"></div>
+          <div id="filter-visualRepresentations" class="filterList"></div>
         </details>
 
         <details>
           <summary>
-            <span class="summaryTitle">Data type</span>
+            <span class="summaryTitle">Data Characteristics</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </summary>
-          <div id="filter-dataTypes" class="filterList"></div>
+          <div id="filter-dataCharacteristics" class="filterList"></div>
         </details>
 
         <details>
           <summary>
-            <span class="summaryTitle">Application</span>
+            <span class="summaryTitle">Applications</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div id="filter-applications" class="filterList"></div>
+        </details>
+
+        <details>
+          <summary>
+            <span class="summaryTitle">Interaction and analysis</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div id="filter-applications" class="filterList"></div>
+        </details>
+
+        <details>
+          <summary>
+            <span class="summaryTitle">Design, evaluation, and ethics</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -729,8 +749,8 @@ Key fixes are:
           email: obj.email,
           webpage: obj.webpage,
           affiliation: obj.affiliation,
-          expertises: obj.expertises ? obj.expertises.split(";").map(s => s.trim()) : [],
-          dataTypes: obj.dataTypes ? obj.dataTypes.split(";").map(s => s.trim()) : [],
+          visualRepresentations: obj.visualRepresentations ? obj.visualRepresentations.split(";").map(s => s.trim()) : [],
+          dataCharacteristics: obj.dataCharacteristics ? obj.dataCharacteristics.split(";").map(s => s.trim()) : [],
           applications: obj.applications ? obj.applications.split(";").map(s => s.trim()) : []
         };
       });
@@ -772,8 +792,8 @@ Key fixes are:
       filters: {
         role: new Set(),
         affiliation: new Set(),
-        expertises: new Set(),
-        dataTypes: new Set(),
+        visualRepresentations: new Set(),
+        dataCharacteristics: new Set(),
         applications: new Set()
       }
     };
@@ -791,8 +811,8 @@ Key fixes are:
     const OPTIONS = {
       roles: uniqSorted(ALL.map(p => p.role).filter(Boolean)),
       affiliations: uniqSorted(ALL.map(p => p.affiliation).filter(Boolean)),
-      expertises: uniqSorted(ALL.flatMap(p => p.expertises || [])),
-      dataTypes: uniqSorted(ALL.flatMap(p => p.dataTypes || [])),
+      visualRepresentations: uniqSorted(ALL.flatMap(p => p.visualRepresentations || [])),
+      dataCharacteristics: uniqSorted(ALL.flatMap(p => p.dataCharacteristics || [])),
       applications: uniqSorted(ALL.flatMap(p => p.applications || [])),
     };
 
@@ -813,8 +833,8 @@ Key fixes are:
         person.role,
         person.email,
         person.affiliation,
-        ...(person.expertises || []),
-        ...(person.dataTypes || []),
+        ...(person.visualRepresentations || []),
+        ...(person.dataCharacteristics || []),
         ...(person.applications || [])
       ].filter(Boolean).join(" • ").toLowerCase();
       return hay.includes(q);
@@ -826,8 +846,8 @@ Key fixes are:
       const f = state.filters;
       if (f.role.size > 0 && !f.role.has(person.role)) return false;
       if (f.affiliation.size > 0 && !f.affiliation.has(person.affiliation)) return false;
-      if (!matchesAllSelected(f.expertises, person.expertises)) return false;
-      if (!matchesAllSelected(f.dataTypes, person.dataTypes)) return false;
+      if (!matchesAllSelected(f.visualRepresentations, person.visualRepresentations)) return false;
+      if (!matchesAllSelected(f.dataCharacteristics, person.dataCharacteristics)) return false;
       if (!matchesAllSelected(f.applications, person.applications)) return false;
       return true;
     }
@@ -838,8 +858,8 @@ Key fixes are:
       const f = state.filters;
       if (excludedGroup !== "role" && f.role.size > 0 && !f.role.has(person.role)) return false;
       if (excludedGroup !== "affiliation" && f.affiliation.size > 0 && !f.affiliation.has(person.affiliation)) return false;
-      if (excludedGroup !== "expertises" && !matchesAllSelected(f.expertises, person.expertises)) return false;
-      if (excludedGroup !== "dataTypes" && !matchesAllSelected(f.dataTypes, person.dataTypes)) return false;
+      if (excludedGroup !== "visualRepresentations" && !matchesAllSelected(f.visualRepresentations, person.visualRepresentations)) return false;
+      if (excludedGroup !== "dataCharacteristics" && !matchesAllSelected(f.dataCharacteristics, person.dataCharacteristics)) return false;
       if (excludedGroup !== "applications" && !matchesAllSelected(f.applications, person.applications)) return false;
       return true;
     }
@@ -855,10 +875,10 @@ Key fixes are:
         } else if (group === "affiliation"){
           const v = p.affiliation;
           if (v) m.set(v, (m.get(v) || 0) + 1);
-        } else if (group === "expertises"){
-          for (const v of (p.expertises || [])) m.set(v, (m.get(v) || 0) + 1);
-        } else if (group === "dataTypes"){
-          for (const v of (p.dataTypes || [])) m.set(v, (m.get(v) || 0) + 1);
+        } else if (group === "visualRepresentations"){
+          for (const v of (p.visualRepresentations || [])) m.set(v, (m.get(v) || 0) + 1);
+        } else if (group === "dataCharacteristics"){
+          for (const v of (p.dataCharacteristics || [])) m.set(v, (m.get(v) || 0) + 1);
         } else if (group === "applications"){
           for (const v of (p.applications || [])) m.set(v, (m.get(v) || 0) + 1);
         }
@@ -909,8 +929,8 @@ Key fixes are:
         state.query.trim().length > 0 ||
         state.filters.role.size > 0 ||
         state.filters.affiliation.size > 0 ||
-        state.filters.expertises.size > 0 ||
-        state.filters.dataTypes.size > 0 ||
+        state.filters.visualRepresentations.size > 0 ||
+        state.filters.dataCharacteristics.size > 0 ||
         state.filters.applications.size > 0
       );
     }
@@ -924,8 +944,8 @@ Key fixes are:
       return (
         state.filters.role.has(value) ||
         state.filters.affiliation.has(value) ||
-        state.filters.expertises.has(value) ||
-        state.filters.dataTypes.has(value) ||
+        state.filters.visualRepresentations.has(value) ||
+        state.filters.dataCharacteristics.has(value) ||
         state.filters.applications.has(value)
       );
     }
@@ -946,8 +966,8 @@ Key fixes are:
         card.className = "card";
 
         const tags = [
-          ...(p.expertises || []),
-          ...(p.dataTypes || []),
+          ...(p.visualRepresentations || []),
+          ...(p.dataCharacteristics || []),
           ...(p.applications || [])
         ];
 
@@ -1001,8 +1021,8 @@ Key fixes are:
       if (state.query.trim()) addChip("query", state.query.trim(), "Search");
       for (const v of state.filters.role) addChip("role", v, "Role");
       for (const v of state.filters.affiliation) addChip("affiliation", v, "Affiliation");
-      for (const v of state.filters.expertises) addChip("expertises", v, "Expertise");
-      for (const v of state.filters.dataTypes) addChip("dataTypes", v, "Data type");
+      for (const v of state.filters.visualRepresentations) addChip("visualRepresentations", v, "Expertise");
+      for (const v of state.filters.dataCharacteristics) addChip("dataCharacteristics", v, "Data type");
       for (const v of state.filters.applications) addChip("applications", v, "Application");
     }
 
@@ -1016,8 +1036,8 @@ Key fixes are:
     function renderFilterCountsAndLists(){
       buildCheckboxList($("#filter-role"), OPTIONS.roles, "role", countMapFor("role"));
       buildCheckboxList($("#filter-affiliation"), OPTIONS.affiliations, "affiliation", countMapFor("affiliation"));
-      buildCheckboxList($("#filter-expertises"), OPTIONS.expertises, "expertises", countMapFor("expertises"));
-      buildCheckboxList($("#filter-dataTypes"), OPTIONS.dataTypes, "dataTypes", countMapFor("dataTypes"));
+      buildCheckboxList($("#filter-visualRepresentations"), OPTIONS.visualRepresentations, "visualRepresentations", countMapFor("visualRepresentations"));
+      buildCheckboxList($("#filter-dataCharacteristics"), OPTIONS.dataCharacteristics, "dataCharacteristics", countMapFor("dataCharacteristics"));
       buildCheckboxList($("#filter-applications"), OPTIONS.applications, "applications", countMapFor("applications"));
     }
 
@@ -1037,8 +1057,8 @@ Key fixes are:
 
       OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
       OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
-      OPTIONS.expertises = uniqSorted(ALL.flatMap(p => p.expertises || []));
-      OPTIONS.dataTypes = uniqSorted(ALL.flatMap(p => p.dataTypes || []));
+      OPTIONS.visualRepresentations = uniqSorted(ALL.flatMap(p => p.visualRepresentations || []));
+      OPTIONS.dataCharacteristics = uniqSorted(ALL.flatMap(p => p.dataCharacteristics || []));
       OPTIONS.applications = uniqSorted(ALL.flatMap(p => p.applications || []));
 
       $("#searchInput").addEventListener("input", (e) => {
