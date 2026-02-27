@@ -1081,11 +1081,11 @@ Key fixes are:
 
       ALL = await loadCSV();
 
-      // OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
-      // OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
-      // OPTIONS.visualRepresentations = uniqSorted(ALL.flatMap(p => p.visualRepresentations || []));
-      // OPTIONS.dataCharacteristics = uniqSorted(ALL.flatMap(p => p.dataCharacteristics || []));
-      // OPTIONS.applications = uniqSorted(ALL.flatMap(p => p.applications || []));
+      OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
+      OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
+      OPTIONS.visualRepresentations = uniqSorted(ALL.flatMap(p => p.visualRepresentations || []));
+      OPTIONS.dataCharacteristics = uniqSorted(ALL.flatMap(p => p.dataCharacteristics || []));
+      OPTIONS.applications = uniqSorted(ALL.flatMap(p => p.applications || []));
 
       $("#searchInput").addEventListener("input", (e) => {
         state.query = e.target.value || "";
