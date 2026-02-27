@@ -1033,11 +1033,7 @@ Key fixes are:
     
     async function init(){
 
-      console.log("here");
-
       ALL = await loadCSV();
-
-      log(ALL[1]);
 
       OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
       OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
