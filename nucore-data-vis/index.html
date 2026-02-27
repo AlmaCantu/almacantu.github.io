@@ -667,7 +667,7 @@ Key fixes are:
 
         <details>
           <summary>
-            <span class="summaryTitle">Data Characteristics</span>
+            <span class="summaryTitle">Data characteristics</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -677,27 +677,27 @@ Key fixes are:
 
         <details>
           <summary>
-            <span class="summaryTitle">Applications</span>
-            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </summary>
-          <div id="filter-applications" class="filterList"></div>
-        </details>
-
-        <details>
-          <summary>
             <span class="summaryTitle">Interaction and analysis</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </summary>
-          <div id="filter-applications" class="filterList"></div>
+          <div id="filter-interactionAnalysis" class="filterList"></div>
         </details>
 
         <details>
           <summary>
             <span class="summaryTitle">Design, evaluation, and ethics</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div id="filter-designEvaluationEthics" class="filterList"></div>
+        </details>
+
+        <details>
+          <summary>
+            <span class="summaryTitle">Applications</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -751,6 +751,8 @@ Key fixes are:
           affiliation: obj.affiliation,
           visualRepresentations: obj.visualRepresentations ? obj.visualRepresentations.split(";").map(s => s.trim()) : [],
           dataCharacteristics: obj.dataCharacteristics ? obj.dataCharacteristics.split(";").map(s => s.trim()) : [],
+          interactionAnalysis: obj.interactionAnalysis ? obj.interactionAnalysis.split(";").map(s => s.trim()) : [],
+          designEvaluationEthics: obj.designEvaluationEthics ? obj.designEvaluationEthics.split(";").map(s => s.trim()) : [],
           applications: obj.applications ? obj.applications.split(";").map(s => s.trim()) : []
         };
       });
@@ -795,6 +797,8 @@ Key fixes are:
         visualRepresentations: new Set(),
         dataCharacteristics: new Set(),
         applications: new Set()
+        interactionAnalysis: new Set(),
+        designEvaluationEthics: new Set()
       }
     };
 
@@ -813,6 +817,8 @@ Key fixes are:
       affiliations: uniqSorted(ALL.map(p => p.affiliation).filter(Boolean)),
       visualRepresentations: uniqSorted(ALL.flatMap(p => p.visualRepresentations || [])),
       dataCharacteristics: uniqSorted(ALL.flatMap(p => p.dataCharacteristics || [])),
+      interactionAnalysis: uniqSorted(ALL.flatMap(p => p.interactionAnalysis || [])),
+      designEvaluationEthics: uniqSorted(ALL.flatMap(p => p.designEvaluationEthics || [])),
       applications: uniqSorted(ALL.flatMap(p => p.applications || [])),
     };
 
@@ -835,6 +841,8 @@ Key fixes are:
         person.affiliation,
         ...(person.visualRepresentations || []),
         ...(person.dataCharacteristics || []),
+        ...(person.interactionAnalysis || []),
+        ...(person.designEvaluationEthics || []),
         ...(person.applications || [])
       ].filter(Boolean).join(" • ").toLowerCase();
       return hay.includes(q);
@@ -848,6 +856,8 @@ Key fixes are:
       if (f.affiliation.size > 0 && !f.affiliation.has(person.affiliation)) return false;
       if (!matchesAllSelected(f.visualRepresentations, person.visualRepresentations)) return false;
       if (!matchesAllSelected(f.dataCharacteristics, person.dataCharacteristics)) return false;
+      if (!matchesAllSelected(f.interactionAnalysis, person.interactionAnalysis)) return false;
+      if (!matchesAllSelected(f.designEvaluationEthics, person.designEvaluationEthics)) return false;
       if (!matchesAllSelected(f.applications, person.applications)) return false;
       return true;
     }
@@ -859,6 +869,8 @@ Key fixes are:
       if (excludedGroup !== "role" && f.role.size > 0 && !f.role.has(person.role)) return false;
       if (excludedGroup !== "affiliation" && f.affiliation.size > 0 && !f.affiliation.has(person.affiliation)) return false;
       if (excludedGroup !== "visualRepresentations" && !matchesAllSelected(f.visualRepresentations, person.visualRepresentations)) return false;
+      if (excludedGroup !== "interactionAnalysis" && !matchesAllSelected(f.interactionAnalysis, person.interactionAnalysis)) return false;
+      if (excludedGroup !== "designEvaluationEthics" && !matchesAllSelected(f.designEvaluationEthics, person.designEvaluationEthics)) return false;
       if (excludedGroup !== "dataCharacteristics" && !matchesAllSelected(f.dataCharacteristics, person.dataCharacteristics)) return false;
       if (excludedGroup !== "applications" && !matchesAllSelected(f.applications, person.applications)) return false;
       return true;
@@ -881,6 +893,10 @@ Key fixes are:
           for (const v of (p.dataCharacteristics || [])) m.set(v, (m.get(v) || 0) + 1);
         } else if (group === "applications"){
           for (const v of (p.applications || [])) m.set(v, (m.get(v) || 0) + 1);
+        } else if (group === "interactionAnalysis"){
+          for (const v of (p.interactionAnalysis || [])) m.set(v, (m.get(v) || 0) + 1);
+        } else if (group === "designEvaluationEthics"){
+          for (const v of (p.designEvaluationEthics || [])) m.set(v, (m.get(v) || 0) + 1);
         }
       }
       return m;
@@ -931,6 +947,8 @@ Key fixes are:
         state.filters.affiliation.size > 0 ||
         state.filters.visualRepresentations.size > 0 ||
         state.filters.dataCharacteristics.size > 0 ||
+        state.filters.interactionAnalysis.size > 0 ||
+        state.filters.designEvaluationEthics.size > 0 ||
         state.filters.applications.size > 0
       );
     }
@@ -946,6 +964,8 @@ Key fixes are:
         state.filters.affiliation.has(value) ||
         state.filters.visualRepresentations.has(value) ||
         state.filters.dataCharacteristics.has(value) ||
+        state.filters.interactionAnalysis.has(value) ||
+        state.filters.designEvaluationEthics.has(value) ||
         state.filters.applications.has(value)
       );
     }
@@ -968,6 +988,8 @@ Key fixes are:
         const tags = [
           ...(p.visualRepresentations || []),
           ...(p.dataCharacteristics || []),
+          ...(p.interactionAnalysis || []),
+          ...(p.designEvaluationEthics || []),
           ...(p.applications || [])
         ];
 
@@ -1021,8 +1043,10 @@ Key fixes are:
       if (state.query.trim()) addChip("query", state.query.trim(), "Search");
       for (const v of state.filters.role) addChip("role", v, "Role");
       for (const v of state.filters.affiliation) addChip("affiliation", v, "Affiliation");
-      for (const v of state.filters.visualRepresentations) addChip("visualRepresentations", v, "Expertise");
-      for (const v of state.filters.dataCharacteristics) addChip("dataCharacteristics", v, "Data type");
+      for (const v of state.filters.visualRepresentations) addChip("visualRepresentations", v, "Visual representation");
+      for (const v of state.filters.dataCharacteristics) addChip("dataCharacteristics", v, "Data characteristic");
+      for (const v of state.filters.interactionAnalysis) addChip("interactionAnalysis", v, "Interaction and analysis");
+      for (const v of state.filters.designEvaluationEthics) addChip("designEvaluationEthics", v, "Design, evaluation and ethics");
       for (const v of state.filters.applications) addChip("applications", v, "Application");
     }
 
@@ -1038,6 +1062,8 @@ Key fixes are:
       buildCheckboxList($("#filter-affiliation"), OPTIONS.affiliations, "affiliation", countMapFor("affiliation"));
       buildCheckboxList($("#filter-visualRepresentations"), OPTIONS.visualRepresentations, "visualRepresentations", countMapFor("visualRepresentations"));
       buildCheckboxList($("#filter-dataCharacteristics"), OPTIONS.dataCharacteristics, "dataCharacteristics", countMapFor("dataCharacteristics"));
+      buildCheckboxList($("#filter-interactionAnalysis"), OPTIONS.interactionAnalysis, "interactionAnalysis", countMapFor("interactionAnalysis"));
+      buildCheckboxList($("#filter-designEvaluationEthics"), OPTIONS.designEvaluationEthics, "designEvaluationEthics", countMapFor("designEvaluationEthics"));
       buildCheckboxList($("#filter-applications"), OPTIONS.applications, "applications", countMapFor("applications"));
     }
 
@@ -1055,11 +1081,11 @@ Key fixes are:
 
       ALL = await loadCSV();
 
-      OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
-      OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
-      OPTIONS.visualRepresentations = uniqSorted(ALL.flatMap(p => p.visualRepresentations || []));
-      OPTIONS.dataCharacteristics = uniqSorted(ALL.flatMap(p => p.dataCharacteristics || []));
-      OPTIONS.applications = uniqSorted(ALL.flatMap(p => p.applications || []));
+      // OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
+      // OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
+      // OPTIONS.visualRepresentations = uniqSorted(ALL.flatMap(p => p.visualRepresentations || []));
+      // OPTIONS.dataCharacteristics = uniqSorted(ALL.flatMap(p => p.dataCharacteristics || []));
+      // OPTIONS.applications = uniqSorted(ALL.flatMap(p => p.applications || []));
 
       $("#searchInput").addEventListener("input", (e) => {
         state.query = e.target.value || "";
