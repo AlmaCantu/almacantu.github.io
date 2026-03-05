@@ -961,11 +961,10 @@ Key fixes are:
 
         card.innerHTML = `
           <div>
-            <h3 class="name">${escapeHtml(p.name)}</h3>
-            <p class="role">${escapeHtml(p.role || "")}</p>
-            <p class="aff">${escapeHtml(p.affiliation || "")}</p>
-            <p class="email">${escapeHtml(p.email)}</p>
-            <div class="webLink"><a href="${escapeHtml(p.webpage)}" target="_blank" rel="noopener noreferrer">Webpage ↗</a></div>
+            <h3 class="name"><a href="${escapeHtml(p.webpage)}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.name)}</a></h3>
+            <p class="role">Role: ${escapeHtml(p.role || "")}</p>
+            <p class="aff">Affiliation: ${escapeHtml(p.affiliation || "")}</p>
+            <p class="email">Email: ${escapeHtml(p.email)}</p>
           </div>
           <div class="tags">${tagsHtml || "<span class='tag'>—</span>"}${moreHtml}</div>
         `;
