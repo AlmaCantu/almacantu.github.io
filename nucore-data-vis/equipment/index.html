@@ -1,19 +1,9 @@
-<!--
-Applied: ONLY the card section scrolls (everything else stays static)
-Key fixes are:
-- html,body { overflow:hidden; height:100% }
-- .wrap { height:100vh; display:flex; flex-direction:column }
-- .layout { flex:1; min-height:0 }
-- .rightCol { min-height:0 }
-- .cardsScroller { flex:1; min-height:0; overflow:auto }
--->
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>People Directory</title>
+  <title>Equipment Directory</title>
 
   <style>
     @font-face{
@@ -36,10 +26,9 @@ Key fixes are:
     :root{
       --ribbon: #003a65;
       --bg: #ffffff;
-      /*--card: #f5f5f5;*/
       --card: #ffffff;
-      --line: #da1a35;     /* red ONLY: ribbon bottom */
-      --border: #e5e7eb;   /* grey everywhere else */
+      --line: #da1a35;
+      --border: #e5e7eb;
       --text: #111111;
       --muted: #6b7280;
       --shadow: 0 6px 18px rgba(0,0,0,.08);
@@ -49,10 +38,6 @@ Key fixes are:
       --focus: 0 0 0 3px rgba(15, 23, 42, .18);
       --padding: 280px;
 
-      /* Tableau 10 */
-      --t10-0:#4E79A7; --t10-1:#F28E2B; --t10-2:#E15759; --t10-3:#76B7B2; --t10-4:#59A14F;
-      --t10-5:#EDC949; --t10-6:#AF7AA1; --t10-7:#FF9DA7; --t10-8:#9C755F; --t10-9:#BAB0AC;
-
       --danger-bg: #fee2e2;
       --danger-border: #fecaca;
       --danger-text: #991b1b;
@@ -60,11 +45,7 @@ Key fixes are:
 
     *{ box-sizing: border-box; }
 
-    /* ✅ Page is static; only cardsScroller can scroll */
-    html, body{
-      height: 100%;
-      /*overflow: hidden;*/
-    }
+    html, body{ height: 100%; }
 
     body{
       margin:0;
@@ -76,7 +57,6 @@ Key fixes are:
     .ribbon{
       background: var(--ribbon);
       color: #fff;
-      /*border-bottom: 3px solid var(--line);*/
     }
     .ribbonInner{
       width: 100%;
@@ -99,26 +79,41 @@ Key fixes are:
     .crumbs a{
       color:#fff;
       text-decoration:none;
-      /*border-bottom: 1px solid rgba(255,255,255,.35);*/
       padding-bottom: 1px;
     }
-    .crumbs a:hover{ border-bottom-color: rgba(255,255,255,.9); font-weight: 700; color: var(--bg);}
+    .crumbs a:hover{ font-weight: 700; color: var(--bg); }
     .sep{ opacity:.75; }
-    .ribbonLogo{ height: 34px; width:auto; display:block; }
-    .ribbonLogoWrap{ display:flex; align-items:center; justify-content:flex-end; }
 
-    /* ✅ Fill viewport; header stays fixed */
+    .banner {
+      background-image: url("img/banner-5.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 50px var(--padding);
+      color: black;
+      text-align: left;
+      margin: 0;
+    }
+    .banner h1 {
+      background-color: rgba(255, 255, 255, 0.3);
+      margin: 0;
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .banner p {
+      background-color: rgba(255, 255, 255, 0.3);
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+    }
+
     .wrap{
       width: 100%;
-      /*padding: 18px 18px 18px;*/
       padding: 18px var(--padding) 18px var(--padding);
       height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 0; /* ✅ allow inner layout to size/scroll */
+      min-height: 0;
     }
-
-    /*header{ padding: 0 2px; flex: 0 0 auto; }*/
 
     h1{
       margin: 8px 0 0 6px;
@@ -129,65 +124,9 @@ Key fixes are:
 
     .subtitle{
       margin: 8px 8px 8px 8px;
-      /*color: var(--muted);*/
       line-height: 1.5;
-      /*max-width: 90ch;*/
       font-weight: 400;
       font-size: 14px;
-    }
-
-    .subtitle-divider{
-      border: none;
-      height: 1px;
-      background: var(--border); /* light grey */
-      margin: 14px 0 18px;       /* space above & below */
-    }
-
-    /*.banner{
-      display: flex;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-
-    .banner img{
-      flex: 1 1 0;
-      width: 100%;
-      height: 120px; 
-      object-fit: cover;
-      display: block;     
-      margin: 0;
-      padding: 0;
-    }*/
-
-    .banner {
-      background-image: url("img/banner-5.jpg"); /* choose your banner background */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      padding: 50px var(--padding);
-      color: black;
-      text-align: left;
-      margin: 0;
-    }
-
-    /* Banner title */
-    .banner h1 {
-      background-color: rgba(255, 255, 255, 0.3);
-      margin: 0;
-      font-size: 3rem;
-      font-weight: bold;
-      /*text-shadow: 2px 2px 4px rgba(0,0,0,0.6);*/
-    }
-
-    /* Optional subtitle */
-    .banner p {
-      background-color: rgba(255, 255, 255, 0.3);
-      margin: 10px 0 0;
-      font-size: 1.2rem;
-      /*text-shadow: 1px 1px 3px rgba(0,0,0,0.5);*/
     }
 
     .searchRow{
@@ -261,7 +200,6 @@ Key fixes are:
       border-color: rgba(17,24,39,.10);
     }
 
-    /* ✅ Layout takes remaining space (critical: min-height:0) */
     .layout{
       display: grid;
       grid-template-columns: 300px 1fr;
@@ -269,13 +207,13 @@ Key fixes are:
       align-items: start;
       width: 100%;
       flex: 1 1 auto;
-      min-height: 0; /* ✅ critical */
+      min-height: 0;
     }
 
     aside{
       background: transparent;
       padding: 0 2px;
-      overflow: hidden; /* keep filters static */
+      overflow: hidden;
     }
 
     details{
@@ -361,11 +299,10 @@ Key fixes are:
     }
     .chk.disabled{ opacity: .45; }
 
-    /* ✅ Right column must allow inner scroller */
     .rightCol{
       display:flex;
       flex-direction: column;
-      min-height: 0; /* ✅ critical */
+      min-height: 0;
     }
 
     .resultsBar{
@@ -430,10 +367,9 @@ Key fixes are:
       font-weight: 700;
     }
 
-    /* ✅ ONLY this section scrolls */
     .cardsScroller{
       flex: 1 1 auto;
-      min-height: 0;  /* ✅ critical */
+      min-height: 0;
       overflow-y: auto;
       overflow-x: hidden;
       padding-right: 2px;
@@ -461,45 +397,15 @@ Key fixes are:
     }
 
     .name{
-      /*margin: 0;*/
       margin: 0 0 16px 0;
       font-size: 18px;
       letter-spacing: -0.01em;
       font-weight: 700;
     }
 
-    .role{
+    .meta{
       margin: 2px 0 2px 0;
       font-size: 13px;
-      /*color: #1f2937;
-      font-weight: 700;
-      letter-spacing: .01em;*/
-      /*font-weight: 700;*/
-      /*text-transform: uppercase;*/
-    }
-
-    .aff{
-      margin: 2px 0 2px 0;
-      /*color: var(--muted);*/
-      font-size: 13px;
-      /*line-height: 1.35;
-      font-weight: 400;*/
-      /*font-weight: 700;*/
-    }
-
-    .email{
-      margin: 2px 0 2px 0;
-      font-size: 13px;
-      /*color: #1f2937;
-      font-weight: 400;*/
-      /*font-weight: 700;*/
-    }
-
-    .webLink{
-      margin: 2px 0 2px 0;
-      font-size: 13px;
-      /*font-weight: 400;*/
-      font-weight: 700;
     }
 
     a{ color: var(--ribbon); text-decoration: none; }
@@ -524,15 +430,10 @@ Key fixes are:
 
     .tag.highlight{
       background: #ffffff;
-      /*background: currentColor;*/
-      /*border-color: currentColor;*/
       border-color: #76B7B2;
       font-weight: 700;
-      color: #76B7B2; 
-      /*color: var(--bg); */
+      color: #76B7B2;
     }
-    /*.tag.h0{ color: var(--t10-0); } .tag.h1{ color: var(--t10-1); } .tag.h2{ color: var(--t10-2); } .tag.h3{ color: var(--t10-3); } .tag.h4{ color: var(--t10-4); }
-    .tag.h5{ color: var(--t10-5); } .tag.h6{ color: var(--t10-6); } .tag.h7{ color: var(--t10-7); } .tag.h8{ color: var(--t10-8); } .tag.h9{ color: var(--t10-9); }*/
 
     @media (max-width: 1200px){
       .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -563,67 +464,21 @@ Key fixes are:
         <span class="sep">&gt;</span>
         <a href="https://www.ncl.ac.uk/data-science-ai/our-research/research-strengths/data-visualisation/" target="_blank" rel="noopener noreferrer">DATA VISUALISATION RESEARCH</a>
         <span class="sep">&gt;</span>
-        <span style="font-weight: 700;">PEOPLE DIRECTORY</span>
+        <span style="font-weight: 700;">EQUIPMENT DIRECTORY</span>
       </div>
-      <!-- <div class="ribbonLogoWrap" aria-label="Newcastle University logo">
-        <img
-          class="ribbonLogo"
-          src="https://upload.wikimedia.org/wikipedia/de/thumb/0/0e/Newcastle_University_Logo.svg/960px-Newcastle_University_Logo.svg.png"
-          alt="Newcastle University"
-        />
-      </div> -->
     </div>
   </div>
 
-  <!-- <div class="wrap"> -->
-
-    <header class="banner">
-      <h1>Data Visualisation Research</h1>
-      <p>Centre for Data Science and AI | Newcastle University</p>
-    </header>
-
-    <!-- <header>
-      <h1>People Directory</h1>
-      <p class="subtitle">
-        This directory brings together members of the <b>Data Visualisation Interest Group</b> within the NUCORE Data Science and AI Excellence. If you would like to be added to this page, please complete this short form:
-        <a href="https://forms.office.com/e/CbgS5JCVub" target="_blank" rel="noopener noreferrer">https://forms.office.com/e/CbgS5JCVub</a>.
-      </p>
-
-      <div class="banner">
-        <img src="./img/banner-1.jpg" alt="">
-        <img src="./img/banner-2.jpg" alt="">
-        <img src="./img/banner-3.jpg" alt="">
-        <img src="./img/banner-4.jpg" alt="">
-        <img src="./img/banner-5.jpg" alt="">
-      </div> -->
-
-      <!-- <hr class="subtitle-divider"> -->
-
-      
-
-      <!-- <div class="banner">
-        <img src="./img/banner-1.jpg" alt="">
-        <img src="./img/banner-2.jpg" alt="">
-        <img src="./img/banner-3.jpg" alt="">
-        <img src="./img/banner-4.jpg" alt="">
-        <img src="./img/banner-5.jpg" alt="">
-      </div> -->
-
-
-    <!-- </header> -->
+  <header class="banner">
+    <h1>Data Visualisation Research</h1>
+    <p>Centre for Data Science and AI | Newcastle University</p>
+  </header>
 
   <div class="wrap">
 
-    <!-- <h1>About the Group</h1> -->
-    <!-- <p class="subtitle">
-      The <b>Data Visualisation Interest Group</b> is part of the <b>NUCORE Data Science and AI Excellence Centre</b> at <b>Newcastle University</b>. It brings together members within the Centre who share an interest in data visualisation. Members connect and share information about events and activities via the NUCORE Data Science and AI mailing list <a href="mailto:dada@newcastle.ac.uk" target="_blank" rel="noopener noreferrer"><b>dada@newcastle.ac.uk</b></a>. Those who wish to join are invited to subscribe at <a href="https://lists.ncl.ac.uk/wws/info/dada" target="_blank" rel="noopener noreferrer"><b>https://lists.ncl.ac.uk/wws/info/dada</b></a>.
-      <br><br>
-      The group is facilitated by <b>Alma Cantu</b>. Please feel free to contact her at <a href="mailto:alma.cantu@newcastle.ac.uk" target="_blank" rel="noopener noreferrer"><b>alma.cantu@newcastle.ac.uk</b></a> with any queries.
-    </p> -->
-
-    <h1>People Directory</h1>
+    <h1>Equipment Directory</h1>
     <p class="subtitle">
-      This directory presents a mapping of data visualisation expertise among members of the Data Visualisation Interest Group. If you would like to be included on this page, please complete the following form: <a href="https://forms.office.com/e/LZ5dJayXmj"><b>https://forms.office.com/e/LZ5dJayXmj</b></a>.
+      Browse and filter available equipment. Click an item name to open the equipment webpage.
     </p>
 
     <div class="searchRow">
@@ -632,61 +487,31 @@ Key fixes are:
           <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
           <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
-        <input id="searchInput" type="search" placeholder="Search by name, role, email, affiliation, interests, data types, applications…" />
+        <input id="searchInput" type="search" placeholder="Search by equipment name, location, keywords…" />
         <button id="clearQueryBtn" class="clearQueryBtn" type="button" aria-label="Clear search">×</button>
       </div>
     </div>
 
     <div class="layout">
       <aside>
-        <details>
+        <details open>
           <summary>
-            <span class="summaryTitle">Roles</span>
+            <span class="summaryTitle">Locations</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </summary>
-          <div id="filter-role" class="filterList"></div>
+          <div id="filter-location" class="filterList"></div>
         </details>
 
-        <details>
+        <details open>
           <summary>
-            <span class="summaryTitle">Affiliations</span>
+            <span class="summaryTitle">Keywords</span>
             <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </summary>
-          <div id="filter-affiliation" class="filterList"></div>
-        </details>
-
-        <details>
-          <summary>
-            <span class="summaryTitle">Data characteristics</span>
-            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </summary>
-          <div id="filter-dataCharacteristics" class="filterList"></div>
-        </details>
-
-        <details>
-          <summary>
-            <span class="summaryTitle">Techniques</span>
-            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </summary>
-          <div id="filter-interactionAndDesign" class="filterList"></div>
-        </details>
-
-        <details>
-          <summary>
-            <span class="summaryTitle">Applications</span>
-            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </summary>
-          <div id="filter-applications" class="filterList"></div>
+          <div id="filter-keywords" class="filterList"></div>
         </details>
       </aside>
 
@@ -700,7 +525,6 @@ Key fixes are:
           </div>
         </div>
 
-        <!-- ✅ Scroll happens here -->
         <div class="cardsScroller" id="cardsScroller">
           <div id="grid" class="grid"></div>
         </div>
@@ -710,32 +534,54 @@ Key fixes are:
   </div>
 
   <script>
-    
     let ALL = [];
 
-    async function loadCSV() {
-      const response = await fetch("./people.csv");
+    function parseCSVLine(line){
+      // Minimal CSV parser for quoted fields (handles commas inside quotes).
+      const out = [];
+      let cur = "";
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++){
+        const ch = line[i];
+        if (ch === '"'){
+          const next = line[i+1];
+          if (inQuotes && next === '"'){ // escaped quote
+            cur += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === ',' && !inQuotes){
+          out.push(cur);
+          cur = "";
+        } else {
+          cur += ch;
+        }
+      }
+      out.push(cur);
+      return out;
+    }
+
+    async function loadCSV(){
+      const response = await fetch("./equipment.csv");
       const text = await response.text();
 
-      const rows = text.trim().split("\n").map(r => r.split(","));
+      const lines = text.replace(/\r/g, "").split("\n").filter(l => l.trim().length);
+      const headers = parseCSVLine(lines.shift()).map(h => h.trim());
 
-      const headers = rows.shift().map(h => h.trim());
-
-      return rows.map(row => {
+      return lines.map((line) => {
+        const cols = parseCSVLine(line);
         const obj = {};
-        headers.forEach((h, i) => {
-          obj[h] = row[i] ? row[i].trim() : "";
-        });
+        headers.forEach((h, i) => obj[h] = (cols[i] ?? "").trim());
 
         return {
-          name: obj.name,
-          role: obj.role,
-          email: obj.email,
-          webpage: obj.webpage,
-          affiliation: obj.affiliation,
-          dataCharacteristics: obj.dataCharacteristics ? obj.dataCharacteristics.split(";").map(s => s.trim()) : [],
-          interactionAndDesign: obj.interactionAndDesign ? obj.interactionAndDesign.split(";").map(s => s.trim()) : [],
-          applications: obj.applications ? obj.applications.split(";").map(s => s.trim()) : []
+          name: obj.name || "",
+          webpage: obj.webpage || "",
+          location: obj.location || "",
+          keywords: (obj.keywords || "")
+            .split(";")
+            .map(s => s.trim())
+            .filter(Boolean)
         };
       });
     }
@@ -753,53 +599,21 @@ Key fixes are:
       return [...new Set(arr)].sort((a,b)=>a.localeCompare(b));
     }
 
-    function surnameKey(fullName){
-      const parts = String(fullName || "").trim().split(/\s+/).filter(Boolean);
-      if (parts.length === 0) return "";
-      return parts[parts.length - 1].toLowerCase();
-    }
-    function fullNameKey(fullName){
-      return String(fullName || "").trim().toLowerCase();
-    }
-    function sortBySurnameThenName(list){
-      return list.sort((a,b) => {
-        const sa = surnameKey(a.name);
-        const sb = surnameKey(b.name);
-        const c1 = sa.localeCompare(sb);
-        if (c1 !== 0) return c1;
-        return fullNameKey(a.name).localeCompare(fullNameKey(b.name));
-      });
+    function sortByName(list){
+      return list.sort((a,b) => String(a.name).localeCompare(String(b.name)));
     }
 
     const state = {
       query: "",
       filters: {
-        role: new Set(),
-        affiliation: new Set(),
-        visualRepresentations: new Set(),
-        dataCharacteristics: new Set(),
-        applications: new Set(),
-        interactionAnalysis: new Set(),
-        interactionAndDesign: new Set()
+        location: new Set(),
+        keywords: new Set()
       }
     };
 
-    const colorIndexByValue = new Map();
-    let colorCursor = 0;
-    function getColorIndex(value){
-      if (!colorIndexByValue.has(value)){
-        colorIndexByValue.set(value, colorCursor % 10);
-        colorCursor++;
-      }
-      return colorIndexByValue.get(value);
-    }
-
     const OPTIONS = {
-      roles: uniqSorted(ALL.map(p => p.role).filter(Boolean)),
-      affiliations: uniqSorted(ALL.map(p => p.affiliation).filter(Boolean)),
-      dataCharacteristics: uniqSorted(ALL.flatMap(p => p.dataCharacteristics || [])),
-      interactionAndDesign: uniqSorted(ALL.flatMap(p => p.interactionAndDesign || [])),
-      applications: uniqSorted(ALL.flatMap(p => p.applications || [])),
+      locations: [],
+      keywords: []
     };
 
     function matchesAllSelected(set, values){
@@ -811,62 +625,45 @@ Key fixes are:
       return true;
     }
 
-    function matchesQuery(person){
+    function matchesQuery(item){
       const q = state.query.trim().toLowerCase();
       if (!q) return true;
       const hay = [
-        person.name,
-        person.role,
-        person.email,
-        person.affiliation,
-        ...(person.dataCharacteristics || []),
-        ...(person.interactionAndDesign || []),
-        ...(person.applications || [])
+        item.name,
+        item.location,
+        ...(item.keywords || [])
       ].filter(Boolean).join(" • ").toLowerCase();
       return hay.includes(q);
     }
 
-    function personMatches(person){
-      if (!matchesQuery(person)) return false;
+    function itemMatches(item){
+      if (!matchesQuery(item)) return false;
 
       const f = state.filters;
-      if (f.role.size > 0 && !f.role.has(person.role)) return false;
-      if (f.affiliation.size > 0 && !f.affiliation.has(person.affiliation)) return false;
-      if (!matchesAllSelected(f.dataCharacteristics, person.dataCharacteristics)) return false;
-      if (!matchesAllSelected(f.interactionAndDesign, person.interactionAndDesign)) return false;
-      if (!matchesAllSelected(f.applications, person.applications)) return false;
+      if (f.location.size > 0 && !f.location.has(item.location)) return false;
+      if (!matchesAllSelected(f.keywords, item.keywords)) return false;
       return true;
     }
 
-    function personMatchesExcludingGroup(person, excludedGroup){
-      if (!matchesQuery(person)) return false;
+    function itemMatchesExcludingGroup(item, excludedGroup){
+      if (!matchesQuery(item)) return false;
 
       const f = state.filters;
-      if (excludedGroup !== "role" && f.role.size > 0 && !f.role.has(person.role)) return false;
-      if (excludedGroup !== "affiliation" && f.affiliation.size > 0 && !f.affiliation.has(person.affiliation)) return false;
-      if (excludedGroup !== "interactionAndDesign" && !matchesAllSelected(f.interactionAndDesign, person.interactionAndDesign)) return false;
-      if (excludedGroup !== "dataCharacteristics" && !matchesAllSelected(f.dataCharacteristics, person.dataCharacteristics)) return false;
-      if (excludedGroup !== "applications" && !matchesAllSelected(f.applications, person.applications)) return false;
+      if (excludedGroup !== "location" && f.location.size > 0 && !f.location.has(item.location)) return false;
+      if (excludedGroup !== "keywords" && !matchesAllSelected(f.keywords, item.keywords)) return false;
       return true;
     }
 
     function countMapFor(group){
       const m = new Map();
-      for (const p of ALL){
-        if (!personMatchesExcludingGroup(p, group)) continue;
+      for (const it of ALL){
+        if (!itemMatchesExcludingGroup(it, group)) continue;
 
-        if (group === "role"){
-          const v = p.role;
+        if (group === "location"){
+          const v = it.location;
           if (v) m.set(v, (m.get(v) || 0) + 1);
-        } else if (group === "affiliation"){
-          const v = p.affiliation;
-          if (v) m.set(v, (m.get(v) || 0) + 1);
-        } else if (group === "dataCharacteristics"){
-          for (const v of (p.dataCharacteristics || [])) m.set(v, (m.get(v) || 0) + 1);
-        } else if (group === "applications"){
-          for (const v of (p.applications || [])) m.set(v, (m.get(v) || 0) + 1);
-        } else if (group === "interactionAndDesign"){
-          for (const v of (p.interactionAndDesign || [])) m.set(v, (m.get(v) || 0) + 1);
+        } else if (group === "keywords"){
+          for (const v of (it.keywords || [])) m.set(v, (m.get(v) || 0) + 1);
         }
       }
       return m;
@@ -913,11 +710,8 @@ Key fixes are:
     function activeAny(){
       return (
         state.query.trim().length > 0 ||
-        state.filters.role.size > 0 ||
-        state.filters.affiliation.size > 0 ||
-        state.filters.dataCharacteristics.size > 0 ||
-        state.filters.interactionAndDesign.size > 0 ||
-        state.filters.applications.size > 0
+        state.filters.location.size > 0 ||
+        state.filters.keywords.size > 0
       );
     }
 
@@ -927,48 +721,37 @@ Key fixes are:
     }
 
     function isSelected(value){
-      return (
-        state.filters.role.has(value) ||
-        state.filters.affiliation.has(value) ||
-        state.filters.dataCharacteristics.has(value) ||
-        state.filters.interactionAndDesign.has(value) ||
-        state.filters.applications.has(value)
-      );
+      return state.filters.location.has(value) || state.filters.keywords.has(value);
     }
 
     function tagHtml(value){
       const highlighted = isSelected(value);
-      const idx = getColorIndex(value);
-      return `<span class="tag ${highlighted ? `highlight h${idx}` : ""}">${escapeHtml(value)}</span>`;
+      return `<span class="tag ${highlighted ? "highlight" : ""}">${escapeHtml(value)}</span>`;
     }
 
-    function renderCards(people){
+    function renderCards(items){
       const grid = $("#grid");
       grid.innerHTML = "";
 
-      const sorted = sortBySurnameThenName([...people]);
-      sorted.forEach((p) => {
+      const sorted = sortByName([...items]);
+      sorted.forEach((it) => {
         const card = document.createElement("article");
         card.className = "card";
 
-        const tags = [
-          ...(p.dataCharacteristics || []),
-          ...(p.interactionAndDesign || []),
-          ...(p.applications || [])
-        ];
-
+        const tags = [...(it.keywords || [])];
         const tagsHtml = tags.slice(0, 18).map(tagHtml).join("");
         const moreCount = Math.max(0, tags.length - 18);
         const moreHtml = moreCount > 0 ? `<span class="tag">+${moreCount} more</span>` : "";
 
-        // <p class="email"><a href="mailto:${encodeURIComponent(p.email)}">${escapeHtml(p.email)}</a></p>
-
         card.innerHTML = `
           <div>
-            <h3 class="name"><a href="${escapeHtml(p.webpage)}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.name)}</a></h3>
-            <p class="role"><b>Role:</b> ${escapeHtml(p.role || "")}</p>
-            <p class="aff"><b>Affiliation:</b> ${escapeHtml(p.affiliation || "")}</p>
-            <p class="email"><b>Email:</b> ${escapeHtml(p.email)}</p>
+            <h3 class="name">
+              ${it.webpage
+                ? `<a href="${escapeHtml(it.webpage)}" target="_blank" rel="noopener noreferrer">${escapeHtml(it.name)}</a>`
+                : `${escapeHtml(it.name)}`
+              }
+            </h3>
+            <p class="meta"><b>Location:</b> ${escapeHtml(it.location || "—")}</p>
           </div>
           <div class="tags">${tagsHtml || "<span class='tag'>—</span>"}${moreHtml}</div>
         `;
@@ -977,7 +760,7 @@ Key fixes are:
     }
 
     function renderCount(n, total){
-      $("#count").textContent = `${n} of ${total} people`;
+      $("#count").textContent = `${n} of ${total} items`;
     }
 
     function renderChips(){
@@ -1004,11 +787,8 @@ Key fixes are:
       };
 
       if (state.query.trim()) addChip("query", state.query.trim(), "Search");
-      for (const v of state.filters.role) addChip("role", v, "Role");
-      for (const v of state.filters.affiliation) addChip("affiliation", v, "Affiliation");
-      for (const v of state.filters.dataCharacteristics) addChip("dataCharacteristics", v, "Data");
-      for (const v of state.filters.interactionAndDesign) addChip("interactionAndDesign", v, "Technique");
-      for (const v of state.filters.applications) addChip("applications", v, "Application");
+      for (const v of state.filters.location) addChip("location", v, "Location");
+      for (const v of state.filters.keywords) addChip("keywords", v, "Keyword");
     }
 
     function clearAll(){
@@ -1019,15 +799,12 @@ Key fixes are:
     }
 
     function renderFilterCountsAndLists(){
-      buildCheckboxList($("#filter-role"), OPTIONS.roles, "role", countMapFor("role"));
-      buildCheckboxList($("#filter-affiliation"), OPTIONS.affiliations, "affiliation", countMapFor("affiliation"));
-      buildCheckboxList($("#filter-dataCharacteristics"), OPTIONS.dataCharacteristics, "dataCharacteristics", countMapFor("dataCharacteristics"));
-      buildCheckboxList($("#filter-interactionAndDesign"), OPTIONS.interactionAndDesign, "interactionAndDesign", countMapFor("interactionAndDesign"));
-      buildCheckboxList($("#filter-applications"), OPTIONS.applications, "applications", countMapFor("applications"));
+      buildCheckboxList($("#filter-location"), OPTIONS.locations, "location", countMapFor("location"));
+      buildCheckboxList($("#filter-keywords"), OPTIONS.keywords, "keywords", countMapFor("keywords"));
     }
 
     function update(){
-      const filtered = ALL.filter(personMatches);
+      const filtered = ALL.filter(itemMatches);
       renderCount(filtered.length, ALL.length);
       renderChips();
       renderCards(filtered);
@@ -1035,16 +812,11 @@ Key fixes are:
       setClearControls();
     }
 
-    
     async function init(){
-
       ALL = await loadCSV();
 
-      OPTIONS.roles = uniqSorted(ALL.map(p => p.role).filter(Boolean));
-      OPTIONS.affiliations = uniqSorted(ALL.map(p => p.affiliation).filter(Boolean));
-      OPTIONS.dataCharacteristics = uniqSorted(ALL.flatMap(p => p.dataCharacteristics || []));
-      OPTIONS.interactionAndDesign = uniqSorted(ALL.flatMap(p => p.interactionAndDesign || []));
-      OPTIONS.applications = uniqSorted(ALL.flatMap(p => p.applications || []));
+      OPTIONS.locations = uniqSorted(ALL.map(x => x.location).filter(Boolean));
+      OPTIONS.keywords = uniqSorted(ALL.flatMap(x => x.keywords || []));
 
       $("#searchInput").addEventListener("input", (e) => {
         state.query = e.target.value || "";
