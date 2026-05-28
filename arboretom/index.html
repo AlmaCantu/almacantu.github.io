@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArboreTom - Élagage</title>
+  <meta name="description" content="ArboreTom, élagueur professionnel à Mons-la-Trivalle, intervient dans un rayon de 50 km pour l’élagage, la taille, l’abattage, le démontage d’arbres et l’entretien extérieur. Contact : 06 84 28 67 31." />
+
+  <meta name="keywords" content="élagueur Mons-la-Trivalle, élagage Mons-la-Trivalle, abattage arbre Hérault, taille arbre, démontage arbre, entretien arbres, ArboreTom, Tom Nouraud élagueur" />
+
+  <meta name="author" content="ArboreTom - Tom Nouraud" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="ArboreTom - Élagueur à Mons-la-Trivalle" />
+  <meta property="og:description" content="Élagage, taille, abattage et entretien d’arbres autour de Mons-la-Trivalle dans un rayon de 50 km." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:image" content="ArboreTom-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-dark: #1f3d2b;
+      --green: #3f7d4e;
+      --green-light: #e8f3ea;
+      --cream: #faf7ef;
+      --brown: #8a5a32;
+      --text: #253126;
+      --white: #ffffff;
+      --shadow: 0 12px 30px rgba(31, 61, 43, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Jost", sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(250, 247, 239, 0.95);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .navbar {
+      max-width: 1180px;
+      margin: auto;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: bold;
+      color: var(--green-dark);
+    }
+
+    .logo-placeholder {
+      width: 58px;
+      height: 58px;
+      /*border: 2px dashed var(--green);*/
+      /*border-radius: 14px;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      text-align: center;
+      /*color: var(--green);
+      background: var(--white);*/
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: normal;
+      color: var(--brown);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+      align-items: center;
+    }
+
+    nav a {
+      font-weight: 600;
+      color: var(--green-dark);
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--green);
+    }
+
+    .menu-toggle {
+      display: none;
+      border: none;
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 10px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.15rem;
+    }
+
+    .hero {
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(rgba(31, 61, 43, 0.72), rgba(31, 61, 43, 0.72)),
+        url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80') center/cover;
+      color: var(--white);
+    }
+
+    .hero-content {
+      max-width: 1180px;
+      width: 100%;
+      margin: auto;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      line-height: 1.08;
+      margin-bottom: 22px;
+    }
+
+    .hero p {
+      max-width: 650px;
+      font-size: 1.18rem;
+      margin-bottom: 30px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--green-dark);
+    }
+
+    section {
+      padding: 78px 20px;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: auto;
+    }
+
+    .section-title {
+      margin-bottom: 36px;
+      text-align: center;
+    }
+
+    .section-title h2 {
+      color: var(--green-dark);
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      max-width: 720px;
+      margin: auto;
+      color: #59665b;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 28px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      color: var(--green-dark);
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+
+    .quote-box {
+      background: var(--green-dark);
+      color: var(--white);
+      border-radius: 28px;
+      padding: 38px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .quote-box h2 {
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      margin-bottom: 16px;
+    }
+
+    .quote-box ul {
+      margin: 18px 0 0 20px;
+    }
+
+    .quote-highlight {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 24px;
+      border-radius: 22px;
+    }
+
+    .zone {
+      background: var(--green-light);
+    }
+
+    .zone-grid,
+    .about-grid,
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .map-placeholder {
+      min-height: 360px;
+      border-radius: 28px;
+      border: 3px var(--green);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      color: var(--green-dark);
+      box-shadow: var(--shadow);
+    }
+
+    .about-photo {
+      min-height: 390px;
+      border-radius: 28px;
+      background: linear-gradient(rgba(31, 61, 43, 0.15), rgba(31, 61, 43, 0.15)),
+        url('photo.jpg') center/cover;
+      box-shadow: var(--shadow);
+    }
+
+    .info-list {
+      list-style: none;
+      margin-top: 22px;
+    }
+
+    .info-list li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .info-list li::before {
+      content: '➜';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    .contact-card {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card a.phone {
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 1.45rem;
+      font-weight: bold;
+      color: var(--green);
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #d8dfd9;
+      border-radius: 14px;
+      font: inherit;
+      background: var(--white);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    form button {
+      border: none;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    footer {
+      background: var(--green-dark);
+      color: var(--white);
+      text-align: center;
+      padding: 28px 20px;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: var(--green);
+      color: var(--white);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: none;
+      box-shadow: var(--shadow);
+    }
+
+    .back-to-top.show {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .cards,
+      .quote-box,
+      .zone-grid,
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: absolute;
+        left: 0;
+        top: 86px;
+        width: 100%;
+        background: var(--cream);
+        display: none;
+        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.1);
+      }
+
+      nav.open {
+        display: block;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 16px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .navbar {
+        padding: 12px 16px;
+      }
+
+      .brand-text strong {
+        font-size: 0.95rem;
+      }
+
+      .logo-placeholder {
+        width: 50px;
+        height: 50px;
+      }
+
+      section {
+        padding: 58px 16px;
+      }
+
+      .hero-content {
+        padding: 68px 16px;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .quote-box,
+      .card,
+      .contact-card {
+        padding: 24px;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "ArboreTom",
+    "description": "Élagueur professionnel à Mons-la-Trivalle : élagage, taille, abattage, démontage d’arbres et entretien extérieur.",
+    "image": "ArboreTom-logo.png",
+    "telephone": "+33684286731",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Mons-la-Trivalle",
+      "addressCountry": "FR"
+    },
+    "areaServed": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.5711,
+        "longitude": 2.8095
+      },
+      "geoRadius": "50000"
+    },
+    "serviceType": [
+      "Élagage",
+      "Taille d’arbres",
+      "Abattage d’arbres",
+      "Démontage d’arbres",
+      "Entretien extérieur"
+    ]
+  }
+</script>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <a class="brand" href="#accueil" aria-label="Retour à l'accueil">
+        <div class="logo-placeholder"><img src="ArboreTom-logo.png" class="logo"></div>
+        <div class="brand-text">
+          <strong>ArboreTom</strong>
+          <!-- <span>Élagage, taille et entretien</span> -->
+        </div>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+
+      <nav id="mainNav">
+        <ul>
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#devis">Devis</a></li>
+          <li><a href="#zone">Zone d'activité</a></li>
+          <li><a href="#apropos">À propos</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="hero-content">
+        <h1>Élagage, taille et entretien de vos arbres</h1>
+        <p>Bienvenue sur le site de ArboreTom. Intervention soignée,
+          conseils adaptés et travaux réalisés dans le respect de l'arbre et de votre terrain.
+        </p>
+        <div class="btn-group">
+          <a class="btn btn-primary" href="tel:+33684286731">📞 06 84 28 67 31</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-title">
+          <h2>Services proposés</h2>
+          <p>Des prestations adaptées aux arbres, aux jardins, aux terrains difficiles et aux besoins de sécurité.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <!-- <div class="card-icon">🌳</div> -->
+            <h3>Élagage</h3>
+            <p>Taille raisonnée, réduction de couronne, éclaircie et entretien pour préserver la santé de l'arbre.</p>
+          </article>
+
+          <article class="card">
+            <!-- <div class="card-icon">🪵</div> -->
+            <h3>Abattage</h3>
+            <p>Abattage simple ou délicat selon l'environnement, avec une attention particulière à la sécurité.</p>
+          </article>
+
+          <article class="card">
+            <!-- <div class="card-icon">🧗</div> -->
+            <h3>Démontage</h3>
+            <p>Démontage par rétention lorsque l'arbre se trouve près d'une maison, d'une clôture ou d'une route.</p>
+          </article>
+
+          <article class="card">
+            <!-- <div class="card-icon">🍃</div> -->
+            <h3>Taille d'entretien</h3>
+            <p>Taille de formation, taille sanitaire, suppression du bois mort et accompagnement de la croissance.</p>
+          </article>
+
+          <article class="card">
+            <!-- <div class="card-icon">🏡</div> -->
+            <h3>Entretien extérieur</h3>
+            <p>Nettoyage après intervention, évacuation possible des déchets verts et remise au propre du chantier.</p>
+          </article>
+
+          <article class="card">
+            <!-- <div class="card-icon">💬</div> -->
+            <h3>Conseils</h3>
+            <p>Analyse de l'état de vos arbres et conseils pour choisir la solution la plus adaptée.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="devis">
+      <div class="container">
+        <div class="quote-box">
+          <div>
+            <h2>Devis</h2>
+            <p>
+              Le prix de la prestation dépend de nombreux facteurs. Il est donc nécessaire de nous contacter afin que nous puissions établir un devis. Préparez-vous à nous renseigner sur les critères suivants :
+            </p>
+            <ul>
+              <li>Hauteur, diamètre et état de l'arbre</li>
+              <li>Accès au terrain et possibilité de stationnement</li>
+              <li>Présence de bâtiments, lignes électriques, clôtures ou routes</li>
+              <li>Type d'intervention : taille, abattage, démontage ou entretien</li>
+              <li>Gestion des branches, du bois et des déchets verts</li>
+            </ul>
+          </div>
+          <div class="quote-highlight">
+            <h3>Besoin d'un devis ?</h3>
+            <p>Appelez nous pour expliquer votre situation et convenir d'un passage si nécessaire.</p>
+            <a style="margin-top: 16px;" class="btn btn-secondary" href="tel:+33684286731">📞 06 84 28 67 31</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone" id="zone">
+      <div class="container zone-grid">
+        <div>
+          <div class="section-title" style="text-align: left; margin-bottom: 20px;">
+            <h2>Zone d'activité</h2>
+            <p>
+              Intervention dans un rayon d'environ 50 km autour de Mons-la-Trivalle,
+              selon la nature du chantier et les disponibilités.
+            </p>
+          </div>
+          <ul class="info-list">
+            <li>Mons-la-Trivalle et alentours</li>
+            <li>Déplacements possibles dans un rayon de 50 km</li>
+          </ul>
+        </div>
+
+        <div class="map-placeholder">
+          <div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d271661.16514409886!2d2.8094991604891146!3d43.57112316072771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b19a8d5339f79b%3A0x86fc8dbce83e058!2s34390%20Mons%2C%20France!5e0!3m2!1sfr!2suk!4v1779978420049!5m2!1sfr!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <!-- <strong>Emplacement prévu pour la carte</strong><br />
+            Intégrez ici une carte Google Maps ou OpenStreetMap centrée sur Mons-la-Trivalle. -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="apropos">
+      <div class="container about-grid">
+        <div class="about-photo" aria-label="Photo illustrative d'un élagueur"></div>
+        <div>
+          <div class="section-title" style="text-align: left; margin-bottom: 20px;">
+            <h2>À propos</h2>
+            <p>
+              ArboreTom a été créé par Tom Nouraud. Élagueur professionnel depuis 2018, Tom est passionné par le travail en extérieur et le soin des arbres.
+            </p>
+          </div>
+          <p>
+            Il intervient pour des travaux d’élagage, de taille et d’abattage.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-grid">
+        <div>
+          <div class="section-title" style="text-align: left; margin-bottom: 20px;">
+            <h2>Contact</h2>
+            <p>
+              Pour toute demande d'élagage, d'abattage, de taille ou de devis,
+              contactez Tom directement par téléphone.
+            </p>
+          </div>
+          <div class="contact-card">
+            <h3>Tom Nouraud - Élagueur</h3>
+            <p>Mons-la-Trivalle</p>
+            <a class="phone" href="tel:+33684286731">06 84 28 67 31</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> ArboreTom - Élagage autour de Mons-la-Trivalle</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Retour en haut">↑</button>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    const backToTop = document.getElementById('backToTop');
+    const contactForm = document.getElementById('contactForm');
+
+    menuToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 450) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
