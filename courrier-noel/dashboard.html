@@ -95,8 +95,9 @@
     const month = date.getMonth(); // 0–11
     const day = date.getDate();
 
-    // Christmas: Nov 1 – Jan 6
+    // Christmas: Oct 1 – Jan 6
     const isChristmas =
+      month === 09 ||           // Octobre
       month === 10 ||           // November
       month === 11 ||           // December
       (month === 0 && day <= 6) // January 1–6
